@@ -1,0 +1,91 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Gojapan</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link btn-custom" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link btn-custom" href="#">Services</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link btn-custom" href="#">Contact</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link btn-custom" href="#">Login</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+    <p>detail works!</p>
+    <p>{{teacherId}}</p>    
+    <p>{{teacherDetails.name}}</p>    
+    <p>{{teacherDetails.location}}</p>    
+     
+    <!-- Teacher Photo and Details Section -->
+    <div class="card mt-4" style="max-width: 800px; margin: 0 auto;">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <img [src]="teacherDetails.image_photo_profil" class="card-img" alt="{{teacherDetails.name}}">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{teacherDetails.name}}</h5>
+              <p class="card-text"><strong>Location:</strong> {{teacherDetails.location}}</p>
+              <p class="card-text"><strong>Status:</strong> {{teacherDetails.status}}</p>
+              <p class="card-text">{{teacherDetails.description}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- About Section -->
+      <div class="mt-4">
+        <h3>About {{teacherDetails.name}}</h3>
+        <p>{{teacherDetails.about}}</p>
+      </div>
+    
+      <!-- Student Testimonials -->
+      <div class="mt-4">
+        <h3>What Students Say</h3>
+        <p><em>"{{teacherDetails.testimonial}}"</em></p>
+      </div>
+    
+      <!-- Current Students -->
+      <div class="mt-4">
+        <h3>Current Students: {{teacherDetails.students}}</h3>
+      </div>
+    
+      <!-- Schedule Section -->
+      <div class="mt-4">
+        <h3>Schedule</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Available Times</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let slot of teacherDetails.schedule">
+              <td>{{slot.day}}</td>
+              <td>{{slot.times}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+      <!-- Floating Book Button -->
+      <div class="fixed-bottom d-flex justify-content-center mb-4">
+        <button class="btn btn-primary btn-lg">Book {{teacherDetails.name}}</button>
+      </div>
+</div>

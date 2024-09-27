@@ -1,0 +1,150 @@
+/* Basic styling for the button */
+.btn-custom {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 20px; /* Rounded edges */
+    text-transform: uppercase;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: transparent;
+    overflow: hidden;
+    transition: color 0.4s ease;
+    z-index: 1;
+    text-decoration: none;
+  }
+  
+  /* Pseudo-element for the background animation */
+  .btn-custom::before {
+    content: '';
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255,99,99);
+    z-index: -1;
+    transition: bottom 0.2s ease;
+  }
+  
+  /* On hover, animate the background from bottom to top */
+  .btn-custom:hover::before {
+    bottom: 0;
+  }
+  
+  /* Change the text color on hover */
+  .btn-custom:hover {
+    color: #fff;
+  }
+  
+  .bg-purple-gradient {
+    background: linear-gradient(to top, rgb(244, 210, 210), rgb(255, 252, 252));
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    color: rgb(41, 38, 38);
+  }
+
+  .navbar-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700; /* Use this to control the font-weight */
+  }
+
+  /* Profile card */
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  .card-img {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    object-fit: cover;
+    height: 100%;
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .card-text {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* About section */
+  h3 {
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Testimonial styling */
+  p em {
+    font-style: italic;
+    color: #6c757d;
+  }
+  
+  /* Schedule table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  thead th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Floating book button */
+  .fixed-bottom {
+    text-align: center;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 50px;
+    padding: 0.75rem 2rem;
+    font-size: 1.25rem;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .card {
+      flex-direction: column;
+    }
+  
+    .card-img {
+      border-radius: 10px 10px 0 0;
+      height: 250px;
+    }
+  
+    .fixed-bottom {
+      position: fixed;
+      bottom: 1rem;
+      left: 0;
+      right: 0;
+    }
+  }
