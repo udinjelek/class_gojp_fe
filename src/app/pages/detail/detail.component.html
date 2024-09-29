@@ -25,65 +25,67 @@
           </nav>
         </div>
       </div>
-
-    <p>detail works!</p>
-    <p>{{teacherId}}</p>    
-    <p>{{teacherDetails.name}}</p>    
-    <p>{{teacherDetails.location}}</p>    
      
     <!-- Teacher Photo and Details Section -->
-    <div class="card mt-4" style="max-width: 800px; margin: 0 auto;">
-        <div class="row no-gutters">
-          <div class="col-md-4">
-            <img [src]="teacherDetails.image_photo_profil" class="card-img" alt="{{teacherDetails.name}}">
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">{{teacherDetails.name}}</h5>
-              <p class="card-text"><strong>Location:</strong> {{teacherDetails.location}}</p>
-              <p class="card-text"><strong>Status:</strong> {{teacherDetails.status}}</p>
-              <p class="card-text">{{teacherDetails.description}}</p>
-            </div>
-          </div>
-        </div>
+    <div class="teacher-detail mt-4 d-flex justify-content-center align-items-start">
+      <div class="photo-container">
+        <img [src]="teacherDetails.image_photo_profil" class="teacher-photo" alt="{{teacherDetails.name}}">
       </div>
+      <div class="teacher-info ms-4">
+        <h5 class="teacher-name">{{teacherDetails.name}}</h5>
+        <p class="teacher-location"><strong>Location:</strong> {{teacherDetails.location}}</p>
+        <p class="teacher-status"><strong>Status:</strong> {{teacherDetails.status}}</p>
+        <p class="teacher-description">{{teacherDetails.description}}</p>
+      </div>
+      
+    </div>
     
       <!-- About Section -->
+      <div class="teacher-detail mt-4 d-flex justify-content-center align-items-start">
       <div class="mt-4">
         <h3>About {{teacherDetails.name}}</h3>
         <p>{{teacherDetails.about}}</p>
       </div>
+      </div>
     
       <!-- Student Testimonials -->
+      <div class="teacher-detail mt-4">
       <div class="mt-4">
         <h3>What Students Say</h3>
         <p><em>"{{teacherDetails.testimonial}}"</em></p>
       </div>
-    
+      </div>
       <!-- Current Students -->
+      <div class="teacher-detail mt-4">
       <div class="mt-4">
         <h3>Current Students: {{teacherDetails.students}}</h3>
       </div>
-    
+      </div>
       <!-- Schedule Section -->
+      <div class="teacher-detail mt-4 d-flex justify-content-center align-items-start">
       <div class="mt-4">
         <h3>Schedule</h3>
         <table class="table">
           <thead>
             <tr>
+              <th>Date</th>
               <th>Day</th>
-              <th>Available Times</th>
+              <th>Time</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let slot of teacherDetails.schedule">
+              <td>{{slot.date}}</td>
               <td>{{slot.day}}</td>
-              <td>{{slot.times}}</td>
+              <td>{{slot.time}}</td>
+              <td>{{slot.status}}</td>
             </tr>
           </tbody>
         </table>
       </div>
-    
+      </div>
+
       <!-- Floating Book Button -->
       <div class="fixed-bottom d-flex justify-content-center mb-4">
         <button class="btn btn-primary btn-lg">Book {{teacherDetails.name}}</button>
