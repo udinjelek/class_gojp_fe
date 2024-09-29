@@ -61,7 +61,13 @@
     <!-- Bottom Content -->
     <div class="row">
       <div class="col-12 text-center p-3">
-        <h2>List Teacher</h2>
+        <ng-container *ngIf="filteredTeachers().length > 0; else noResults">
+          <h2>List Teacher</h2>
+        </ng-container>
+        
+        <ng-template #noResults>
+          <h2>No teachers found</h2>
+        </ng-template>
       </div>
       <div class="list-teacher d-flex flex-wrap justify-content-center">
         <ng-container *ngFor="let teacher of teachers">

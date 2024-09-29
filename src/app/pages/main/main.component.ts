@@ -99,4 +99,17 @@ export class MainComponent {
       description: 'Specializes in teaching Japanese writing skills, particularly Kanji and essay composition.'
     }
   ];
+
+  filteredTeachers(): any[] {
+    // If searchTerm is blank, return all teachers
+    if (!this.searchTerm) {
+      return this.teachers;
+    }
+    
+    // Filter teachers based on searchTerm, ignoring case sensitivity
+    return this.teachers.filter(teacher => 
+      teacher.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+  
 }
