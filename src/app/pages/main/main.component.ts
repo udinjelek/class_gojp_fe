@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule for NgFor
 import { RouterModule } from '@angular/router'; // Add this
-
+import { FormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule,],
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent {
   title = 'teacher-list';
-
+  searchTerm: string = '';
   teachers = [
     { id: 1,
       image_photo_profil: '/assets/images/teacher1.jpeg',
