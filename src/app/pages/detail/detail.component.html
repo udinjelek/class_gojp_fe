@@ -56,38 +56,87 @@
       </div>
       </div>
       <!-- Current Students -->
-      <div class="teacher-detail mt-4">
+      <div class="teacher-detail mt-4" *ngIf="teacherDetails.students>0">
       <div class="mt-4">
         <h3>Current Students: {{teacherDetails.students}}</h3>
       </div>
       </div>
       <!-- Schedule Section -->
-      <div class="teacher-detail mt-4 d-flex justify-content-center align-items-start">
-      <div class="mt-4">
-        <h3>Schedule</h3>
+      <div class="teacher-detail mt-4 row ">
+        <div class="col-4">
+          <h3>Schedule</h3></div>
+        <div class="container mt-4 col-8">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Select a Date (Max 3 months ahead)</mat-label>
+            <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="Choose a date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <!-- <mat-datepicker #picker class="highlighted-calendar"></mat-datepicker> -->
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>  
+      </div>
+      
+      <div class="teacher-detail mt-0 d-flex justify-content-center align-items-start">
+      <div class="container mt-0">
         <table class="table">
           <thead>
             <tr>
               <th>Date</th>
               <th>Day</th>
               <th>Time</th>
-              <th>Status</th>
+              <th >Status</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let slot of teacherDetails.schedule">
-              <td>{{slot.date}}</td>
-              <td>{{slot.day}}</td>
-              <td>{{slot.time}}</td>
-              <td>{{slot.status}}</td>
-            </tr>
+            
+              <tr *ngFor="let slot of teacherDetails.schedule; let i = index">
+                <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked By Other', 'bg-success-2': slot.status === 'Booked By Me'}">{{slot.date}}</td>
+                <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked By Other', 'bg-success-2': slot.status === 'Booked By Me'}">{{slot.day}}</td>
+                <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked By Other', 'bg-success-2': slot.status === 'Booked By Me'}">{{slot.time}}</td>
+                <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked By Other', 'bg-success-2': slot.status === 'Booked By Me'}" class="text-center" style="width:160px;">
+                  <button *ngIf="slot.status == 'Available'" 
+                  class="btn btn-primary text-center" 
+                  style="width:100; text-align: center;"
+                  data-toggle="modal" 
+                  data-target="#bookingModal" 
+                  (click)="prepareModal(slot, i)"
+                  (mouseenter)="hoveredIndex = i" 
+                  (mouseleave)="hoveredIndex = -1">
+                    {{ hoveredIndex === i ? 'Book Now' : slot.status }}
+                  </button>
+                  <span *ngIf="slot.status != 'Available'"  class="text-center">{{slot.status}}</span>
+                </td>
+              </tr>
+            
           </tbody>
         </table>
       </div>
       </div>
 
       <!-- Floating Book Button -->
-      <div class="fixed-bottom d-flex justify-content-center mb-4">
-        <button class="btn btn-primary btn-lg">Book {{teacherDetails.name}}</button>
+      <!-- <div class="fixed-bottom d-flex justify-content-center mb-4">
+        <button class="btn btn-primary-book btn-lg">Book {{teacherDetails.name}}</button>
+      </div> -->
+      <!-- Booking Confirmation Modal -->
+      <div class="modal" tabindex="-1" [ngClass]="{'d-block': showBookingModal}" style="background-color: rgba(0,0,0,0.5)">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Booking Confirmation</h5>
+              <button type="button" class="btn-close" aria-label="Close" (click)="closeBookingModal()"></button>
+            </div>
+            <div class="modal-body text-center">
+              <p>Are you sure you want to book class </p>
+              <p>with Sensai <b>{{teacherDetails.name}}</b></p>
+               <p> at {{ modalSlot.day }} {{ modalSlot.date }} on {{ modalSlot.time }}?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="closeBookingModal()">Cancel</button>
+              <button type="button" class="btn btn-primary" (click)="confirmBooking()">Confirm</button>
+            </div>
+          </div>
+        </div>
       </div>
+
 </div>
+

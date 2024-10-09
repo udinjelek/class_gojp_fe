@@ -1,19 +1,36 @@
 import { Component , OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'; // Import ActivatedRoute
 import { CommonModule } from '@angular/common'; // Import CommonModule for NgFor
+import { MatDatepickerModule } from '@angular/material/datepicker'; // Datepicker module
+import { MatNativeDateModule } from '@angular/material/core'; // For native date handling
+import { MatFormFieldModule } from '@angular/material/form-field'; // For form field wrapper
+import { MatInputModule } from '@angular/material/input'; // For input styling
 
 @Component({
   selector: 'app-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule // Import necessary modules for the Datepicker
+    ],
   templateUrl: './detail.component.html',
-  styleUrl: './detail.component.scss'
+  styleUrls:['./detail.component.scss']
 })
 export class DetailComponent implements OnInit {
-  teacherId: number | null = null;
-  teacherDetails: any = null;
+    minDate = new Date();
+    maxDate: Date;  
+    teacherId: number | null = null;
+    teacherDetails: any = null;
+    hoveredIndex: number = -1; // Flag to track hover status
+    modalSlot: any=[];
+    modalSlotIndex: number = -1;
+    showBookingModal:boolean=false;
+    showSuccessModal:boolean=false;
+    successMessage:string='';
 
-  teachers = [
+    teachers = [
     {
         id: 1,
         image_photo_profil: '/assets/images/teacher1.jpeg',
@@ -27,11 +44,11 @@ export class DetailComponent implements OnInit {
         students: 32,
         schedule: [
             { date: '2024-10-01', day: 'Tuesday', time: '10:00 AM - 11:00 AM', status: 'Available' },
-            { date: '2024-10-02', day: 'Wednesday', time: '02:00 PM - 03:00 PM', status: 'Booked' },
+            { date: '2024-10-02', day: 'Wednesday', time: '02:00 PM - 03:00 PM', status: 'Booked By Other' },
             { date: '2024-10-03', day: 'Thursday', time: '09:00 AM - 10:00 AM', status: 'Available' },
             { date: '2024-10-04', day: 'Friday', time: '11:00 AM - 12:00 PM', status: 'Available' },
             { date: '2024-10-05', day: 'Saturday', time: '01:00 PM - 02:00 PM', status: 'Available' },
-            { date: '2024-10-06', day: 'Sunday', time: '03:00 PM - 04:00 PM', status: 'Booked' },
+            { date: '2024-10-06', day: 'Sunday', time: '03:00 PM - 04:00 PM', status: 'Booked By Other' },
             { date: '2024-10-07', day: 'Monday', time: '08:00 AM - 09:00 AM', status: 'Available' },
             { date: '2024-10-08', day: 'Tuesday', time: '10:00 AM - 11:00 AM', status: 'Available' }
         ]
@@ -49,12 +66,12 @@ export class DetailComponent implements OnInit {
         students: 25,
         schedule: [
             { date: '2024-10-01', day: 'Tuesday', time: '01:00 PM - 02:00 PM', status: 'Available' },
-            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked' },
+            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked By Other' },
             { date: '2024-10-03', day: 'Thursday', time: '11:00 AM - 12:00 PM', status: 'Available' },
-            { date: '2024-10-04', day: 'Friday', time: '02:00 PM - 03:00 PM', status: 'Booked' },
+            { date: '2024-10-04', day: 'Friday', time: '02:00 PM - 03:00 PM', status: 'Booked By Other' },
             { date: '2024-10-05', day: 'Saturday', time: '12:00 PM - 01:00 PM', status: 'Available' },
             { date: '2024-10-06', day: 'Sunday', time: '09:00 AM - 10:00 AM', status: 'Available' },
-            { date: '2024-10-07', day: 'Monday', time: '04:00 PM - 05:00 PM', status: 'Booked' },
+            { date: '2024-10-07', day: 'Monday', time: '04:00 PM - 05:00 PM', status: 'Booked By Other' },
             { date: '2024-10-08', day: 'Tuesday', time: '10:00 AM - 11:00 AM', status: 'Available' }
         ]
     },
@@ -71,12 +88,12 @@ export class DetailComponent implements OnInit {
       students: 25,
       schedule: [
         { date: "2024-10-01", day: "Thursday", time: "01:00 PM - 02:00 PM", status: "Available" },
-        { date: "2024-10-02", day: "Friday", time: "03:00 PM - 04:00 PM", status: "Booked" },
+        { date: "2024-10-02", day: "Friday", time: "03:00 PM - 04:00 PM", status: "Booked By Other" },
         { date: "2024-10-03", day: "Saturday", time: "09:00 AM - 10:00 AM", status: "Available" },
         { date: "2024-10-04", day: "Sunday", time: "11:00 AM - 12:00 PM", status: "Available" },
-        { date: "2024-10-05", day: "Monday", time: "02:00 PM - 03:00 PM", status: "Booked" },
+        { date: "2024-10-05", day: "Monday", time: "02:00 PM - 03:00 PM", status: "Booked By Other" },
         { date: "2024-10-06", day: "Tuesday", time: "10:00 AM - 11:00 AM", status: "Available" },
-        { date: "2024-10-07", day: "Wednesday", time: "04:00 PM - 05:00 PM", status: "Booked" },
+        { date: "2024-10-07", day: "Wednesday", time: "04:00 PM - 05:00 PM", status: "Booked By Other" },
         { date: "2024-10-08", day: "Thursday", time: "08:00 AM - 09:00 AM", status: "Available" },
         { date: "2024-10-09", day: "Friday", time: "03:00 PM - 04:00 PM", status: "Available" }
       ]
@@ -94,13 +111,13 @@ export class DetailComponent implements OnInit {
         students: 25,
         schedule: [
             { date: '2024-10-01', day: 'Tuesday', time: '01:00 PM - 02:00 PM', status: 'Available' },
-            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked' },
+            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked By Other' },
             { date: '2024-10-03', day: 'Thursday', time: '09:00 AM - 10:00 AM', status: 'Available' },
             { date: '2024-10-04', day: 'Friday', time: '11:00 AM - 12:00 PM', status: 'Available' },
-            { date: '2024-10-05', day: 'Saturday', time: '01:00 PM - 02:00 PM', status: 'Booked' },
+            { date: '2024-10-05', day: 'Saturday', time: '01:00 PM - 02:00 PM', status: 'Booked By Other' },
             { date: '2024-10-06', day: 'Sunday', time: '04:00 PM - 05:00 PM', status: 'Available' },
             { date: '2024-10-07', day: 'Monday', time: '10:00 AM - 11:00 AM', status: 'Available' },
-            { date: '2024-10-08', day: 'Tuesday', time: '03:00 PM - 04:00 PM', status: 'Booked' },
+            { date: '2024-10-08', day: 'Tuesday', time: '03:00 PM - 04:00 PM', status: 'Booked By Other' },
             { date: '2024-10-09', day: 'Wednesday', time: '09:00 AM - 10:00 AM', status: 'Available' }
         ]
     },
@@ -117,10 +134,10 @@ export class DetailComponent implements OnInit {
         students: 25,
         schedule: [
             { date: '2024-10-01', day: 'Tuesday', time: '01:00 PM - 02:00 PM', status: 'Available' },
-            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked' },
+            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked By Other' },
             { date: '2024-10-03', day: 'Thursday', time: '10:00 AM - 11:00 AM', status: 'Available' },
             { date: '2024-10-04', day: 'Friday', time: '01:00 PM - 02:00 PM', status: 'Available' },
-            { date: '2024-10-05', day: 'Saturday', time: '02:00 PM - 03:00 PM', status: 'Booked' },
+            { date: '2024-10-05', day: 'Saturday', time: '02:00 PM - 03:00 PM', status: 'Booked By Other' },
             { date: '2024-10-06', day: 'Sunday', time: '12:00 PM - 01:00 PM', status: 'Available' },
             { date: '2024-10-07', day: 'Monday', time: '09:00 AM - 10:00 AM', status: 'Available' },
             { date: '2024-10-08', day: 'Tuesday', time: '04:00 PM - 05:00 PM', status: 'Available' }
@@ -139,12 +156,12 @@ export class DetailComponent implements OnInit {
         students: 25,
         schedule: [
             { date: '2024-10-01', day: 'Tuesday', time: '01:00 PM - 02:00 PM', status: 'Available' },
-            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked' },
+            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked By Other' },
             { date: '2024-10-03', day: 'Thursday', time: '11:00 AM - 12:00 PM', status: 'Available' },
-            { date: '2024-10-04', day: 'Friday', time: '02:00 PM - 03:00 PM', status: 'Booked' },
+            { date: '2024-10-04', day: 'Friday', time: '02:00 PM - 03:00 PM', status: 'Booked By Other' },
             { date: '2024-10-05', day: 'Saturday', time: '01:00 PM - 02:00 PM', status: 'Available' },
             { date: '2024-10-06', day: 'Sunday', time: '03:00 PM - 04:00 PM', status: 'Available' },
-            { date: '2024-10-07', day: 'Monday', time: '10:00 AM - 11:00 AM', status: 'Booked' },
+            { date: '2024-10-07', day: 'Monday', time: '10:00 AM - 11:00 AM', status: 'Booked By Other' },
             { date: '2024-10-08', day: 'Tuesday', time: '09:00 AM - 10:00 AM', status: 'Available' },
             { date: '2024-10-09', day: 'Wednesday', time: '04:00 PM - 05:00 PM', status: 'Available' }
         ]
@@ -162,12 +179,12 @@ export class DetailComponent implements OnInit {
         students: 25,
         schedule: [
             { date: '2024-10-01', day: 'Tuesday', time: '01:00 PM - 02:00 PM', status: 'Available' },
-            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked' },
+            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked By Other' },
             { date: '2024-10-03', day: 'Thursday', time: '10:00 AM - 11:00 AM', status: 'Available' },
-            { date: '2024-10-04', day: 'Friday', time: '02:00 PM - 03:00 PM', status: 'Booked' },
+            { date: '2024-10-04', day: 'Friday', time: '02:00 PM - 03:00 PM', status: 'Booked By Other' },
             { date: '2024-10-05', day: 'Saturday', time: '11:00 AM - 12:00 PM', status: 'Available' },
             { date: '2024-10-06', day: 'Sunday', time: '12:00 PM - 01:00 PM', status: 'Available' },
-            { date: '2024-10-07', day: 'Monday', time: '03:00 PM - 04:00 PM', status: 'Booked' },
+            { date: '2024-10-07', day: 'Monday', time: '03:00 PM - 04:00 PM', status: 'Booked By Other' },
             { date: '2024-10-08', day: 'Tuesday', time: '10:00 AM - 11:00 AM', status: 'Available' }
         ]
     },
@@ -184,15 +201,15 @@ export class DetailComponent implements OnInit {
         students: 25,
         schedule: [
             { date: '2024-10-01', day: 'Tuesday', time: '01:00 PM - 02:00 PM', status: 'Available' },
-            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked' },
+            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked By Other' },
             { date: '2024-10-03', day: 'Thursday', time: '10:00 AM - 11:00 AM', status: 'Available' },
-            { date: '2024-10-04', day: 'Friday', time: '12:00 PM - 01:00 PM', status: 'Booked' },
+            { date: '2024-10-04', day: 'Friday', time: '12:00 PM - 01:00 PM', status: 'Booked By Other' },
             { date: '2024-10-05', day: 'Saturday', time: '02:00 PM - 03:00 PM', status: 'Available' },
             { date: '2024-10-06', day: 'Sunday', time: '11:00 AM - 12:00 PM', status: 'Available' },
-            { date: '2024-10-07', day: 'Monday', time: '09:00 AM - 10:00 AM', status: 'Booked' },
+            { date: '2024-10-07', day: 'Monday', time: '09:00 AM - 10:00 AM', status: 'Booked By Other' },
             { date: '2024-10-08', day: 'Tuesday', time: '04:00 PM - 05:00 PM', status: 'Available' },
             { date: '2024-10-09', day: 'Wednesday', time: '02:00 PM - 03:00 PM', status: 'Available' },
-            { date: '2024-10-10', day: 'Thursday', time: '09:00 AM - 10:00 AM', status: 'Booked' }
+            { date: '2024-10-10', day: 'Thursday', time: '09:00 AM - 10:00 AM', status: 'Booked By Other' }
         ]
     },
     {
@@ -208,12 +225,12 @@ export class DetailComponent implements OnInit {
         students: 25,
         schedule: [
             { date: '2024-10-01', day: 'Tuesday', time: '01:00 PM - 02:00 PM', status: 'Available' },
-            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked' },
+            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked By Other' },
             { date: '2024-10-03', day: 'Thursday', time: '09:00 AM - 10:00 AM', status: 'Available' },
-            { date: '2024-10-04', day: 'Friday', time: '02:00 PM - 03:00 PM', status: 'Booked' },
+            { date: '2024-10-04', day: 'Friday', time: '02:00 PM - 03:00 PM', status: 'Booked By Other' },
             { date: '2024-10-05', day: 'Saturday', time: '11:00 AM - 12:00 PM', status: 'Available' },
             { date: '2024-10-06', day: 'Sunday', time: '09:00 AM - 10:00 AM', status: 'Available' },
-            { date: '2024-10-07', day: 'Monday', time: '03:00 PM - 04:00 PM', status: 'Booked' },
+            { date: '2024-10-07', day: 'Monday', time: '03:00 PM - 04:00 PM', status: 'Booked By Other' },
             { date: '2024-10-08', day: 'Tuesday', time: '10:00 AM - 11:00 AM', status: 'Available' },
             { date: '2024-10-09', day: 'Wednesday', time: '11:00 AM - 12:00 PM', status: 'Available' }
         ]
@@ -231,12 +248,12 @@ export class DetailComponent implements OnInit {
         students: 25,
         schedule: [
             { date: '2024-10-01', day: 'Tuesday', time: '01:00 PM - 02:00 PM', status: 'Available' },
-            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked' },
+            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked By Other' },
             { date: '2024-10-03', day: 'Thursday', time: '11:00 AM - 12:00 PM', status: 'Available' },
-            { date: '2024-10-04', day: 'Friday', time: '01:00 PM - 02:00 PM', status: 'Booked' },
+            { date: '2024-10-04', day: 'Friday', time: '01:00 PM - 02:00 PM', status: 'Booked By Other' },
             { date: '2024-10-05', day: 'Saturday', time: '03:00 PM - 04:00 PM', status: 'Available' },
             { date: '2024-10-06', day: 'Sunday', time: '10:00 AM - 11:00 AM', status: 'Available' },
-            { date: '2024-10-07', day: 'Monday', time: '09:00 AM - 10:00 AM', status: 'Booked' },
+            { date: '2024-10-07', day: 'Monday', time: '09:00 AM - 10:00 AM', status: 'Booked By Other' },
             { date: '2024-10-08', day: 'Tuesday', time: '04:00 PM - 05:00 PM', status: 'Available' }
         ]
     },
@@ -253,12 +270,12 @@ export class DetailComponent implements OnInit {
         students: 25,
         schedule: [
             { date: '2024-10-01', day: 'Tuesday', time: '01:00 PM - 02:00 PM', status: 'Available' },
-            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked' },
+            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked By Other' },
             { date: '2024-10-03', day: 'Thursday', time: '11:00 AM - 12:00 PM', status: 'Available' },
-            { date: '2024-10-04', day: 'Friday', time: '02:00 PM - 03:00 PM', status: 'Booked' },
+            { date: '2024-10-04', day: 'Friday', time: '02:00 PM - 03:00 PM', status: 'Booked By Other' },
             { date: '2024-10-05', day: 'Saturday', time: '12:00 PM - 01:00 PM', status: 'Available' },
             { date: '2024-10-06', day: 'Sunday', time: '11:00 AM - 12:00 PM', status: 'Available' },
-            { date: '2024-10-07', day: 'Monday', time: '10:00 AM - 11:00 AM', status: 'Booked' },
+            { date: '2024-10-07', day: 'Monday', time: '10:00 AM - 11:00 AM', status: 'Booked By Other' },
             { date: '2024-10-08', day: 'Tuesday', time: '09:00 AM - 10:00 AM', status: 'Available' }
         ]
     },
@@ -275,19 +292,23 @@ export class DetailComponent implements OnInit {
         students: 25,
         schedule: [
             { date: '2024-10-01', day: 'Tuesday', time: '01:00 PM - 02:00 PM', status: 'Available' },
-            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked' },
+            { date: '2024-10-02', day: 'Wednesday', time: '03:00 PM - 04:00 PM', status: 'Booked By Other' },
             { date: '2024-10-03', day: 'Thursday', time: '09:00 AM - 10:00 AM', status: 'Available' },
             { date: '2024-10-04', day: 'Friday', time: '11:00 AM - 12:00 PM', status: 'Available' },
-            { date: '2024-10-05', day: 'Saturday', time: '01:00 PM - 02:00 PM', status: 'Booked' },
+            { date: '2024-10-05', day: 'Saturday', time: '01:00 PM - 02:00 PM', status: 'Booked By Other' },
             { date: '2024-10-06', day: 'Sunday', time: '10:00 AM - 11:00 AM', status: 'Available' },
             { date: '2024-10-07', day: 'Monday', time: '02:00 PM - 03:00 PM', status: 'Available' },
             { date: '2024-10-08', day: 'Tuesday', time: '04:00 PM - 05:00 PM', status: 'Available' },
-            { date: '2024-10-09', day: 'Wednesday', time: '01:00 PM - 02:00 PM', status: 'Booked' }
+            { date: '2024-10-09', day: 'Wednesday', time: '01:00 PM - 02:00 PM', status: 'Booked By Other' }
         ]
     }
   ];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) {
+    const currentDate = new Date();
+    this.maxDate = new Date(currentDate.setMonth(currentDate.getMonth() + 3));
+  }
+
   ngOnInit(): void {
     // Get the teacher ID from the route parameter
     this.teacherId = Number(this.route.snapshot.paramMap.get('id'));
@@ -299,5 +320,42 @@ export class DetailComponent implements OnInit {
 
   bookTeacher() {
     alert(`Booking ${this.teacherDetails.name}`);
+  }
+
+  dateClass = (d: Date): string => {
+    
+    const date = d.getDate();
+    const month = d.getMonth();
+    const year = d.getFullYear();
+
+    // Example to circle the date '2024-10-20'
+    if (year == 2024) {
+        console.log('hai')
+      return 'highlight-date'; // Add custom CSS class to specific date
+    }
+    console.log('hello')
+    return 'highlight-date'; // Return empty string for unmarked dates
+  }
+
+  prepareModal(slot: any, index:number): void {
+    this.modalSlotIndex = index;
+    this.modalSlot = slot;
+    this.showBookingModal = true;  // Show the booking modal
+  }
+
+  closeBookingModal(): void {
+    this.showBookingModal = false;  // Hide the booking modal
+  }
+
+  confirmBooking(): void {
+    console.log('Booking confirmed', this.modalSlot);
+    this.teacherDetails.schedule[this.modalSlotIndex].status = "Booked By Me"
+    // this.successMessage = 'Booking confirmed successfully';
+    // this.showSuccessModal = true;  // Show success modal
+    this.showBookingModal = false;  // Hide the booking modal
+  }
+
+  closeModal(): void {
+    this.showSuccessModal = false;  // Hide success modal
   }
 }

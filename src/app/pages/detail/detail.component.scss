@@ -132,7 +132,7 @@
     text-align: center;
   }
   
-  .btn-primary {
+  .btn-primary-book {
     background-color: #007bff;
     border: none;
     border-radius: 50px;
@@ -141,6 +141,14 @@
     transition: background-color 0.3s ease-in-out;
   }
   
+  .bg-secondary-2 {
+    background-color: #ffe2bd;
+  }
+
+  .bg-success-2 {
+    background-color: #c0ffbd;
+  }
+
   .btn-primary:hover {
     background-color: #0056b3;
   }
@@ -163,3 +171,6 @@
       right: 0;
     }
   }
+
+  
+

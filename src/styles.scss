@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+  
+.highlight-heart .mat-calendar-body-cell-content::after {
+    content: '\2665'; /* Unicode for heart symbol */
+    position: absolute;
+    top: 30%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: red;
+    z-index: 1;
+  }
+  
