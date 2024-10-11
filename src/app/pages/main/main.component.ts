@@ -18,6 +18,7 @@ export class MainComponent {
   password: string = '';
   showLoginModal: boolean = false;
   showSignUpModal: boolean = false;
+  isNavbarCollapsed: boolean = true;  // Initially collapsed
   
   teachers = [
     { id: 1,
@@ -165,5 +166,9 @@ export class MainComponent {
     event.preventDefault();  // Prevent default form behavior
     console.log('Sign-up form submitted');
     this.closeSignUpModal();  // Close the sign-up modal after submission
+  }
+  // Function to toggle the navbar collapse state
+  toggleNavbar() {
+    this.isNavbarCollapsed = !this.isNavbarCollapsed;
   }
 }
