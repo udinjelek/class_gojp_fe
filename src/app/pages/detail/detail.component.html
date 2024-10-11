@@ -18,7 +18,7 @@
                   <a class="nav-link btn-custom" href="#">Contact</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link btn-custom" href="#">Login</a>
+                  <a class="nav-link btn-custom" href="javascript:void(0)" (click)="openLoginModal()">Login</a>
                 </li>
               </ul>
             </div>
@@ -113,10 +113,6 @@
       </div>
       </div>
 
-      <!-- Floating Book Button -->
-      <!-- <div class="fixed-bottom d-flex justify-content-center mb-4">
-        <button class="btn btn-primary-book btn-lg">Book {{teacherDetails.name}}</button>
-      </div> -->
       <!-- Booking Confirmation Modal -->
       <div class="modal" tabindex="-1" [ngClass]="{'d-block': showBookingModal}" style="background-color: rgba(0,0,0,0.5)">
         <div class="modal-dialog">
@@ -133,6 +129,122 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" (click)="closeBookingModal()">Cancel</button>
               <button type="button" class="btn btn-primary" (click)="confirmBooking()">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Login Modal -->
+      <div class="modal" tabindex="-1" [ngClass]="{'d-block': showLoginModal}" style="background-color: rgba(0,0,0,0.5)">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content position-relative">
+            <!-- Outer Circle (using Bootstrap) -->
+            <div class="circle-outer bg-white text-white rounded-circle position-absolute top-0 start-50 translate-middle d-flex justify-content-center align-items-center">
+              <!-- Inner Circle and Padlock -->
+              <div class="bg-primary rounded-circle d-flex justify-content-center align-items-center" style="width: 80px; height: 80px;">
+                <i class="bi bi-lock-fill fs-3 text-white"></i>
+              </div>
+            </div>
+
+            <!-- Close button at the top right -->
+            <div class="modal-header border-0">
+              <button type="button" class="btn-close ms-auto" aria-label="Close" (click)="closeLoginModal()"></button>
+            </div>
+
+            <!-- Modal title (Login Now) centered below the close button -->
+            <div class="text-center mb-2">
+              <h5 class="modal-title">Login Now</h5>
+            </div>
+
+            <div class="modal-body">
+              <form (submit)="onLogin($event)">
+                <!-- Email input -->
+                <div class="mb-3">
+                  <label for="login-email" class="form-label">Email</label>
+                  <input type="email" id="login-email" class="form-control" placeholder="Enter your email" required>
+                </div>
+
+                <!-- Password input -->
+                <div class="mb-3">
+                  <label for="login-password" class="form-label">Password</label>
+                  <input type="password" id="login-password" class="form-control" placeholder="Enter your password" required>
+                </div>
+
+                <!-- Login button -->
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+              </form>
+            </div>
+
+            <!-- Switch to Sign-Up Modal -->
+            <div class="modal-footer justify-content-center">
+              <a href="#" class="text-primary" (click)="switchToSignUp($event)">Don't have an account?</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sign-Up Modal -->
+      <div class="modal" tabindex="-1" [ngClass]="{'d-block': showSignUpModal}" style="background-color: rgba(0,0,0,0.5)">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content position-relative">
+            <!-- Outer Circle (for Sign-Up) -->
+            <div class="circle-outer bg-white text-white rounded-circle position-absolute top-0 start-50 translate-middle d-flex justify-content-center align-items-center">
+              <!-- Inner Circle and Person-Plus Icon -->
+              <div class="bg-success rounded-circle d-flex justify-content-center align-items-center" style="width: 80px; height: 80px;">
+                <i class="bi bi-person-plus-fill fs-3 text-white"></i>
+              </div>  
+            </div>
+
+            <!-- Close button at the top right -->
+            <div class="modal-header border-0">
+              <button type="button" class="btn-close ms-auto" aria-label="Close" (click)="closeSignUpModal()"></button>
+            </div>
+
+            <!-- Modal title (Sign Up Now) centered below the close button -->
+            <div class="text-center mb-2">
+              <h5 class="modal-title">Sign Up Now</h5>
+            </div>
+
+            <div class="modal-body">
+              <form (submit)="onSignUp($event)">
+                <!-- First Name input -->
+                <div class="mb-3">
+                  <label for="firstName" class="form-label">First Name</label>
+                  <input type="text" id="signup-firstname" class="form-control" placeholder="Enter your first name" required>
+                </div>
+
+                <!-- Last Name input -->
+                <div class="mb-3">
+                  <label for="lastName" class="form-label">Last Name</label>
+                  <input type="text" id="signup-lastname" class="form-control" placeholder="Enter your last name" required>
+                </div>
+
+                <!-- Phone input -->
+                <div class="mb-3">
+                  <label for="signup-phone" class="form-label">Phone Number</label>
+                  <input type="tel" id="signup-phone" class="form-control" placeholder="Enter your phone number" required>
+                </div>
+
+                <!-- Email input -->
+                <div class="mb-3">
+                  <label for="signup-email" class="form-label">Email</label>
+                  <input type="email" id="signup-email" class="form-control" placeholder="Enter your email" required>
+                </div>
+
+                <!-- Password input -->
+                <div class="mb-3">
+                  <label for="signup-password" class="form-label">Password</label>
+                  <input type="password" id="signup-password" class="form-control" placeholder="Enter your password" required>
+                </div>
+
+                <!-- Sign Up button -->
+                <button type="submit" class="btn btn-success w-100">Sign Up</button>
+              </form>
+            </div>
+
+            <!-- Switch to Login Modal -->
+            <div class="modal-footer justify-content-center">
+              <a href="#" class="text-success" (click)="switchToLogin($event)">Already have an account? Log in</a>
             </div>
           </div>
         </div>

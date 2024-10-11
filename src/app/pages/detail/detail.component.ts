@@ -5,11 +5,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker'; // Datepicke
 import { MatNativeDateModule } from '@angular/material/core'; // For native date handling
 import { MatFormFieldModule } from '@angular/material/form-field'; // For form field wrapper
 import { MatInputModule } from '@angular/material/input'; // For input styling
-
+import { FormsModule } from '@angular/forms'; 
 @Component({
   selector: 'app-detail',
   standalone: true,
   imports: [CommonModule,
+    FormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
@@ -30,6 +31,10 @@ export class DetailComponent implements OnInit {
     showSuccessModal:boolean=false;
     successMessage:string='';
 
+    email: string = '';
+    password: string = '';
+    showLoginModal: boolean = false;
+    showSignUpModal: boolean = false;
     teachers = [
     {
         id: 1,
@@ -357,5 +362,53 @@ export class DetailComponent implements OnInit {
 
   closeModal(): void {
     this.showSuccessModal = false;  // Hide success modal
+  }
+
+  // Function to open the Login Modal and close Sign-Up Modal
+  openLoginModal() {
+    this.showSignUpModal = false;  // Close Sign-Up Modal
+    this.showLoginModal = true;    // Open Login Modal
+  }
+
+  // Function to open the Sign-Up Modal and close Login Modal
+  openSignUpModal() {
+    this.showLoginModal = false;   // Close Login Modal
+    this.showSignUpModal = true;   // Open Sign-Up Modal
+  }
+
+  
+  switchToLogin(event: Event) {
+    event.preventDefault();  // Prevents the default anchor behavior
+    this.showSignUpModal = false;  // Close Sign-Up Modal
+    this.showLoginModal = true;
+    
+  }
+
+  // Function to switch from Login Modal to Sign-Up Modal
+  switchToSignUp(event: Event) {
+    event.preventDefault();  // Prevents the default anchor behavior
+    this.showLoginModal = false;  // Close Login Modal
+    this.showSignUpModal = true;
+  
+  }
+
+  closeLoginModal() {
+    this.showLoginModal = false;
+  }
+
+  closeSignUpModal() {
+    this.showSignUpModal = false;
+  }
+
+  onLogin(event: Event) {
+    event.preventDefault();  // Prevent default form behavior
+    console.log('Login form submitted');
+    this.closeLoginModal();  // Close the login modal after submission
+  }
+
+  onSignUp(event: Event) {
+    event.preventDefault();  // Prevent default form behavior
+    console.log('Sign-up form submitted');
+    this.closeSignUpModal();  // Close the sign-up modal after submission
   }
 }
