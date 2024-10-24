@@ -1,42 +1,4 @@
-/* Basic styling for the button */
-.btn-custom {
-    position: relative;
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: 20px; /* Rounded edges */
-    text-transform: uppercase;
-    color: #000;
-    font-size: 16px;
-    font-weight: 500;
-    background-color: transparent;
-    overflow: hidden;
-    transition: color 0.4s ease;
-    z-index: 1;
-    text-decoration: none;
-  }
   
-  /* Pseudo-element for the background animation */
-  .btn-custom::before {
-    content: '';
-    position: absolute;
-    bottom: -100%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgb(255,99,99);
-    z-index: -1;
-    transition: bottom 0.2s ease;
-  }
-  
-  /* On hover, animate the background from bottom to top */
-  .btn-custom:hover::before {
-    bottom: 0;
-  }
-  
-  /* Change the text color on hover */
-  .btn-custom:hover {
-    color: #fff;
-  }
   
   .bg-purple-gradient {
     background: linear-gradient(to top, rgb(244, 210, 210), rgb(255, 252, 252));
@@ -61,11 +23,7 @@
     object-fit: cover;
   }
   
-  .navbar-brand {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700; /* Use this to control the font-weight */
-  }
-
+  
   footer {
     background-color: #000; /* Black background */
     color: #fff; /* White text */
@@ -124,8 +82,4 @@
     transform: scale(1.1); /* Zooms in by 10% */
   }
   
-  .circle-outer {
-    width: 100px;
-    height: 100px;
-    top: -50px; /* Moves the circle upwards to be partially above the modal */
-  }
+ 
