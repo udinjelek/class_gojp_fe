@@ -3,14 +3,14 @@ import { HttpClient, HttpHeaders, HttpParams, HttpClientXsrfModule , HttpErrorRe
 import { Observable, map , throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ResponseApi } from './response';
-
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private storageKey = 'isLoggedIn'; // This can also store tokens or user info.
 
-  baseApi:string = 'http://localhost:5000'
+  baseApi:string = environment.apiUrl;
   apiUrl:string=''
   constructor(private http: HttpClient,) { }
 
