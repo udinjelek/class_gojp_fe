@@ -10,7 +10,7 @@ import { ResponseApi } from './response';
 export class AuthService {
   private storageKey = 'isLoggedIn'; // This can also store tokens or user info.
 
-  baseApi:string = 'http://localhost:8000'
+  baseApi:string = 'http://localhost:5000'
   apiUrl:string=''
   constructor(private http: HttpClient,) { }
 
