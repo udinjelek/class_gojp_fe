@@ -20,6 +20,7 @@ export class NavComponent {
   phone_number:string = '';
   email: string = '';
   password: string = '';
+  confirm_password: string = '';
   showLoginModal: boolean = false;
   showSignUpModal: boolean = false;
 
@@ -108,6 +109,18 @@ export class NavComponent {
   }
 
   onSignUp(event: Event) {
+
+    if (!this.isValidAll() ){
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please fill in all fields correctly.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+      // early exit
+      return;
+    }
+
     event.preventDefault();  // Prevent default form behavior
     console.log('Sign-up form submitted');
     this.closeSignUpModal();  // Close the sign-up modal after submission
@@ -182,4 +195,38 @@ export class NavComponent {
     }
     
   }
+
+  
+  isValidAll()
+  {
+    return (  this.isValid(this.full_name, 'full_name') 
+    &&        this.isValid(this.phone_number, 'phone_number') 
+    &&        this.isValid(this.email, 'email') 
+    &&        this.isValid(this.password, 'password') 
+    );
+    
+  }
+
+  isValid(dataCheck: any, type: string): boolean {
+    const lengthCheck = (minLength: number) => dataCheck.length > minLength;
+  
+    switch (type) {
+      case 'full_name':
+        return lengthCheck(3);
+        
+      case 'phone_number':
+        return lengthCheck(6);
+  
+      case 'email':
+        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        return emailRegex.test(dataCheck);
+
+      case 'password':
+          return ( dataCheck == this.confirm_password )&& dataCheck;
+
+      default:
+        return false;
+    }
+  }
+  
 }
