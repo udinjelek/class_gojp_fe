@@ -30,6 +30,7 @@ export class MyclassComponent {
 
   checkActiveTab(){
       console.log(`Active tab set to: ${this.activeTab}`);
+
   }
 
   daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -57,6 +58,9 @@ export class MyclassComponent {
               };
   constructor(private authService: AuthService, private classService: ClassService,) {
       this.role = this.authService.getLocalStorage('role') || '';
+      if (this.role == 'teacher'){
+        this.activeTab = 'update'
+      }
   }
 
   
