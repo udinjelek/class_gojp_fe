@@ -1,0 +1,75 @@
+<div class="container-fluid">
+    <!-- Top Content -->
+    <app-nav></app-nav>
+
+    <div class="container mt-4">
+        <!-- Tab navigation with Angular bindings -->
+        <div class="custom-tabs">
+            <ul class="nav nav-tabs">
+              <li class="nav-item" *ngIf="role==='teacher'">
+                <a 
+                  class="nav-link" 
+                  [class.active]="activeTab === 'update'" 
+                  (click)="activeTab = 'update'">
+                  <i class="bi bi-eye-fill me-2"></i>View Update Availability Class
+                </a>
+              </li>
+              
+              <li class="nav-item" *ngIf="role==='teacher'">
+                <a 
+                  class="nav-link" 
+                  [class.active]="activeTab === 'template'" 
+                  (click)="activeTab = 'template'">
+                  <i class="bi bi-calendar2-week-fill me-2"></i>Manage Weekly Schedule Templates
+                </a>
+              </li>
+              <li class="nav-item">
+                <a 
+                  class="nav-link" 
+                  [class.active]="activeTab === 'view'" 
+                  (click)="activeTab = 'view'">
+                  <i class="bi bi-calendar2-week-fill me-2"></i>View MyClass Schedule
+                </a>
+              </li>
+              <li class="nav-item" *ngIf="role==='teacher'">
+                <a 
+                  class="nav-link" 
+                  [class.active]="activeTab === 'availability'" 
+                  (click)="activeTab = 'availability'">
+                  <i class="bi bi-clock-fill me-2"></i>Create Custom Class
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+      
+        <!-- Tab content controlled by Angular -->
+        <div class="tab-content mt-4">
+          <div *ngIf="activeTab === 'update'" class="tab-pane fade" [class.show]="activeTab === 'update'" [class.active]="activeTab === 'update'">
+            <p>Content for viewing class schedules...</p>
+            <app-container-view-update-class-schedule ></app-container-view-update-class-schedule>
+          </div>
+
+          
+          <div *ngIf="activeTab === 'template'" class="tab-pane fade show active">
+            <p>Content for managing the weekly schedule template...</p>
+            <app-container-manage-weekly-schedule-template ></app-container-manage-weekly-schedule-template>
+          </div>
+          
+          
+          <div *ngIf="activeTab === 'view'" class="tab-pane fade" [class.show]="activeTab === 'view'" [class.active]="activeTab === 'view'">
+            <p>Content for viewing class schedules...</p>
+            <p>In Develop, please wait..</p>
+          </div>
+          
+          
+          <div *ngIf="activeTab === 'availability'" class="tab-pane fade" [class.show]="activeTab === 'availability'" [class.active]="activeTab === 'availability'">
+            <p>Content for setting or updating availability...</p>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      
+</div>

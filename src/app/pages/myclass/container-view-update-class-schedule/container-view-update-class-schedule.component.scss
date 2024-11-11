@@ -1,0 +1,50 @@
+
+.bg-base{
+  background-color: rgb(255, 99, 99);
+}
+
+@media (max-width: 768px) {
+    .responsive-label::before {
+      content: 'Select a Date';
+    }
+    .responsive-label {
+      visibility: hidden;
+      position: relative;
+    }
+    .responsive-label::before {
+      visibility: visible;
+      position: absolute;
+      left: 0;
+    }
+  }
+
+  
+// disable
+// h5{
+//     color:#eee;
+// }
+// div{
+//     color:#eee;
+// }
+// table{
+//     color:#eee;
+// }
+// th{
+//     color:#eee;
+// }
+// td{
+//     color:#eee;
+// }
+// span{
+//     color:#eee;
+// }
+// .text-black{
+//     color:#eee !important; 
+// }
+
+// .btn-success{
+//     background-color: #ddd !important;
+// }
+// .btn-danger{
+//     background-color: #ddd !important;
+// }

@@ -1,3 +1,6 @@
+.details {
+  display: inline;
+}
 /* Basic styling for the button */
 .btn-custom {
   position: relative;
@@ -65,3 +68,41 @@
   order: 2;
 }
 }
+
+
+@media (max-width: 768px) {
+  .responsive-label::before {
+    content: 'Select a Date';
+  }
+  .responsive-label {
+    visibility: hidden;
+    position: relative;
+  }
+  .responsive-label::before {
+    visibility: visible;
+    position: absolute;
+    left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .details {
+    display: none;
+  }
+}
+// disable
+// a{
+//   color: #eee;
+// }
+
+// .btn-custom::before {
+//   background-color:#eee;
+// }
+
+// .btn-custom {
+//   color:#eee;
+// }
+
+// span{
+//   color:#eee;
+// }

@@ -5,7 +5,8 @@
     <!-- Teacher Photo and Details Section -->
     <div class="teacher-detail mt-4 d-flex justify-content-center align-items-start">
       <div class="photo-container">
-        <img [src]="teacherDetails.image_photo_profil" class="teacher-photo" alt="{{teacherDetails.name}}">
+        <img [src]="teacherDetails.profile_pic" class="teacher-photo" alt="{{teacherDetails.name}}">
+        <!-- <img  class="teacher-photo" alt="{{teacherDetails.name}}"> -->
       </div>
       <div class="teacher-info ms-4">
         <h5 class="teacher-name">{{teacherDetails.name}}</h5>
@@ -19,7 +20,7 @@
       <!-- About Section -->
       <div class="teacher-detail mt-4 d-flex justify-content-center align-items-start">
       <div class="mt-4">
-        <h3>About {{teacherDetails.name}}</h3>
+        <h3 class="sub-bold">About {{teacherDetails.name}}</h3>
         <p>{{teacherDetails.about}}</p>
       </div>
       </div>
@@ -27,24 +28,24 @@
       <!-- Student Testimonials -->
       <div class="teacher-detail mt-4">
       <div class="mt-4">
-        <h3>What Students Say</h3>
+        <h3 class="sub-bold">What Students Say</h3>
         <p><em>"{{teacherDetails.testimonial}}"</em></p>
       </div>
       </div>
       <!-- Current Students -->
       <div class="teacher-detail mt-4" *ngIf="teacherDetails.students>0">
       <div class="mt-4">
-        <h3>Current Students: {{teacherDetails.students}}</h3>
+        <h3 class="sub-bold">Current Students: {{teacherDetails.students}}</h3>
       </div>
       </div>
       <!-- Schedule Section -->
       <div class="teacher-detail mt-4 row ">
-        <div class="col-4">
+        <div class="container col-6 mt-2">
           <h3>Schedule</h3></div>
-        <div class="container mt-4 col-8">
+        <div class="container col-6">
           <mat-form-field appearance="fill" class="w-100">
-            <mat-label>Select a Date (Max 3 months ahead)</mat-label>
-            <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="Choose a date">
+            <mat-label class="responsive-label">Select a Date (Max 3 months ahead)</mat-label>
+            <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="Choose a date" (dateChange)="onDateChange($event)"> 
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <!-- <mat-datepicker #picker class="highlighted-calendar"></mat-datepicker> -->
             <mat-datepicker #picker></mat-datepicker>
@@ -53,40 +54,56 @@
       </div>
       
       <div class="teacher-detail mt-0 d-flex justify-content-center align-items-start">
-      <div class="container mt-0">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Day</th>
-              <th>Time</th>
-              <th >Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-              <tr *ngFor="let slot of teacherDetails.schedule; let i = index">
-                <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked By Other', 'bg-success-2': slot.status === 'Booked By Me'}">{{slot.date}}</td>
-                <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked By Other', 'bg-success-2': slot.status === 'Booked By Me'}">{{slot.day}}</td>
-                <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked By Other', 'bg-success-2': slot.status === 'Booked By Me'}">{{slot.time}}</td>
-                <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked By Other', 'bg-success-2': slot.status === 'Booked By Me'}" class="text-center" style="width:160px;">
-                  <button *ngIf="slot.status == 'Available'" 
-                  class="btn btn-primary text-center" 
-                  style="width:100; text-align: center;"
-                  data-toggle="modal" 
-                  data-target="#bookingModal" 
-                  (click)="prepareModal(slot, i)"
-                  (mouseenter)="hoveredIndex = i" 
-                  (mouseleave)="hoveredIndex = -1">
-                    {{ hoveredIndex === i ? 'Book Now' : slot.status }}
-                  </button>
-                  <span *ngIf="slot.status != 'Available'"  class="text-center">{{slot.status}}</span>
-                </td>
+        <div class="mt-0">
+          <div *ngIf="formattedDate===''" class="text-center m-3 p-3 card">
+            <h5>Please Select Date First</h5>
+          </div>
+          <div *ngIf="formattedDate!=='' && teacherDetails.schedule.length == 0" class="text-center m-3 p-2 card">
+              <h5>Teacher don’t have any classes scheduled<br>for <span class="text-primary">{{dayOfWeek}}</span> <span class="text-danger"> {{formattedDate}}</span><br><br>Please select another date</h5>
+          </div>
+          <table *ngIf="formattedDate!=='' && teacherDetails.schedule.length > 0" class="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Day</th>
+                <th>Time</th>
+                <th>Slot</th>
+                <th class="text-center" >Status</th>
               </tr>
-            
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              
+                <tr *ngFor="let slot of teacherDetails.schedule; let i = index">
+                  <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }">{{slot.date}}</td>
+                  <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }">{{slot.day}}</td>
+                  <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }">{{slot.time}}</td>
+                  <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }"> <span *ngIf="slot.count_member > 0">{{slot.member_slots}}/{{slot.count_member}}</span></td>
+                  <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }" class="text-center" style="width:160px;">
+                    
+                    <ng-container [ngSwitch]="slot.status">
+                      <button *ngSwitchCase="'Available'" 
+                              class="btn btn-primary text-center" 
+                              style="width:100; text-align: center;"
+                              data-toggle="modal" 
+                              data-target="#bookingModal" 
+                              (click)="bookingThisSlot(slot, i)"
+                              (mouseenter)="hoveredIndex = i" 
+                              (mouseleave)="hoveredIndex = -1">
+                                {{ hoveredIndex === i ? 'Book Now' : slot.status }}
+                      </button>
+                      <ng-container *ngSwitchCase="'Booked'"  class="text-center text-danger">
+                        <span *ngIf="slot.participant == 0 && slot.count_member == slot.member_slots">Full Booked</span>
+                        <span *ngIf="slot.participant == 1">Booked by me</span>
+                      </ng-container> 
+                      <span *ngSwitchDefault class="text-center">{{slot.status}}</span>
+                    </ng-container>
+                    
+                  </td>
+                </tr>
+              
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Booking Confirmation Modal -->

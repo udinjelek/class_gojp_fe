@@ -53,12 +53,15 @@
 
   
   /* About section */
-  h3 {
-    font-weight: 600;
+  .sub-bold {
+   
     margin-top: 2rem;
     margin-bottom: 1rem;
   }
   
+  h3{
+    font-weight: 600;
+  }
   /* Testimonial styling */
   p em {
     font-style: italic;
@@ -130,4 +133,57 @@
       left: 0;
       right: 0;
     }
+
+    .responsive-label::before {
+      content: 'Select a Date';
+    }
+    .responsive-label {
+      visibility: hidden;
+      position: relative;
+    }
+    .responsive-label::before {
+      visibility: visible;
+      position: absolute;
+      left: 0;
+    }
   }
+
+
+  // disable
+// h5{
+//     color:#eee;
+// }
+// h3{
+//   color:#eee;
+// }
+// div{
+//     color:#eee;
+// }
+// table{
+//     color:#eee;
+// }
+// th{
+//     color:#eee;
+// }
+// td{
+//     color:#eee;
+// }
+// span{
+//     color:#eee;
+// }
+// .text-black{
+//     color:#eee !important; 
+// }
+
+// .btn-success{
+//     background-color: #ddd !important;
+// }
+// .btn-danger{
+//     background-color: #ddd !important;
+// }
+// em{
+//   color:#eee !important;
+// }
+// p{
+//   color:#eee !important;
+// }

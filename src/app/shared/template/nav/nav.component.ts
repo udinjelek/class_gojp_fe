@@ -3,20 +3,24 @@ import { CommonModule } from '@angular/common'; // Import CommonModule for ngCla
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';  // Import FormsModule for ngModel
 import { Router } from '@angular/router'; // Import Router
+import { RouterModule } from '@angular/router'; // Add this
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [CommonModule,FormsModule,],
+  imports: [CommonModule,FormsModule,RouterModule,],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.scss'
 })
 export class NavComponent {
 
   userProfilePic: string | null = 'https://classgojp-file.polaris.my.id/images/default/caticon1.jpg'; // URL for the user's profile picture
+  profile_pic: string | null = ''
+  user_id: string | null = '';
+  role: string | null = '';
   isNavbarCollapsed = true;
-  full_name:string = '';
+  full_name:string | null = '';
   phone_number:string = '';
   email: string = '';
   password: string = '';
@@ -24,7 +28,12 @@ export class NavComponent {
   showLoginModal: boolean = false;
   showSignUpModal: boolean = false;
 
-  constructor(private authService: AuthService , private router: Router) {}
+  constructor(private authService: AuthService , private router: Router) {
+    this.user_id = this.authService.getLocalStorage('user_id');
+    this.updateUserProfilePic();
+    this.full_name = this.authService.getLocalStorage('full_name');
+    this.role = this.authService.getLocalStorage('role');
+  }
 
   // Function to open the Login Modal and close Sign-Up Modal
   openLoginModal() {
@@ -71,7 +80,7 @@ export class NavComponent {
             next: (response) => {
               if (response.status){
                   console.log('User login successfully:', response);
-                  const userData = {user_id: response.data.user_id, full_name: response.data.full_name , profile_pic: response.data.profile_pic }
+                  const userData = {user_id: response.data.user_id, full_name: response.data.full_name , profile_pic: response.data.profile_pic, role:response.data.role }
                   this.authService.login(userData);
                   // handle success
                   const full_name = this.authService.getLocalStorage('full_name');
@@ -82,6 +91,7 @@ export class NavComponent {
                     confirmButtonText: 'Proceed'
                   });
                   this.updateUserProfilePic()
+                  
               }
               else{
                   Swal.fire({
@@ -137,7 +147,8 @@ export class NavComponent {
                       icon: 'success',
                       confirmButtonText: 'OK'
                     });
-                    const userData = {user_id: response.data.user_id, full_name: response.data.full_name , profile_pic: response.data.profile_pic }
+                    const userData = {user_id: response.data.user_id, full_name: response.data.full_name , profile_pic: response.data.profile_pic , role: response.data.role}
+                    this.profile_pic = response.data.profile_pic; 
                     this.authService.login(userData);
                     this.updateUserProfilePic()
               }
@@ -191,8 +202,12 @@ export class NavComponent {
   updateUserProfilePic(){
     const profile_pic = this.authService.getLocalStorage('profile_pic')
     if (profile_pic){
-      this.userProfilePic = 'https://classgojp-file.polaris.my.id/' + profile_pic ;
+      this.userProfilePic =  profile_pic ;
     }
+    else {
+      this.userProfilePic =  this.profile_pic ;
+    }
+
     
   }
 
@@ -208,8 +223,15 @@ export class NavComponent {
   }
 
   isValid(dataCheck: any, type: string): boolean {
-    const lengthCheck = (minLength: number) => dataCheck.length > minLength;
-  
+    // const lengthCheck = (minLength: number) => dataCheck.length > minLength;
+    const lengthCheck = (minLength: number) => {
+      if (dataCheck) {
+        return dataCheck.length > minLength;
+      } else {
+        return false;
+      }
+    };
+
     switch (type) {
       case 'full_name':
         return lengthCheck(3);

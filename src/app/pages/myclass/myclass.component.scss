@@ -1,0 +1,89 @@
+.custom-tabs {
+    .nav-tabs {
+      border-bottom: 2px solid  rgb(255, 99, 99);
+      
+      .nav-link {
+        color: rgb(255, 99, 99);
+        // disable
+        // color: #eee;
+        font-weight: 500;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        display: flex;
+        align-items: center;
+        transition: color 0.3s ease;
+  
+        i {
+          font-size: 1.2rem;
+        }
+  
+        &.active {
+          color: #fff;
+          background-color:  rgb(255, 99, 99);
+          // disable
+          // background-color: #eee;
+
+          border-radius: 8px 8px 0 0;
+        }
+  
+        &:hover {
+          color: #333;
+        }
+      }
+    }
+  }
+  
+/* Base styling for time buttons */
+.time-button {
+    background-color: #f8f9fa; /* Default color for unselected state */
+    border: 1px solid #ced4da;
+    color: #212529;
+    text-align: center;
+  
+    &.active {
+      background-color: #28a745; /* Green for selected state */
+      color: #fff;
+      border-color: #28a745;
+    }
+  
+    /* Disable hover effect entirely */
+    &:hover {
+      background-color: inherit;
+      color: inherit;
+      border-color: inherit;
+    }
+  }
+  
+  .teacher-detail {
+    display: flex;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+// disable
+  // .custom-tabs .nav-link {
+  //   color: rgb(249, 232, 232);
+  // }
+
+  // .custom-tabs .nav-link i .active{
+  //   background-color:  rgb(249, 232, 232);
+  // }
+
+  // .custom-tabs .nav-tabs {
+  //     border-bottom: 2px solid  rgb(249, 232, 232);
+  // }
+  // li{
+  //   background-color: #eee;
+  // }
+  // a{
+  //   background-color: #eee;
+  // }
+  // .nav-link{
+  //   background-color: #eee;
+  //   color:#ccc;
+  // }
+  // p{
+  //   color:#eee;
+  // }
+  

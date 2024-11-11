@@ -25,7 +25,7 @@ export class AuthService {
     return this.http.get<any>(this.apiUrl);
   }
 
-  public createUser(userDataCreate: { full_name: string,  phone_number: string, email: string, password: string }): Observable<ResponseApi> {
+  public createUser(userDataCreate: { full_name: string | null,  phone_number: string, email: string, password: string }): Observable<ResponseApi> {
     this.apiUrl = this.baseApi + '/classgojp/create_user';
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<ResponseApi>(this.apiUrl, userDataCreate, { headers });
@@ -52,6 +52,7 @@ export class AuthService {
     localStorage.setItem('user_id', userData.user_id);
     localStorage.setItem('full_name', userData.full_name);
     localStorage.setItem('profile_pic', userData.profile_pic);
+    localStorage.setItem('role', userData.role);
   }
 
   logout(): void {
@@ -60,6 +61,7 @@ export class AuthService {
     localStorage.removeItem('user_id');
     localStorage.removeItem('full_name');
     localStorage.removeItem('profile_pic');
+    localStorage.removeItem('role');
   }
 
 

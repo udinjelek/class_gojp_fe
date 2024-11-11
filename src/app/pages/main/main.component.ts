@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule for NgFor
 import { RouterModule } from '@angular/router'; // Add this
 import { FormsModule } from '@angular/forms'; 
 import { NavComponent } from '../../shared/template/nav/nav.component';
+import { ClassService } from '../../shared/services/class.service';
+import { AuthService } from '../../shared/services/auth.service';
 @Component({
   selector: 'app-main',
   standalone: true,
@@ -10,11 +12,11 @@ import { NavComponent } from '../../shared/template/nav/nav.component';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
   title = 'teacher-list';
   searchTerm: string = '';
 
-  teachers = [
+  teachers:any[] = [
     { id: 1,
       image_photo_profil: '/assets/images/teacher1.jpeg',
       name: 'Hiroshi Tanaka',
@@ -100,6 +102,29 @@ export class MainComponent {
       description: 'Specializes in teaching Japanese writing skills, particularly Kanji and essay composition.'
     }
   ];
+
+  constructor(private authService: AuthService, private classService: ClassService,) {
+  }
+
+  ngOnInit(): void {
+      this.getListTeachers()  
+  }
+
+  getListTeachers(){
+    this.classService.getListTeachers().subscribe({
+      next: (response) => {
+        if (response.status) {
+          this.teachers = response.data;
+          console.log('teachers data:', this.teachers);
+        } else {
+          console.log('No teachers found:', response.message);
+        }
+      },
+      error: (error) => {
+        console.error('Error retrieving teachers data:', error);
+      }
+    });
+  }
 
   filteredTeachers(): any[] {
     // If searchTerm is blank, return all teachers

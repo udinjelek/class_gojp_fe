@@ -1,0 +1,109 @@
+<div class="tab-pane fade show active">
+    <div class="teacher-detail mt-4 row ">
+        <div class="container col-6 mt-2">
+          <h3>Schedule</h3>
+        </div>
+        <div class="container col-6">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label class="responsive-label">Select a Date (Max 3 months ahead)</mat-label>
+            <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="Choose a date" (dateChange)="onDateChange($event)"> 
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <!-- <mat-datepicker #picker class="highlighted-calendar"></mat-datepicker> -->
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>  
+    </div>
+
+    <div class="teacher-detail mt-0 d-flex justify-content-center align-items-start">
+        <div class="container mt-0">
+            <div *ngIf="formattedDate===''" class="text-center m-3 p-3 card">
+                <h5>Please Select Date First</h5>
+            </div>
+            <div *ngIf="formattedDate!=='' && myData.schedule.length == 0" class="text-center m-3 p-3 card">
+                <h5>You don’t have any classes scheduled for <span class="text-primary">{{dayOfWeek}}</span> <span class="text-danger"> {{formattedDate}}</span>.<br><br>Please set them up in <span class="text-danger">Manage Weekly Schedule Templates</span></h5>
+            </div>
+            <table *ngIf="formattedDate!=='' && myData.schedule.length > 0" class="table">
+                <thead>
+                    <tr>
+                    <th>Date</th>
+                    <th>Day</th>
+                    <th>Time</th>
+                    <th >Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr *ngFor="let slot of myData.schedule; let i = index">
+                        <td >{{slot.date}}</td>
+                        <td >{{slot.day}}</td>
+                        <td >{{slot.time}}</td>
+                        <td class="text-center" style="width:160px;">
+                            <div class="input-group d-flex justify-content-center align-items-center">
+                                
+                                <ng-container *ngIf="slot.status == 'Booked'">
+                                    <button class="btn bg-base text-white text-center" (click)="statusClicked(slot)">
+                                        <span>{{ slot.status }} <span *ngIf="slot.member_slots>0"> {{slot.count_member}}/{{slot.member_slots}}</span></span>
+                                    </button>
+                                </ng-container>
+                                <ng-container *ngIf="slot.status != 'Booked'">
+                                    <span class="form-control text-black" >{{ slot.status }} <span *ngIf="slot.member_slots>0"> {{slot.count_member}}/{{slot.member_slots}}</span></span>
+                                
+                                    <button class="btn btn-success text-white" *ngIf="slot.status == 'Available'" (click)="toogleStatus(slot)">
+                                        <i class="bi bi-toggle-on"></i>
+                                    </button>
+                                    <button class="btn btn-danger" *ngIf="slot.status == 'Unavailable'" (click)="toogleStatus(slot)">
+                                        <i class="bi bi-toggle-off"></i>
+                                    </button>
+                                </ng-container>
+                                
+                            </div>
+
+                            
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" [ngClass]="{'d-block': showClassDetailModal}" style="background-color: rgba(0,0,0,0.5)">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        
+            <!-- Modal Header -->
+            <div class="modal-header border-0">
+                <h4 class="modal-title mx-auto">Course Details</h4>
+                <button type="button" class="btn-close" aria-label="Close" (click)="closeClassDetailModal()"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <!-- Class Information -->
+                <div class="mb-3">
+                <strong>Class Info:</strong> <span>{{courseDetailSelected.name}} | {{courseDetailSelected.type_class}}</span>
+                </div>
+                <div class="mb-3">
+                <strong>Time: </strong> <span> {{courseDetailSelected.day}}, {{courseDetailSelected.date}} at {{courseDetailSelected.hour_ampm}}</span>
+                </div>
+                
+
+                <!-- Member List -->
+                <div class="mt-4">
+                    <h6>{{courseDetailSelected.member_slots}} Member List:</h6>
+                    <ul class="list-group">
+                        <li *ngFor="let member of courseMemberList" class="list-group-item d-flex align-items-center justify-content-between">
+                        <div>
+                            - {{member.full_name}} | {{member.email}}
+                        </div>
+                        <img [src]="member.profile_pic" alt="{{member.full_name}}'s profile picture" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+  

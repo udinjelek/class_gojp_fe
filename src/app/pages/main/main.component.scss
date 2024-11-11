@@ -2,6 +2,9 @@
   
   .bg-purple-gradient {
     background: linear-gradient(to top, rgb(244, 210, 210), rgb(255, 252, 252));
+    // disable
+    // background: linear-gradient(to top, rgb(255, 252, 252), rgb(255, 252, 252));
+
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     color: rgb(41, 38, 38);
@@ -23,7 +26,17 @@
     object-fit: cover;
   }
   
-  
+  .abs-overlay{
+    position: absolute; 
+    bottom: 0; 
+    left: 0; 
+    width: 100%; 
+    background: rgba(0, 0, 0, 0.3); 
+    color: white; 
+    padding: 10px;
+  }
+
+
   footer {
     background-color: #000; /* Black background */
     color: #fff; /* White text */
@@ -82,4 +95,36 @@
     transform: scale(1.1); /* Zooms in by 10% */
   }
   
- 
+// disable
+// h1 {
+//  color:#eee 
+// }
+// h2 {
+//   color:#eee 
+// }
+// p {
+//   color:#eee 
+// }
+// div {
+//   color:#eee 
+// }
+// input{
+//   color:#eee 
+// }
+
+// .abs-overlay{
+//   position: absolute; 
+//   bottom: 0; 
+//   left: 0; 
+//   width: 100%; 
+//   background:#eee; 
+//   color: white; 
+//   padding: 10px;
+// }
+
+// .card{
+//   border-color: #fff;
+// }
+// div{
+//   border-color: #fff;
+// }
