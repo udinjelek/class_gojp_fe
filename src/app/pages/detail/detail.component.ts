@@ -168,7 +168,7 @@ export class DetailComponent implements OnInit {
 
   createCourseBystudent(){
     this.user_id = this.authService.getLocalStorage('user_id') || '';
-    this.classService.createCourseBystudent(this.user_id, this.teacherId, this.modalSlot.date, this.modalSlot.hm_id, 'Private').subscribe({
+    this.classService.createCourseBystudent(this.user_id, this.teacherId, this.modalSlot.date, this.modalSlot.hm_id, 'Private', 'Private Class').subscribe({
       next: (response) => {
         if (response.status) {
           console.log('Create Course By student data', this.teacherDetails.schedule);

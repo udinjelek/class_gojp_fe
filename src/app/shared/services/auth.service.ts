@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpClientXsrfModule , HttpErrorResponse } from '@angular/common/http';
-import { Observable, map , throwError } from 'rxjs';
+import { Observable, Subject, map , throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ResponseApi } from './response';
 import { environment } from '../../../environments/environment';
@@ -9,6 +9,17 @@ import { environment } from '../../../environments/environment';
 })
 export class AuthService {
   private storageKey = 'isLoggedIn'; // This can also store tokens or user info.
+
+  loginRequest = new Subject<void>();
+  signupRequest = new Subject<void>();
+
+  triggerLogin() {
+    this.loginRequest.next();
+  }
+
+  triggerSignup() {
+    this.signupRequest.next();
+  }
 
   baseApi:string = environment.apiUrl;
   apiUrl:string=''

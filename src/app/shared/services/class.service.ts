@@ -44,6 +44,15 @@ export class ClassService {
     return this.http.get<any>(this.apiUrl, { headers, params });
   }
 
+  public getScheduleUser(user_id:string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.apiUrl = this.baseApi + '/classgojp/get_schedule_user'
+    const params = new HttpParams()
+      .set('user_id', user_id);
+
+    return this.http.get<any>(this.apiUrl, { headers, params });
+  }
+
   public setUnsetAvailability(teacher_id: string, date: string, hour_id: number, set_unavailable: boolean): Observable<ResponseApi> {
     this.apiUrl = this.baseApi + '/classgojp/set_unavailable_schedule'
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -66,10 +75,10 @@ export class ClassService {
     return this.http.get<any>(this.apiUrl, { headers, params });
   }
 
-  public createCourseBystudent(user_id: string, teacher_id: string, date: string, hour_id: number, type_class:string): Observable<ResponseApi> {
+  public createCourseBystudent(user_id: string, teacher_id: string, date: string, hour_id: number, type_class:string, name:string): Observable<ResponseApi> {
     this.apiUrl = this.baseApi + '/classgojp/create_course_bystudent'
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const requestBody = { user_id, teacher_id, date, hour_id, type_class };
+    const requestBody = { user_id, teacher_id, date, hour_id, type_class, name };
 
     return this.http.post<ResponseApi>(this.apiUrl, requestBody, { headers });
   }

@@ -53,15 +53,15 @@
         </div>  
       </div>
       
-      <div class="teacher-detail mt-0 d-flex justify-content-center align-items-start">
-        <div class="mt-0">
-          <div *ngIf="formattedDate===''" class="text-center m-3 p-3 card">
+      <div class="teacher-detail mt-0 d-flex justify-content-center align-items-start w-100">
+        <div class="mt-0 w-100">
+          <div *ngIf="formattedDate===''" class="text-center m-3 p-3 card w-100">
             <h5>Please Select Date First</h5>
           </div>
-          <div *ngIf="formattedDate!=='' && teacherDetails.schedule.length == 0" class="text-center m-3 p-2 card">
+          <div *ngIf="formattedDate!=='' && teacherDetails.schedule.length == 0" class="text-center m-3 p-2 card w-100">
               <h5>Teacher don’t have any classes scheduled<br>for <span class="text-primary">{{dayOfWeek}}</span> <span class="text-danger"> {{formattedDate}}</span><br><br>Please select another date</h5>
           </div>
-          <table *ngIf="formattedDate!=='' && teacherDetails.schedule.length > 0" class="table">
+          <table *ngIf="formattedDate!=='' && teacherDetails.schedule.length > 0" class="table w-100">
             <thead>
               <tr>
                 <th>Date</th>

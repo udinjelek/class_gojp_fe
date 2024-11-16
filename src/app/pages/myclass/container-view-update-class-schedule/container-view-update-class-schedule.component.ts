@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common'; // Import CommonModule for NgFor
 import { MatDatepickerModule } from '@angular/material/datepicker'; // Datepicker module
 import { MatNativeDateModule } from '@angular/material/core'; // For native date handling
@@ -28,6 +28,8 @@ export class ContainerViewUpdateClassScheduleComponent {
   showClassDetailModal:boolean=false;
   minDate = new Date();
   maxDate: Date;  
+  isMobile: boolean = false;
+
   courseDetailSelected:any={name:'',description:'', type_class:'', day_en:'', hour_ampm:''}
   courseMemberList:any[]=[
     {user_id:'',email:'', type_class:'', date:'', day_en:'', hour_ampm:'', full_name:''}
@@ -35,8 +37,15 @@ export class ContainerViewUpdateClassScheduleComponent {
   constructor(private authService: AuthService, private classService: ClassService,) {
     const currentDate = new Date();
     this.maxDate = new Date(currentDate.setMonth(currentDate.getMonth() + 3));
+    this.checkScreenSize(); // Initial check
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  }
+
+  
   myData:any = {  schedule: [
     // { date: "2024-10-01", day: "Thursday", time: "01:00 PM - 02:00 PM", status: "Available" },
     // { date: "2024-10-02", day: "Friday", time: "03:00 PM - 04:00 PM", status: "Booked By Other" },
@@ -157,5 +166,9 @@ export class ContainerViewUpdateClassScheduleComponent {
 
   closeClassDetailModal(){
     this.showClassDetailModal= false
+  }
+
+  checkScreenSize() {
+    this.isMobile = window.innerWidth < 768; // Adjust breakpoint value as needed
   }
 }

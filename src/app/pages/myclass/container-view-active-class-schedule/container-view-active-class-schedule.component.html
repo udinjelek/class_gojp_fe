@@ -1,1 +1,68 @@
-<p>container-view-active-class-schedule works!</p>
+<div class="container mt-4">
+    <!-- Table for larger screens -->
+    <div *ngIf="!user_id" class="alert alert-warning text-center mt-4">
+      <h5 class="mb-3">You must be logged in to view your schedule.</h5>
+      <p class="mb-0">
+        Please 
+        <button type="button" class="btn btn-link p-0 align-baseline text-decoration-none" (click)="openLoginModal()">
+          <strong>log in</strong>
+        </button> 
+        or 
+        <button type="button" class="btn btn-link p-0 align-baseline text-decoration-none" (click)="openSignUpModal()">
+          <strong>sign up</strong>
+        </button> 
+        to continue.
+      </p>
+    </div>    
+     <div *ngIf="user_id!=''">
+          <div class="table-responsive">
+            <table *ngIf="schedulesList.length > 0" class="table w-100">
+              <thead class="table-header-group" *ngIf="!isMobile">
+                <tr>
+                  <th>Course</th>
+                  <th>Type</th>
+                  <th>Teacher/Student</th>
+                  <th>Criteria</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let schedule of schedulesList"
+                    [ngClass]="{
+                      'bg-info text-white': schedule.criteria === 'Learning with Sensai', 
+                      'bg-warning text-dark': schedule.criteria === 'Teaching Private/Group'
+                    }"
+                    class="d-none d-md-table-row">
+                  <td><div *ngIf="schedule.course_name!=''">{{ schedule.course_name }}</div>
+                    {{getDayNameFromDate(schedule.schedule_date)}}, {{ schedule.schedule_date }} at {{ schedule.schedule_hour }}</td>
+                  <td>{{ schedule.course_type }}</td>
+                  <td>{{ schedule.teacher_name }}</td>
+                  <td>{{ schedule.criteria }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      
+              <!-- Card view for smaller screens -->
+          <div class="d-md-none">
+            <div *ngFor="let schedule of schedulesList" class="card mb-3 shadow-sm">
+              <div class="card-header text-center" 
+                  [ngClass]="{
+                    'bg-info text-white': schedule.criteria === 'Learning with Sensai', 
+                    'bg-warning text-dark': schedule.criteria === 'Teaching Private/Group'
+                  }">
+                <strong>{{ schedule.course_name }}</strong> - {{ schedule.criteria }}
+              </div>
+              <div class="card-body">
+                <p><strong>Date:</strong> {{ schedule.schedule_date }}</p>
+                <p><strong>Time:</strong> {{ schedule.schedule_hour }}</p>
+                <p><strong>Type:</strong> {{ schedule.course_type }}</p>
+                <p><strong>Description:</strong> {{ schedule.course_description }}</p>
+                <p><strong>Teacher/Student:</strong> {{ schedule.teacher_name }}</p>
+              </div>
+            </div>
+          </div>
+     </div>
+    
+
+  </div>
+  

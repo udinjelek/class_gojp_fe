@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule for ngClass
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';  // Import FormsModule for ngModel
@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.scss'
 })
-export class NavComponent {
+export class NavComponent implements OnInit {
 
   userProfilePic: string | null = 'https://classgojp-file.polaris.my.id/images/default/caticon1.jpg'; // URL for the user's profile picture
   profile_pic: string | null = ''
@@ -27,6 +27,15 @@ export class NavComponent {
   confirm_password: string = '';
   showLoginModal: boolean = false;
   showSignUpModal: boolean = false;
+
+  ngOnInit() {
+    this.authService.loginRequest.subscribe(() => {
+      this.openLoginModal();
+    });
+    this.authService.signupRequest.subscribe(() => {
+      this.openSignUpModal();
+    });
+  }
 
   constructor(private authService: AuthService , private router: Router) {
     this.user_id = this.authService.getLocalStorage('user_id');
