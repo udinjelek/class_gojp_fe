@@ -3,6 +3,13 @@
   background-color: rgb(255, 99, 99);
 }
 
+.table-list {
+  display: flex;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 @media (max-width: 768px) {
     .responsive-label::before {
       content: 'Select a Date';

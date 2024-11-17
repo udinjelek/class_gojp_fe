@@ -28,7 +28,8 @@ export class ContainerViewActiveClassScheduleComponent {
                 this.classService.getScheduleUser(user_id).subscribe({
                   next: (response) => {
                     if (response.status) {
-                      this.schedulesList = response.data.schedule;
+                      this.schedulesList = this.enrichScheduleWithCounts(response.data.schedule, response.data.count_member_class) ;
+
                       console.log('Schedule data:', this.schedulesList);
                     } else {
                       console.log('No schedule found:', response.message);
@@ -63,4 +64,28 @@ export class ContainerViewActiveClassScheduleComponent {
     const options: Intl.DateTimeFormatOptions = { weekday: 'long' };
     return date.toLocaleDateString('en-US', options);
   }
+
+  enrichScheduleWithCounts(schedule: any[], countData: any[]) {
+    if (!Array.isArray(schedule) || !Array.isArray(countData)) {
+      console.error('Invalid input: schedule or countData is not an array');
+      return schedule; // Return original schedule if input is invalid
+    }
+    return schedule.map(item => {
+      // Find matching data based on course_id
+      const match = countData.find(data => Number(data.course_id) === Number(item.course_id));
+      if (match) {
+        // Add count_member and member_slots if match is found
+        return {
+          ...item,
+          count_member: match.count_member,
+          member_slots: match.member_slots,
+          student_id: match.student_id,
+          student_name: match.student_name,
+          student_profile_pic: match.student_profile_pic
+        };
+      }
+      return item; // Return original item if no match found
+    });
+  }
+  
 }

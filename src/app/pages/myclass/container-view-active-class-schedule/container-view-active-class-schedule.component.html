@@ -1,42 +1,75 @@
 <div class="container mt-4">
     <!-- Table for larger screens -->
-    <div *ngIf="!user_id" class="alert alert-warning text-center mt-4">
-      <h5 class="mb-3">You must be logged in to view your schedule.</h5>
-      <p class="mb-0">
-        Please 
-        <button type="button" class="btn btn-link p-0 align-baseline text-decoration-none" (click)="openLoginModal()">
-          <strong>log in</strong>
-        </button> 
-        or 
-        <button type="button" class="btn btn-link p-0 align-baseline text-decoration-none" (click)="openSignUpModal()">
-          <strong>sign up</strong>
-        </button> 
-        to continue.
-      </p>
+    <div *ngIf="!user_id" class="alert alert-warning text-center mt-4 max800">
+      
+        <h5 class="mb-3">You must be logged in to view your schedule.</h5>
+        <p class="mb-0">
+          Please 
+          <button type="button" class="btn btn-link p-0 align-baseline text-decoration-none" (click)="openLoginModal()">
+            <strong>log in</strong>
+          </button> 
+          or 
+          <button type="button" class="btn btn-link p-0 align-baseline text-decoration-none" (click)="openSignUpModal()">
+            <strong>sign up</strong>
+          </button> 
+          to continue.
+        </p>
+      
     </div>    
      <div *ngIf="user_id!=''">
-          <div class="table-responsive">
+          <div class="table-responsive table-list">
             <table *ngIf="schedulesList.length > 0" class="table w-100">
               <thead class="table-header-group" *ngIf="!isMobile">
                 <tr>
+                  <th style="width:20px"></th>
                   <th>Course</th>
-                  <th>Type</th>
-                  <th>Teacher/Student</th>
-                  <th>Criteria</th>
+                  <th>Description</th>
+                  <th>Profile</th>
+                  <th style="width:20px"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let schedule of schedulesList"
                     [ngClass]="{
-                      'bg-info text-white': schedule.criteria === 'Learning with Sensai', 
-                      'bg-warning text-dark': schedule.criteria === 'Teaching Private/Group'
+                      'bg-info text-white': schedule.criteria == 'Learning with Sensai', 
+                      'bg-warning text-dark': schedule.criteria != 'Learning with Sensai'
                     }"
                     class="d-none d-md-table-row">
-                  <td><div *ngIf="schedule.course_name!=''">{{ schedule.course_name }}</div>
-                    {{getDayNameFromDate(schedule.schedule_date)}}, {{ schedule.schedule_date }} at {{ schedule.schedule_hour }}</td>
-                  <td>{{ schedule.course_type }}</td>
-                  <td>{{ schedule.teacher_name }}</td>
-                  <td>{{ schedule.criteria }}</td>
+                            <td [ngClass]="{  'bg-info': schedule.criteria == 'Learning with Sensai', 
+                                              'bg-warning':schedule.criteria!= 'Learning with Sensai'}">
+                            </td>
+                            <td>  <div *ngIf="schedule.course_name!=''">{{ schedule.course_name }}</div>
+                                  <span>{{getDayNameFromDate(schedule.schedule_date)}}, {{ schedule.schedule_date }} at {{ schedule.schedule_hour }}</span>
+                            </td>
+                            <td>
+                                <div *ngIf="schedule.criteria=='Learning with Sensai'">
+                                  <div>{{ schedule.criteria }}</div>
+                                  <span>{{ schedule.teacher_name }}</span>
+                                </div>
+                                <div *ngIf="schedule.criteria=='Teaching'">
+                                  <div>{{ schedule.criteria }} {{ schedule.course_type}} ({{ schedule.count_member }} /  {{ schedule.member_slots }})</div>
+                                  <span *ngIf="schedule.count_member==1">{{ schedule.student_name }}</span>
+                                </div>
+                            </td>
+                            <td>
+                              <div *ngIf="schedule.criteria=='Learning with Sensai'">
+                                          <img [src]="schedule.teacher_profile_pic" alt="" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                              </div>
+                              <div *ngIf="schedule.criteria=='Teaching'">
+                                          <ng-container *ngIf="schedule.count_member === 1; else multipleUsers">
+                                              <img [src]="schedule.student_profile_pic" alt="" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                                          </ng-container>
+                                          
+                                          <ng-template #multipleUsers>
+                                              <button class="btn p-0" style="width: 50px; height: 50px;">
+                                                  <i class="bi bi-people"></i>
+                                              </button>
+                                          </ng-template>
+                              </div>
+                            </td>
+                            <td [ngClass]="{  'bg-info': schedule.criteria == 'Learning with Sensai', 
+                                              'bg-warning':schedule.criteria!= 'Learning with Sensai'}">
+                            </td>
                 </tr>
               </tbody>
             </table>
@@ -48,16 +81,39 @@
               <div class="card-header text-center" 
                   [ngClass]="{
                     'bg-info text-white': schedule.criteria === 'Learning with Sensai', 
-                    'bg-warning text-dark': schedule.criteria === 'Teaching Private/Group'
+                    'bg-warning text-dark': schedule.criteria === 'Teaching'
                   }">
-                <strong>{{ schedule.course_name }}</strong> - {{ schedule.criteria }}
+                {{ schedule.criteria }}<br><strong>{{ schedule.course_name }}</strong>
               </div>
               <div class="card-body">
-                <p><strong>Date:</strong> {{ schedule.schedule_date }}</p>
-                <p><strong>Time:</strong> {{ schedule.schedule_hour }}</p>
-                <p><strong>Type:</strong> {{ schedule.course_type }}</p>
-                <p><strong>Description:</strong> {{ schedule.course_description }}</p>
-                <p><strong>Teacher/Student:</strong> {{ schedule.teacher_name }}</p>
+                <p><strong class="text-crimson">{{getDayNameFromDate(schedule.schedule_date)}}</strong>, {{ schedule.schedule_date }} at {{ schedule.schedule_hour }}</p>
+                <div class="d-flex" style="width: 100%;">
+                  <!-- Left Section -->
+                  <div style="flex-grow: 1;">
+                    <p><strong>Description:</strong> {{ schedule.course_description }}</p>
+                    <p *ngIf="schedule.criteria === 'Learning with Sensai'"><strong>Teacher:</strong> {{ schedule.teacher_name }}</p>
+                    <p *ngIf="schedule.criteria === 'Teaching'"><strong>Student:</strong> {{ schedule.student_name }}</p>
+                  </div>
+                
+                  <!-- Right Section -->
+                  <div style="width: 60px;">
+                    <ng-container *ngIf="schedule.criteria === 'Teaching'">
+                        <ng-container *ngIf="schedule.count_member === 1; else multipleUsers">
+                            <img [src]="schedule.student_profile_pic" alt="" class="rounded-circle" style="width: 60px; height: 60px; object-fit: cover;">
+                        </ng-container>
+                        
+                        <ng-template #multipleUsers>
+                            <button class="btn p-0" style="width: 60px; height: 60px;">
+                                <i class="bi bi-people"></i>
+                            </button>
+                        </ng-template>
+                    </ng-container>
+                    <ng-container *ngIf="schedule.criteria === 'Learning with Sensai'">
+                          <img [src]="schedule.teacher_profile_pic" alt="" class="rounded-circle" style="width: 60px; height: 60px; object-fit: cover;">
+                    </ng-container>
+                    
+                  </div>
+                </div>                
               </div>
             </div>
           </div>
