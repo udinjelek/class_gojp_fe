@@ -112,13 +112,23 @@ export class NavComponent implements OnInit {
               }
             },
             error: (error) => {
-              console.error('Error login:', error);
-              Swal.fire({
-                title: 'Error!',
-                text: 'There was an error when login',
-                icon: 'error',
-                confirmButtonText: 'OK'
-              });
+              // Check if the error is an HTTP error with a response message
+              if (error.status === 401 && error.error?.message) {
+                Swal.fire({
+                  title: 'Login Failed!',
+                  text: error.error.message, // Use the message from the API response
+                  icon: 'error',
+                  confirmButtonText: 'OK',
+                });
+              } else {
+                console.error('Error during login:', error);
+                Swal.fire({
+                  title: 'Error!',
+                  text: 'There was an error when login',
+                  icon: 'error',
+                  confirmButtonText: 'OK',
+                });
+              }
             },
             // complete: () => {
             //   console.log('User creation process completed.');

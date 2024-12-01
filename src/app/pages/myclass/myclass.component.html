@@ -34,8 +34,8 @@
               <li class="nav-item" *ngIf="role==='teacher'">
                 <a 
                   class="nav-link" 
-                  [class.active]="activeTab === 'availability'" 
-                  (click)="activeTab = 'availability'">
+                  [class.active]="activeTab === 'custom'" 
+                  (click)="activeTab = 'custom'">
                   <i class="bi bi-clock-fill me-2"></i>Create Custom Class
                 </a>
               </li>
@@ -63,8 +63,9 @@
           </div>
           
           
-          <div *ngIf="activeTab === 'availability'" class="tab-pane fade" [class.show]="activeTab === 'availability'" [class.active]="activeTab === 'availability'">
+          <div *ngIf="activeTab === 'custom'" class="tab-pane fade" [class.show]="activeTab === 'custom'" [class.active]="activeTab === 'custom'">
             <p>Content for setting or updating availability...</p>
+            <app-container-manage-custom-class></app-container-manage-custom-class>
           </div>
         </div>
       </div>

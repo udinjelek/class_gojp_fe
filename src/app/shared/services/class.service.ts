@@ -44,6 +44,18 @@ export class ClassService {
     return this.http.get<any>(this.apiUrl, { headers, params });
   }
 
+  public getScheduleTeacherIgnoreWeeklyTemplate(teacher_id: string, formattedDate: string, dayOfWeek: string, showUnavailable: boolean): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.apiUrl = this.baseApi + '/classgojp/get_schedule_teacher_ignore_weekly_template'
+    const params = new HttpParams()
+      .set('teacher_id', teacher_id)
+      .set('formattedDate', formattedDate)
+      .set('dayOfWeek', dayOfWeek)
+      .set('showUnavailable', showUnavailable);
+
+    return this.http.get<any>(this.apiUrl, { headers, params });
+  }
+
   public getScheduleUser(user_id:string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     this.apiUrl = this.baseApi + '/classgojp/get_schedule_user'
@@ -75,10 +87,10 @@ export class ClassService {
     return this.http.get<any>(this.apiUrl, { headers, params });
   }
 
-  public createCourseBystudent(user_id: string, teacher_id: string, date: string, hour_id: number, type_class:string, name:string): Observable<ResponseApi> {
+  public createCourseBystudent(user_id: string, teacher_id: string, date: string, hour_id: number, type_class:string, name:string, duration:number): Observable<ResponseApi> {
     this.apiUrl = this.baseApi + '/classgojp/create_course_bystudent'
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const requestBody = { user_id, teacher_id, date, hour_id, type_class, name };
+    const requestBody = { user_id, teacher_id, date, hour_id, type_class, name , duration};
 
     return this.http.post<ResponseApi>(this.apiUrl, requestBody, { headers });
   }

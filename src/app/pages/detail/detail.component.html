@@ -72,8 +72,8 @@
               </tr>
             </thead>
             <tbody>
-              
-                <tr *ngFor="let slot of teacherDetails.schedule; let i = index">
+              <ng-container *ngFor="let slot of teacherDetails.schedule; let i = index">
+                <tr *ngIf="slot.status!=''">
                   <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }">{{slot.date}}</td>
                   <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }">{{slot.day}}</td>
                   <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }">{{slot.time}}</td>
@@ -100,7 +100,7 @@
                     
                   </td>
                 </tr>
-              
+              </ng-container>
             </tbody>
           </table>
         </div>

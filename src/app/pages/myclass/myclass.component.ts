@@ -7,6 +7,7 @@ import { ClassService } from '../../shared/services/class.service';
 import { ContainerManageWeeklyScheduleTemplateComponent } from './container-manage-weekly-schedule-template/container-manage-weekly-schedule-template.component';
 import { ContainerViewUpdateClassScheduleComponent } from './container-view-update-class-schedule/container-view-update-class-schedule.component';
 import { ContainerViewActiveClassScheduleComponent } from './container-view-active-class-schedule/container-view-active-class-schedule.component';
+import { ContainerManageCustomClassComponent } from './container-manage-custom-class/container-manage-custom-class.component';
 
 import Swal from 'sweetalert2';
 
@@ -18,6 +19,7 @@ import Swal from 'sweetalert2';
     , ContainerManageWeeklyScheduleTemplateComponent
     , ContainerViewUpdateClassScheduleComponent
     , ContainerViewActiveClassScheduleComponent
+    , ContainerManageCustomClassComponent
   ],
   templateUrl: './myclass.component.html',
   styleUrl: './myclass.component.scss'

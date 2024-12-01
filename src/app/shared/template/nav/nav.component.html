@@ -72,13 +72,13 @@
           <form (submit)="onLogin($event)">
             <!-- Email input -->
             <div class="mb-3">
-              <label for="login-email" class="form-label">Email</label>
+              <label class="form-label">Email</label>
               <input [(ngModel)]="email" name="login-email"  type="email"  class="form-control" placeholder="Enter your email" required>
             </div>
 
             <!-- Password input -->
             <div class="mb-3">
-              <label for="login-password" class="form-label">Password</label>
+              <label class="form-label">Password</label>
               <input [(ngModel)]="password" name="login-password" type="password"  class="form-control" placeholder="Enter your password" required>
             </div>
 
@@ -121,7 +121,7 @@
           <form (submit)="onSignUp($event)">
             <!-- Full Name input -->
             <div class="mb-3">
-              <label for="full_name" class="form-label">Full Name</label>
+              <label class="form-label">Full Name</label>
               <div class="input-group mb-3">
                 <!-- Input field for full name -->
                 <input [(ngModel)]="full_name" name="signup-full_name" type="text" class="form-control" placeholder="Enter your full name" required>
@@ -136,7 +136,7 @@
 
             <!-- Phone input -->
             <div class="mb-3">
-              <label for="signup-phone" class="form-label">Phone Number</label>
+              <label class="form-label">Phone Number</label>
               <div class="input-group mb-3">
                 <input [(ngModel)]="phone_number" name="signup-phone" type="tel" class="form-control" placeholder="Enter your phone number" required>
                 <span class="input-group-text bg-transparent border-1">
@@ -149,7 +149,7 @@
 
             <!-- Email input -->
             <div class="mb-3">
-              <label for="signup-email" class="form-label">Email</label>
+              <label class="form-label">Email</label>
               <div class="input-group mb-3">
                 <input [(ngModel)]="email" name="signup-email"  type="email"  class="form-control" placeholder="Enter your email" required>
                 <span class="input-group-text bg-transparent border-1">
@@ -161,7 +161,7 @@
 
             <!-- Password input -->
             <div class="mb-3">
-              <label for="signup-password" class="form-label">Password</label>
+              <label class="form-label">Password</label>
               <div class="input-group mb-3">
                 <input [(ngModel)]="password" name="signup-password" type="password"  class="form-control" placeholder="Enter your password" required>
                 <span class="input-group-text bg-transparent border-1">
@@ -172,7 +172,7 @@
             </div>
 
             <div class="mb-3">
-              <label for="signup-confirm-password" class="form-label">Confirmation Password</label>
+              <label class="form-label">Confirmation Password</label>
               <div class="input-group mb-3">
                 <input [(ngModel)]="confirm_password" name="signup-confirm-password" type="password"  class="form-control" placeholder="Enter your password" required>
                 <span class="input-group-text bg-transparent border-1">

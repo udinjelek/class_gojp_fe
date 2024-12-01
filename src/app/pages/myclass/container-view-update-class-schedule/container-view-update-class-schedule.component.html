@@ -1,23 +1,32 @@
 <div class="tab-pane fade show active ">
     <div class="teacher-detail mt-4 row table-list">
         <div class="container col-6 mt-2">
-          <h3>Schedule</h3>
+          <!-- pc view -->
+          <h3 class="d-none d-md-block">Schedule</h3>
+          <!-- mobile view -->
+           <h4 class="d-md-none">Schedule</h4> 
+          
         </div>
         <div class="container col-6">
-          <mat-form-field appearance="fill" class="w-100">
-            <mat-label class="responsive-label">Select a Date (Max 3 months ahead)</mat-label>
-            <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="Choose a date" (dateChange)="onDateChange($event)"> 
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <!-- <mat-datepicker #picker class="highlighted-calendar"></mat-datepicker> -->
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </div>  
+
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label class="responsive-label ">Selecta a Date (Max 3 months ahead)</mat-label>
+              <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="Choose a date" (dateChange)="onDateChange($event)"> 
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <!-- <mat-datepicker #picker class="highlighted-calendar"></mat-datepicker> -->
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+
     </div>
 
     <div class="teacher-detail mt-0 d-flex justify-content-center align-items-start w-100 table-list">
         <div class="container mt-0 w-100">
             <div *ngIf="formattedDate===''" class="text-center pt-3 card w-100">
-                <h5>Please Select Date First</h5>
+                <!-- mobile view -->
+                <h5 class="d-none d-md-block">Please Select Date First</h5>
+                <!-- mobile view -->
+                <h6 class="d-md-none">Please Select Date First</h6>
             </div>
             <div *ngIf="formattedDate!=='' && myData.schedule.length == 0" class="text-center pt-3 card w-100">
                 <h5>You don’t have any classes scheduled for <br><span class="text-primary">{{dayOfWeek}}</span> <span class="text-danger"> {{formattedDate}}</span>.<br><br>Please set them up in <span class="text-danger">Manage Weekly Schedule Templates</span></h5>
@@ -34,58 +43,71 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let slot of myData.schedule; let i = index" class="d-none d-md-table-row">
-                      <td>{{slot.date}}</td>
-                      <td>{{slot.day}}</td>
-                      <td>{{slot.time}}</td>
-                      <td class="text-center" style="width:160px;">
-                        <div class="input-group d-flex justify-content-center align-items-center">
-                          <ng-container *ngIf="slot.status == 'Booked'">
-                            <button class="btn bg-base text-white text-center" (click)="statusClicked(slot)">
-                              <span>{{ slot.status }} <span *ngIf="slot.member_slots>0"> {{slot.count_member}}/{{slot.member_slots}}</span></span>
-                            </button>
-                          </ng-container>
-                          <ng-container *ngIf="slot.status != 'Booked'">
-                            <span class="form-control text-black">{{ slot.status }} <span *ngIf="slot.member_slots>0"> {{slot.count_member}}/{{slot.member_slots}}</span></span>
-                            <button class="btn btn-success text-white" *ngIf="slot.status == 'Available'" (click)="toogleStatus(slot)">
-                              <i class="bi bi-toggle-on"></i>
-                            </button>
-                            <button class="btn btn-danger" *ngIf="slot.status == 'Unavailable'" (click)="toogleStatus(slot)">
-                              <i class="bi bi-toggle-off"></i>
-                            </button>
-                          </ng-container>
-                        </div>
-                      </td>
-                    </tr>
-              
-                    <!-- Mobile view -->
-                    <tr *ngFor="let slot of myData.schedule; let i = index" class="d-md-none">
-                      <td colspan="4" class="p-3 border">
-                        <div class="d-flex flex-column">
-                          <div><strong>Time:</strong> <span class="text-primary">  {{slot.day}}</span><span> {{slot.date}}</span>  <span class="text-danger">  {{slot.time}}</span></div>
-                          <div class="d-flex align-items-center mt-1">
-                            <strong class="me-2">Status:</strong> <!-- Add margin-end (me-2) for spacing -->
-                            <div class="input-group d-flex justify-content-center align-items-center">
-                              <ng-container *ngIf="slot.status == 'Booked'">
-                                <button class="btn bg-base text-white text-center" (click)="statusClicked(slot)">
-                                  <span>{{ slot.status }} <span *ngIf="slot.member_slots>0"> {{slot.count_member}}/{{slot.member_slots}}</span></span>
-                                </button>
-                              </ng-container>
-                              <ng-container *ngIf="slot.status != 'Booked'">
-                                <span class="form-control text-black">{{ slot.status }} <span *ngIf="slot.member_slots>0"> {{slot.count_member}}/{{slot.member_slots}}</span></span>
-                                <button class="btn btn-success text-white" *ngIf="slot.status == 'Available'" (click)="toogleStatus(slot)">
-                                  <i class="bi bi-toggle-on"></i>
-                                </button>
-                                <button class="btn btn-danger" *ngIf="slot.status == 'Unavailable'" (click)="toogleStatus(slot)">
-                                  <i class="bi bi-toggle-off"></i>
-                                </button>
-                              </ng-container>
-                            </div>
+                    <ng-container *ngFor="let slot of myData.schedule; let i = index"> 
+                      <tr class="d-none d-md-table-row" *ngIf="slot.status!=''">
+                        <td>{{slot.date}}</td>
+                        <td>{{slot.day}}</td>
+                        <td>{{slot.time}}</td>
+                        <td class="text-center" style="width:160px;">
+                          <div class="input-group d-flex justify-content-center align-items-center">
+                            <ng-container *ngIf="slot.status == 'Booked'">
+                              <button class="btn bg-base text-white text-center" (click)="statusClicked(slot)">
+                                <span>{{ slot.status }} <span *ngIf="slot.member_slots>0"> {{slot.count_member}}/{{slot.member_slots}}</span></span>
+                              </button>
+                            </ng-container>
+                            <ng-container *ngIf="slot.status == 'in session'">
+                              <span class="form-control text-black bg-warning">
+                                    {{ slot.status }}
+                              </span>
+                            </ng-container>
+                            <ng-container *ngIf="slot.status != 'Booked' && slot.status != 'in session'">
+                              <span class="form-control text-black">{{ slot.status }} <span *ngIf="slot.member_slots>0"> {{slot.count_member}}/{{slot.member_slots}}</span></span>
+                              <button class="btn btn-success text-white" *ngIf="slot.status == 'Available'" (click)="toogleStatus(slot)">
+                                <i class="bi bi-toggle-on"></i>
+                              </button>
+                              <button class="btn btn-danger" *ngIf="slot.status == 'Unavailable'" (click)="toogleStatus(slot)">
+                                <i class="bi bi-toggle-off"></i>
+                              </button>
+                            </ng-container>
                           </div>
-                          
-                        </div>
-                      </td>
-                    </tr>
+                        </td>
+                      </tr>
+                    </ng-container>
+                    <!-- Mobile view -->
+                    <ng-container *ngFor="let slot of myData.schedule; let i = index"> 
+                      <tr *ngIf="slot.status !!= ''" class="d-md-none">
+                        <td colspan="4" class="p-3 border">
+                          <div class="d-flex flex-column">
+                            <div><span class="text-primary">  {{slot.day}}</span><span> {{slot.date}}</span>  <span class="text-danger">  {{slot.time}}</span></div>
+                            <div class="d-flex align-items-center mt-1">
+                              <strong class="me-2">Status:</strong> <!-- Add margin-end (me-2) for spacing -->
+                              <div class="input-group d-flex justify-content-center align-items-center">
+                                <ng-container *ngIf="slot.status == 'Booked'">
+                                  <button class="btn bg-base text-white text-center" (click)="statusClicked(slot)">
+                                    <span>{{ slot.status }} <span *ngIf="slot.member_slots>0"> {{slot.count_member}}/{{slot.member_slots}}</span></span>
+                                  </button>
+                                </ng-container>
+                                <ng-container *ngIf="slot.status == 'in session'">
+                                  <span class="form-control text-black ">
+                                    {{ slot.status }} 
+                                  </span>
+                                </ng-container>
+                                <ng-container *ngIf="slot.status != 'Booked' && slot.status != 'in session'">
+                                  <span class="form-control text-black">{{ slot.status }} <span *ngIf="slot.member_slots>0"> {{slot.count_member}}/{{slot.member_slots}}</span></span>
+                                  <button class="btn btn-success text-white" *ngIf="slot.status == 'Available'" (click)="toogleStatus(slot)">
+                                    <i class="bi bi-toggle-on"></i>
+                                  </button>
+                                  <button class="btn btn-danger" *ngIf="slot.status == 'Unavailable'" (click)="toogleStatus(slot)">
+                                    <i class="bi bi-toggle-off"></i>
+                                  </button>
+                                </ng-container>
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-container>
                   </tbody>
                 </table>
               </div>

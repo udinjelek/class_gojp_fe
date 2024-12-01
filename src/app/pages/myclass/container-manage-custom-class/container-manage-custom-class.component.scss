@@ -1,0 +1,66 @@
+.card {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  
+    &.active-card {
+      border: 2px solid #007bff;
+      transform: scale(1.02);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+  
+    &:hover {
+      transform: scale(1.02);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  .card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    i {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .table {
+    margin-top: 15px;
+  }
+  
+  .table th, .table td {
+    vertical-align: middle;
+  }
+  
+  .bg-base{
+    background-color: rgb(255, 99, 99);
+    color:azure
+  }
+  
+  .bg-success-alt{
+    background-color: rgb(70, 179, 105);
+    color:azure
+  }
+
+  .modal {
+    z-index: 999 !important; /* Set lower than the cdk-overlay-container (1051) */
+  }
+  
+  .modal-backdrop {
+    z-index: 998 !important; /* Ensure the backdrop stays behind the modal */
+  }
+  
+  @media (max-width: 768px) {
+    .responsive-label::before {
+      content: 'Select Date';
+    }
+    .responsive-label {
+      visibility: hidden;
+      position: relative;
+    }
+    .responsive-label::before {
+      visibility: visible;
+      position: absolute;
+      left: 0;
+    }
+  }

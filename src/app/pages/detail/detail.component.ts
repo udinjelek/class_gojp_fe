@@ -144,7 +144,7 @@ export class DetailComponent implements OnInit {
     
     // const dayId = this.getDayId(dayOfWeek)
     this.user_id = this.authService.getLocalStorage('user_id') || '';
-    this.getScheduleTeacher(this.teacherId, this.user_id, this.formattedDate, this.dayOfWeek, false);
+    this.getScheduleTeacher(this.teacherId, this.user_id, this.formattedDate, this.dayOfWeek, true);
 
   }
 
@@ -168,18 +168,80 @@ export class DetailComponent implements OnInit {
 
   createCourseBystudent(){
     this.user_id = this.authService.getLocalStorage('user_id') || '';
-    this.classService.createCourseBystudent(this.user_id, this.teacherId, this.modalSlot.date, this.modalSlot.hm_id, 'Private', 'Private Class').subscribe({
-      next: (response) => {
-        if (response.status) {
-          console.log('Create Course By student data', this.teacherDetails.schedule);
-          this.getScheduleTeacher(this.teacherId, this.user_id, this.formattedDate, this.dayOfWeek, false);
-        } else {
-          console.log("Can't Create Course By student data", response.message);
+    const class_duration:number = 60
+    const available_time:number = this.checkAvailableTime(this.modalSlot.hm_id,this.teacherDetails.schedule)
+
+    if (available_time < class_duration) {
+      const text_class_duration:string = this.formatMinutesToHoursAndMinutes(class_duration )
+      const text_available_time:string = this.formatMinutesToHoursAndMinutes(available_time)
+      
+      Swal.fire({
+        title: 'Error!',
+        html: `Booking this class is not possible at the selected time.
+        <br>The teacher is only available for <strong style="color: darkblue;">${text_available_time}</strong> at <strong style="color: darkgreen;">${this.modalSlot.hour_24}</strong>,
+        <br>while the class you wish to book requires <strong style="color: darkred;">${text_class_duration}</strong>.
+        <br><br>Please select another time.`,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+    else{
+      this.classService.createCourseBystudent(this.user_id, this.teacherId, this.modalSlot.date, this.modalSlot.hm_id, 'Private', 'Private Class', class_duration).subscribe({
+        next: (response) => {
+          if (response.status) {
+            console.log('Create Course By student data', this.teacherDetails.schedule);
+            this.getScheduleTeacher(this.teacherId, this.user_id, this.formattedDate, this.dayOfWeek, true);
+          } else {
+            console.log("Can't Create Course By student data", response.message);
+          }
+        },
+        error: (error) => {
+          console.error('Error retrieving schedule:', error);
         }
-      },
-      error: (error) => {
-        console.error('Error retrieving schedule:', error);
+      });
+    }
+  }
+
+  checkAvailableTime(hm_id_selected: number , schedule:any[]): number {
+    const increment = 30; // Increment for each loop (30 minutes)
+    let duration = 0; // Initialize duration
+
+    for (let i = 0; i < 360; i++) {
+      // Calculate the current hm_id
+      const currentHmId = hm_id_selected + duration;  
+
+      // Find the schedule with the current hm_id
+      const currentSchedule = schedule.find(item => item.hm_id == currentHmId);
+      
+      // Increase the duration for the next iteration
+      duration += increment;
+
+      // Check if the schedule exists and its status is an empty string
+      if (!currentSchedule || currentSchedule.status != 'Available' ) {
+        // Stop if the status is not empty or the schedule is not found
+        return duration - increment;
       }
-    });
+
+    }
+
+    // If the loop completes and all slots are valid, return the total duration
+    return duration;
+  }
+
+  formatMinutesToHoursAndMinutes(totalMinutes: number): string {
+    const hours = Math.floor(totalMinutes / 60); // Calculate full hours
+    const minutes = totalMinutes % 60; // Calculate remaining minutes
+  
+    // Create a formatted string
+    let result = '';
+    if (hours > 0) {
+      result += `${hours} ${hours === 1 ? 'hour' : 'hours'}`;
+    }
+    if (minutes > 0) {
+      if (result.length > 0) result += ' '; // Add space if there are hours
+      result += `${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`;
+    }
+  
+    return result || '0 minutes'; // Default to '0 minutes' if input is 0
   }
 }
