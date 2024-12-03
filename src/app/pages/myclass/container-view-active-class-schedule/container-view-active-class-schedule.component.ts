@@ -88,4 +88,20 @@ export class ContainerViewActiveClassScheduleComponent {
     });
   }
   
+  formatMinutesToHoursAndMinutesTable(totalMinutes: number): string {
+    const hours = Math.floor(totalMinutes / 60); // Calculate full hours
+    const minutes = totalMinutes % 60; // Calculate remaining minutes
+  
+    // Create a formatted string
+    let result = '';
+    if (hours > 0) {
+      result += `${hours} ${hours === 1 ? 'hour' : 'hours'}`;
+    }
+    if (minutes > 0) {
+      if (result.length > 0) result += '\n'; // Add space if there are hours
+      result += `${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`;
+    }
+  
+    return result || '0 minutes'; // Default to '0 minutes' if input is 0
+  }
 }

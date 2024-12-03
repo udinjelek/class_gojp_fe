@@ -171,4 +171,9 @@ export class ContainerViewUpdateClassScheduleComponent {
   checkScreenSize() {
     this.isMobile = window.innerWidth < 768; // Adjust breakpoint value as needed
   }
+
+  countValidSchedule():number{
+    const totalValidSchedule = this.myData.schedule.filter((schedule: any) => schedule.status !== '').length;
+    return totalValidSchedule
+  }
 }

@@ -114,6 +114,28 @@ export class DetailComponent implements OnInit {
       
   }
 
+  joinThisGroup(slot:any, index:number): void{
+    this.user_id = this.authService.getLocalStorage('user_id') || '';
+    if (this.user_id == this.teacherId){
+        const full_name = this.authService.getLocalStorage('full_name');
+        Swal.fire({
+          title: 'Error!',
+          html: `<strong style="color: darkblue;">${full_name}</strong> you can't booking your own class.`,
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+    }
+    else{
+      // this.prepareModal(slot, index);
+      Swal.fire({
+        title: 'Error!',
+        html: `you can't join this class group yet, system under maintance.`,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  }
+
   prepareModal(slot: any, index:number): void {
     this.modalSlotIndex = index;
     this.modalSlot = slot;
@@ -243,5 +265,10 @@ export class DetailComponent implements OnInit {
     }
   
     return result || '0 minutes'; // Default to '0 minutes' if input is 0
+  }
+
+  countValidSchedule():number{
+    const totalValidSchedule = this.teacherDetails.schedule.filter((schedule: any) => schedule.status !== '').length;
+    return totalValidSchedule
   }
 }

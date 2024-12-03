@@ -20,7 +20,7 @@
     <!-- Create Custom Class Form -->
     <div *ngIf="activeSection === 'create'" class="mb-4">
       <div class="card shadow-sm p-3">
-        <form (ngSubmit)="submitCustomClass()" #customClassForm="ngForm">
+        
           <div class="mb-3">
             <label class="form-label">Class Name <span class="text-danger">*</span></label>
             <input
@@ -40,36 +40,75 @@
               class="form-control"
               [(ngModel)]="maxParticipants"
               name="maxParticipants"
+              min="0"
               required
             />
           </div>
           <div class="mb-3">
             <label class="form-label">List Schedules <span class="text-danger">*</span></label>
+
             <div class=" form-control" >
+                <label *ngIf="draftScheduleBooking.length == 0" class="form-label">Please add at least one schedule to proceed.</label>
                 <ng-container *ngFor="let schedule of draftScheduleBooking">
-                    <div class="input-group w-100 mb-2" *ngIf="schedule.type==='Draft'">
-                    
-                        <div class=" form-control d-none d-md-block" >
-                            <div class="row text-center">
-                                <div class="col-4">{{schedule.fullDay}}</div> 
-                                <div class="col-4">{{schedule.date}}</div> 
-                                <div class="col-4">{{schedule.hour_ampm}}</div>
-                            </div> 
+                  <!-- Desktop View -->
+                  <div class="input-group w-100 mb-2 d-none d-md-flex" *ngIf="schedule.type === 'Draft'">  
+                    <div class="form-control align-items-center">
+                      <div class="row w-100 text-center align-items-center">
+                        <!-- Full Day -->
+                        <div class="col-3 text-primary font-weight-bold">{{ schedule.fullDay }}</div>
+                        
+                        <!-- Date and Time -->
+                        <div class="col-4 text-secondary">
+                          <span class="text-danger">{{ schedule.date }}</span> at <span class="text-dark">{{ schedule.hour_ampm }}</span>
                         </div>
-
-                        <div class=" form-control d-md-none p-2" style="font-weight: 500; font-size: small;">
-                          {{schedule.shortDay}}, {{schedule.date}} at {{schedule.hour_ampm}}
+                        
+                        <!-- Duration -->
+                        <div class="col-5 text-secondary">
+                          Duration: <span class="font-weight-bold text-success">{{ formatMinutesToHoursAndMinutes(schedule.duration) }}</span>
                         </div>
-
-                        <button type="button" class="btn btn-sm btn-danger" ><i class="bi bi-trash-fill"></i></button>
+                      </div>
                     </div>
+                      <!-- Delete Button (Grouped) -->
+                      <button type="button" class="btn btn-sm btn-danger" (click)="deleteDraftSchedule(schedule)">
+                        <i class="bi bi-trash-fill"></i>
+                      </button>
+                  </div>
+
+                  <!-- Mobile View -->
+                  <div class="d-md-none" *ngIf="schedule.type === 'Draft'">
+                    <div class="card mb-3 shadow-sm">
+                      <div class="card-body m-0">
+                        <!-- Full Day -->
+                        <p class="text-primary font-weight-bold">{{ schedule.fullDay }}</p>
+                  
+                        <!-- Date and Time -->
+                        <div class="text-secondary">
+                          {{ schedule.date }} at <span class="text-dark">{{ schedule.hour_ampm }}</span>
+                        </div>
+                  
+                        <!-- Duration -->
+                        <div class="text-success">
+                          Duration: <span class="font-weight-bold">{{ formatMinutesToHoursAndMinutes(schedule.duration) }}</span>
+                        </div>
+                      </div>
+                  
+                      <!-- Delete Button -->
+                      <div class="card-footer p-0">
+                        <button type="button" class="btn btn-sm btn-danger rounded-0 rounded-bottom w-100" (click)="deleteDraftSchedule(schedule)">
+                          <i class="bi bi-trash-fill"></i> Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  
                 </ng-container>
                 
                 <button type="button" class="btn bg-success-alt w-100" (click)="openSchedulePicker()"><i class="bi bi-plus-circle"></i> Add new schedule</button>
             </div>
           </div>
-          <button type="submit" class="btn bg-base w-100">Create Class</button>
-        </form>
+          <button class="btn bg-base w-100" (click)="createClass()">Create Class</button>
+        
       </div>
     </div>
   
@@ -149,7 +188,6 @@
                       <label class="form-label">Class Duration</label>
                       <select
                         class="form-select"
-                        id="durationSelect"
                         [(ngModel)]="selectedDuration"
                       >
                         <option *ngFor="let duration of durations" [value]="duration.value">

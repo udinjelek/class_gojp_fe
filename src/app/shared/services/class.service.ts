@@ -103,4 +103,12 @@ export class ClassService {
 
     return this.http.get<any>(this.apiUrl, { headers, params });
   }
+
+  public createCustomCourse(user_id: string, teacher_id: string, course_name: string, max_participants: number, course_schedule:any[]): Observable<ResponseApi> {
+    this.apiUrl = this.baseApi + '/classgojp/create_custom_course'
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const requestBody = { user_id, teacher_id, course_name, max_participants, course_schedule};
+
+    return this.http.post<ResponseApi>(this.apiUrl, requestBody, { headers });
+  }
 }

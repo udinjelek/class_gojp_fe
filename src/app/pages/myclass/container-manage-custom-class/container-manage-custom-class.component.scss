@@ -14,14 +14,11 @@
     }
   }
   
-  .card-body {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   
-    i {
-      font-size: 1.5rem;
-    }
+  .form-select {
+    position: relative;
+    z-index: 1050;
+    pointer-events: auto;
   }
   
   .table {

@@ -31,7 +31,7 @@ export class ContainerManageCustomClassComponent implements OnInit{
   schedule_hours_ignore_weekly_template: any[] = []; 
 
   durations: { value: number; display: string }[] = [];
-  selectedDuration: number | null = 60;
+  selectedDuration: number = 60;
   draftScheduleBooking: any[]=[]
   showSchedulePicker: boolean = false;
   schedule:any[]=[
@@ -142,7 +142,7 @@ export class ContainerManageCustomClassComponent implements OnInit{
   ];
   activeSection: string = ''; // To track which section is active
   className: string = '';
-  maxParticipants: number | null = null;
+  maxParticipants: number = 0;
   listScheduleCreate: any[] = [ {date:'2025-01-13', day:'Sunday', day_short:'Sun', time:'14:00 AM'}
                               , {date:'2025-01-20', day:'Sunday', day_short:'Sun', time:'18:00 AM'}
                               ]
@@ -166,7 +166,7 @@ export class ContainerManageCustomClassComponent implements OnInit{
     const maxDurationInMinutes = 480; // For example, up to 8 hours
     const increment = 30; // Increment by 30 minutes
 
-    for (let minutes = 0; minutes <= maxDurationInMinutes; minutes += increment) {
+    for (let minutes = 30; minutes <= maxDurationInMinutes; minutes += increment) {
       const hours = Math.floor(minutes / 60);
       const remainingMinutes = minutes % 60;
 
@@ -195,7 +195,7 @@ export class ContainerManageCustomClassComponent implements OnInit{
     });
     // Reset form inputs after submission
     this.className = '';
-    this.maxParticipants = null;
+    this.maxParticipants = 0;
     this.activeSection = ''; // Close the form after submission
   }
 
@@ -238,10 +238,9 @@ export class ContainerManageCustomClassComponent implements OnInit{
       const class_duration:number = this.selectedDuration || 0
       const available_time:number = this.checkAvailableTime(hour.id,this.schedule_hours_ignore_weekly_template)
       
+      const text_class_duration:string = this.formatMinutesToHoursAndMinutes(class_duration )
+      const text_available_time:string = this.formatMinutesToHoursAndMinutes(available_time)
       if (available_time < class_duration) {
-        const text_class_duration:string = this.formatMinutesToHoursAndMinutes(class_duration )
-        const text_available_time:string = this.formatMinutesToHoursAndMinutes(available_time)
-        
         Swal.fire({
           title: 'Error!',
           html: `Booking this class is not possible at the selected time.
@@ -254,65 +253,96 @@ export class ContainerManageCustomClassComponent implements OnInit{
       }
       else
       {
-        const initial_hour = hour.id;
-        const dayDetail = this.getDayAndShortDay(this.formattedDate)
-        const insertedHour = {
-          ...hour, // Keep existing fields
-          type: 'Draft', // Overwrites existing 'type'
-          status: 'Draft', // Adds new 'status'
-          duration: class_duration, // Overwrites existing 'duration'
-          date: this.formattedDate,
-          fullDay: dayDetail.fullDay,
-          shortDay: dayDetail.shortDay,
-          master_hour_id:initial_hour
-        };
-
-        this.draftScheduleBooking.push(insertedHour);
-
-        
-        console.log(this.draftScheduleBooking)
-
-        // 
-        // If class_duration > 30, add additional entries in increments of 30
-        if (class_duration > 30) {
-          
-          const increments = Math.floor(class_duration / 30) - 1; // Number of additional 30-minute slots needed
-
-          for (let i = 1; i <= increments; i++) {
-            const offsetId = initial_hour + i * 30; // Calculate the next hour's ID
-            const offsetHour = this.schedule_hours_ignore_weekly_template.find(h => h.id === offsetId);
-
-            if (offsetHour) {
-              const insertedOffsetHour = {
-                ...offsetHour,
-                status: 'Draft',
-                type: 'in session',
-                duration: 0, // Set duration to 0 for in-session blocks
-                date: this.formattedDate,
-                fullDay: dayDetail.fullDay,
-                shortDay: dayDetail.shortDay,
-                master_hour_id:initial_hour
-              };
-              this.draftScheduleBooking.push(insertedOffsetHour);
-            } else {
-              console.warn(`Hour with ID ${offsetId} not found in schedule.`);
-            }
+        // confirmation create class draft
+        Swal.fire({
+          title: 'Confirm Class Creation',
+          html: `Are you sure you want to create a class at <strong style="color: darkblue;">${hour.hour_ampm}</strong> for <strong style="color: darkgreen;">${text_class_duration}</strong>?`,
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, create it',
+          cancelButtonText: 'No, cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Action to take when "Yes" is clicked
+            console.log('Class confirmed!');
+            this.addDraftClassSchedule(hour)
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            // Action to take when "No" is clicked
+            console.log('Class creation canceled!');
           }
+        });
 
-          Swal.fire({
-            title: 'Success!',
-            html: `Class scheduled successfully at <strong style="color: darkgreen;">${hour.hour_24}</strong> for <strong>${this.formatMinutesToHoursAndMinutes(class_duration)}</strong>.`,
-            icon: 'success',
-            confirmButtonText: 'OK'
-          });
-          
-          this.closeSchedulePicker()
-          this.updateScheduleFromDraft()
-        }
       }
   }
 
+  addDraftClassSchedule(hour:any):void{
+    const class_duration:number = this.selectedDuration || 0
+    const initial_hour = hour.id;
+    const dayDetail = this.getDayAndShortDay(this.formattedDate)
+    const insertedHour = {
+      ...hour, // Keep existing fields
+      type: 'Draft', // Overwrites existing 'type'
+      status: 'Draft', // Adds new 'status'
+      duration: class_duration, // Overwrites existing 'duration'
+      date: this.formattedDate,
+      fullDay: dayDetail.fullDay,
+      shortDay: dayDetail.shortDay,
+      master_hour_id:initial_hour
+    };
+
+    this.draftScheduleBooking.push(insertedHour);
+
+    
+    console.log(this.draftScheduleBooking)
+
+    // 
+    // If class_duration > 30, add additional entries in increments of 30
+    if (class_duration > 30) {
+      
+      const increments = Math.floor(class_duration / 30) - 1; // Number of additional 30-minute slots needed
+
+      for (let i = 1; i <= increments; i++) {
+        const offsetId = initial_hour + i * 30; // Calculate the next hour's ID
+        const offsetHour = this.schedule_hours_ignore_weekly_template.find(h => h.id === offsetId);
+
+        if (offsetHour) {
+          const insertedOffsetHour = {
+            ...offsetHour,
+            status: 'Draft',
+            type: 'in session',
+            duration: 0, // Set duration to 0 for in-session blocks
+            date: this.formattedDate,
+            fullDay: dayDetail.fullDay,
+            shortDay: dayDetail.shortDay,
+            master_hour_id:initial_hour
+          };
+          this.draftScheduleBooking.push(insertedOffsetHour);
+        } else {
+          console.warn(`Hour with ID ${offsetId} not found in schedule.`);
+        }
+      }
+
+      Swal.fire({
+        title: 'Success!',
+        html: `Class scheduled successfully at <strong style="color: darkgreen;">${hour.hour_24}</strong> for <strong>${this.formatMinutesToHoursAndMinutes(class_duration)}</strong>.`,
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+      
+      this.closeSchedulePicker()
+      this.updateScheduleFromDraft()
+    }
+  }
+
   updateScheduleFromDraft(): void {
+    // Normalisasi
+    this.schedule_hours_ignore_weekly_template.forEach((item) => {
+      if (item.status === 'Draft') {
+        item.status = 'Available';
+        item.type = 'Available';
+      }
+    });
+
     // Filter draftScheduleBooking entries matching the current formatted date
     const draftsToReplace = this.draftScheduleBooking.filter(draft => draft.date === this.formattedDate);
   
@@ -415,5 +445,114 @@ export class ContainerManageCustomClassComponent implements OnInit{
         console.error('Error retrieving schedule:', error);
       }
     });
+  }
+
+  onDurationChange(value: number): void {
+    console.log('Selected duration:', value);
+    this.selectedDuration = value;
+  }
+
+  deleteDraftSchedule(schedule:any):void{
+    this.draftScheduleBooking = this.draftScheduleBooking.filter(
+      (item) => item.date !== schedule.date || item.master_hour_id !== schedule.master_hour_id
+    );
+
+    this.updateScheduleFromDraft()
+  }
+
+  setInputDefault(){
+    this.className = ''
+    this.maxParticipants = 0
+    this.draftScheduleBooking = []
+  }
+
+  createClass(){
+    // validasi data input
+    let msgError = ''
+    if (this.className == ''){
+      msgError += '<br>- The class name is provided.'
+    }
+    if (this.maxParticipants <= 0){
+      msgError += '<br>- Participants are greater than 0.'
+    }
+    if (this.draftScheduleBooking.length == 0){
+      msgError += '<br>- At least one schedule is added to the Schedule List.'
+    }
+
+
+    if (msgError !== ''){
+
+      msgError = 'Booking class failed. Please ensure the following:<br>' + msgError 
+      Swal.fire({
+        title: 'Error!',
+        html: msgError,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+    else {
+      Swal.fire({
+        title: 'Confirm Class Creation',
+        html: `Are you sure you want to create a custom course? <br><br>Course Name: <strong style="color: darkblue;">${this.className}</strong><br>Max Participants :<strong style="color: darkgreen;">${this.maxParticipants}</strong> persons<br>Total Classes: <strong style="color: darkred;">${this.countDraftClass()} </strong> times`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, create it',
+        cancelButtonText: 'No, cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Action to take when "Yes" is clicked
+          this.processCreateCustomClass()
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // Action to take when "No" is clicked
+          console.log('Custom Class creation canceled!');
+        }
+      });
+      
+    }
+
+  }
+
+  countDraftClass():number{
+    const draftCount = this.draftScheduleBooking.filter(schedule => schedule.type === 'Draft').length;
+    return draftCount
+  }
+
+  processCreateCustomClass(){
+    const draftSchedules = this.draftScheduleBooking.filter(schedule => schedule.type === 'Draft');
+    const user_id = this.authService.getLocalStorage('user_id') || ''
+    const teacher_id = user_id
+    this.classService.createCustomCourse(user_id, teacher_id, this.className, this.maxParticipants, draftSchedules).subscribe({
+      next: (response) => {
+        if (response.status) {
+          Swal.fire({
+            title: 'Success!',
+            html: `Create Custom Course Success.`,
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+          console.log('Create Custom Course Success');
+          this.setInputDefault()
+
+        } else {
+          console.log('Create Custom Course Failed');
+          Swal.fire({
+            title: 'Failed!',
+            html: `Create Custom Course Failed.`,
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
+      },
+      error: (error) => {
+        Swal.fire({
+          title: 'Error!',
+          html: `Create Custom Course Error.`,
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+        console.error('Error Create Custom Course:', error);
+      }
+    });
+    
   }
 }

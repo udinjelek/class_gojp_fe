@@ -28,11 +28,11 @@
                 <!-- mobile view -->
                 <h6 class="d-md-none">Please Select Date First</h6>
             </div>
-            <div *ngIf="formattedDate!=='' && myData.schedule.length == 0" class="text-center pt-3 card w-100">
+            <div *ngIf="formattedDate!=='' && countValidSchedule() == 0" class="text-center pt-3 card w-100">
                 <h5>You don’t have any classes scheduled for <br><span class="text-primary">{{dayOfWeek}}</span> <span class="text-danger"> {{formattedDate}}</span>.<br><br>Please set them up in <span class="text-danger">Manage Weekly Schedule Templates</span></h5>
             </div>
             <div class="table-responsive">
-                <table *ngIf="formattedDate!=='' && myData.schedule.length > 0" class="table w-100">
+                <table *ngIf="formattedDate!=='' && countValidSchedule() > 0" class="table w-100">
                   
                   <thead class="table-header-group" *ngIf="!isMobile">
                     <tr>

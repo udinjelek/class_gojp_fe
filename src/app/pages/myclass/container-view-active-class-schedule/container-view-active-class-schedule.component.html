@@ -23,6 +23,7 @@
                 <tr>
                   <th style="width:20px"></th>
                   <th>Course</th>
+                  <th>Duration</th>
                   <th>Description</th>
                   <th>Profile</th>
                   <th style="width:20px"></th>
@@ -41,13 +42,14 @@
                             <td>  <div *ngIf="schedule.course_name!=''">{{ schedule.course_name }}</div>
                                   <span>{{getDayNameFromDate(schedule.schedule_date)}}, {{ schedule.schedule_date }} at {{ schedule.schedule_hour }}</span>
                             </td>
-                            <td>
+                            <td style="vertical-align: middle; white-space: pre-line;">{{formatMinutesToHoursAndMinutesTable(schedule.duration)}}</td>
+                            <td style="vertical-align: middle;">
                                 <div *ngIf="schedule.criteria=='Learning with Sensai'">
                                   <div>{{ schedule.criteria }}</div>
                                   <span>{{ schedule.teacher_name }}</span>
                                 </div>
                                 <div *ngIf="schedule.criteria=='Teaching'">
-                                  <div>{{ schedule.criteria }} {{ schedule.course_type}} ({{ schedule.count_member }} /  {{ schedule.member_slots }})</div>
+                                  <div>{{ schedule.criteria }} {{ schedule.course_type}} ({{ schedule.count_member ?? 0 }} /  {{ schedule.member_slots }})</div>
                                   <span *ngIf="schedule.count_member==1">{{ schedule.student_name }}</span>
                                 </div>
                             </td>

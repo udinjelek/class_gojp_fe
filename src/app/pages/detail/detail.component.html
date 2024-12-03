@@ -58,10 +58,10 @@
           <div *ngIf="formattedDate===''" class="text-center m-3 p-3 card w-100">
             <h5>Please Select Date First</h5>
           </div>
-          <div *ngIf="formattedDate!=='' && teacherDetails.schedule.length == 0" class="text-center m-3 p-2 card w-100">
+          <div *ngIf="formattedDate!=='' && countValidSchedule() == 0" class="text-center m-3 p-2 card w-100">
               <h5>Teacher don’t have any classes scheduled<br>for <span class="text-primary">{{dayOfWeek}}</span> <span class="text-danger"> {{formattedDate}}</span><br><br>Please select another date</h5>
           </div>
-          <table *ngIf="formattedDate!=='' && teacherDetails.schedule.length > 0" class="table w-100">
+          <table *ngIf="formattedDate!=='' && countValidSchedule() > 0" class="table w-100">
             <thead>
               <tr>
                 <th>Date</th>
@@ -81,19 +81,31 @@
                   <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }" class="text-center" style="width:160px;">
                     
                     <ng-container [ngSwitch]="slot.status">
-                      <button *ngSwitchCase="'Available'" 
-                              class="btn btn-primary text-center" 
-                              style="width:100; text-align: center;"
-                              data-toggle="modal" 
-                              data-target="#bookingModal" 
-                              (click)="bookingThisSlot(slot, i)"
-                              (mouseenter)="hoveredIndex = i" 
-                              (mouseleave)="hoveredIndex = -1">
-                                {{ hoveredIndex === i ? 'Book Now' : slot.status }}
-                      </button>
+                      <ng-container *ngSwitchCase="'Available'">
+                        <button  
+                                class="btn btn-primary text-center" 
+                                style="width:100; text-align: center;"
+                                data-toggle="modal" 
+                                data-target="#bookingModal" 
+                                (click)="bookingThisSlot(slot, i)"
+                                (mouseenter)="hoveredIndex = i" 
+                                (mouseleave)="hoveredIndex = -1">
+                                  {{ hoveredIndex === i ? 'Book Now' : slot.status }}
+                        </button>
+                      </ng-container>
                       <ng-container *ngSwitchCase="'Booked'"  class="text-center text-danger">
                         <span *ngIf="slot.participant == 0 && slot.count_member == slot.member_slots">Full Booked</span>
                         <span *ngIf="slot.participant == 1">Booked by me</span>
+                        <button *ngIf="slot.participant == 0 && slot.count_member < slot.member_slots" 
+                                class="btn btn-primary text-center" 
+                                style="width:100; text-align: center;"
+                                data-toggle="modal" 
+                                data-target="#bookingModal" 
+                                (click)="joinThisGroup(slot, i)"
+                                (mouseenter)="hoveredIndex = i" 
+                                (mouseleave)="hoveredIndex = -1">
+                                {{ hoveredIndex === i ? 'Book Now' : 'Group (' + (slot.count_member || 0) + '/' + (slot.member_slots || 0) + ')' }}
+                        </button>
                       </ng-container> 
                       <span *ngSwitchDefault class="text-center">{{slot.status}}</span>
                     </ng-container>
