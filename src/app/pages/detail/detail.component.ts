@@ -36,13 +36,17 @@ export class DetailComponent implements OnInit {
     showBookingModal:boolean=false;
     showSuccessModal:boolean=false;
     successMessage:string='';
+    listGroupCourses: any=[];
+    scheduleGroupCourse: any=[];
 
-    
+    selectedDetailGroupRow: number | null = null;
+
     time_days: any[] = [];  
     time_hours: any[] = []; 
     dayOfWeek:string='';
     formattedDate:string='';
-    
+    isMobile: boolean = false;
+
   constructor(private route: ActivatedRoute, private authService: AuthService, private classService: ClassService,) {
     const currentDate = new Date();
     this.maxDate = new Date(currentDate.setMonth(currentDate.getMonth() + 3));
@@ -53,7 +57,7 @@ export class DetailComponent implements OnInit {
     this.teacherId = this.route.snapshot.paramMap.get('id') || '';
     console.log(this.teacherId )
     this.getDetailTeacher()
-    
+    this.checkScreenSize()
     // Find the teacher details by ID
     // load teacher data
     // if (this.teacherId) {
@@ -61,12 +65,19 @@ export class DetailComponent implements OnInit {
     // }
   }
 
+  checkScreenSize() {
+    this.isMobile = window.innerWidth < 768; // Adjust breakpoint value as needed
+  }
+
   getDetailTeacher(){
-    const id:string = this.teacherId
-      this.classService.getDetailTeacher(id).subscribe({
+    const teacher_id:string = this.teacherId;
+    const user_id:string = this.authService.getLocalStorage('user_id') || '';
+      this.classService.getDetailTeacher(teacher_id, user_id ).subscribe({
         next: (response) => {
           if (response.status) {
-            this.teacherDetails = response.data;
+            this.teacherDetails = response.data.profile;
+            this.listGroupCourses = response.data.listGroupCourses;
+            console.log(this.listGroupCourses)
             console.log('teachers data:', this.teacherDetails);
           } else {
             console.log('No teachers found:', response.message);
@@ -270,5 +281,78 @@ export class DetailComponent implements OnInit {
   countValidSchedule():number{
     const totalValidSchedule = this.teacherDetails.schedule.filter((schedule: any) => schedule.status !== '').length;
     return totalValidSchedule
+  }
+
+  toggleDetails(course:any, index: number): void {
+    // Toggle details for the clicked row
+    this.selectedDetailGroupRow = this.selectedDetailGroupRow === index ? null : index;
+    console.log(course)
+
+    const course_id = course.id
+    this.classService.getScheduleGroupCourse(course_id).subscribe({
+      next: (response) => {
+        if (response.status) {
+          this.scheduleGroupCourse = response.data;
+          
+        } else {
+          console.log('No schedule found:', response.message);
+        }
+      },
+      error: (error) => {
+        console.error('Error retrieving schedule:', error);
+      }
+    });
+  }
+
+  joinThisGroupX(course:any, event: Event)
+  {
+    event.stopPropagation();
+  }
+
+  getDayAndShortDay(dateString: string): { fullDay: string; shortDay: string } {
+    // Parse the input date string into a Date object
+    const date = new Date(dateString);
+  
+    // Array for full day names and short day names
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const shortDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  
+    // Get the day index (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+    const dayIndex = date.getDay();
+  
+    // Return the full day name and short day name
+    return {
+      fullDay: days[dayIndex],  // Full name of the day
+      shortDay: shortDays[dayIndex] // Abbreviated name of the day
+    };
+  }
+
+  toogleStatus(slot: any): void {
+    console.log(slot)
+    const teacherId = this.authService.getLocalStorage('user_id') || ""; // Retrieve teacher ID based on your app's logic
+    const date = slot.date; // Example date, replace with selected date from UI
+    const hourId = slot.hm_id; // Assuming slot has hour_id
+    const setUnavailable = slot.status === 'Available';
+
+    this.classService.setUnsetAvailability(teacherId, date, hourId, setUnavailable)
+    .subscribe({
+      next: (response) => {
+        console.log('API response:', response);
+        slot.status = setUnavailable ? 'Unavailable' : 'Available';
+      },
+      error: (error) => {
+        console.error('Error updating availability:', error);
+      }
+    });
+    slot.status = "Unavailable"
+
+
+  }
+
+  statusClicked(slot: any): void{
+    // if (slot.status === 'Booked'){
+    //   this.showDetailCourseSelected(slot)
+    // }
+
   }
 }

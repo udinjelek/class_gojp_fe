@@ -44,6 +44,15 @@ export class ClassService {
     return this.http.get<any>(this.apiUrl, { headers, params });
   }
 
+  public getScheduleGroupCourse(course_id: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.apiUrl = this.baseApi + '/classgojp/get_schedule_group_course'
+    const params = new HttpParams()
+      .set('course_id', course_id);
+   
+    return this.http.get<any>(this.apiUrl, { headers, params });
+  }
+
   public getScheduleTeacherIgnoreWeeklyTemplate(teacher_id: string, formattedDate: string, dayOfWeek: string, showUnavailable: boolean): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     this.apiUrl = this.baseApi + '/classgojp/get_schedule_teacher_ignore_weekly_template'
@@ -78,11 +87,12 @@ export class ClassService {
     return this.http.get<any>(this.apiUrl);
   }
 
-  public getDetailTeacher(id: string): Observable<any> {
+  public getDetailTeacher(teacher_id: string, user_id: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     this.apiUrl = this.baseApi + '/classgojp/get_detail_teacher'
     const params = new HttpParams()
-      .set('id', id);
+      .set('teacher_id', teacher_id)
+      .set('user_id', user_id);
 
     return this.http.get<any>(this.apiUrl, { headers, params });
   }

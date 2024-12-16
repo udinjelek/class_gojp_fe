@@ -18,6 +18,12 @@
   margin: 0 auto;
 }
 
+.table-list {
+  display: flex;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
 /* Container for the photo */
 .photo-container {
   width: 200px;
@@ -114,6 +120,13 @@
 
   .btn-primary:hover {
     background-color: #0056b3;
+  }
+  
+  .justify-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
   }
   
   /* Mobile responsiveness */
