@@ -47,6 +47,8 @@ export class DetailComponent implements OnInit {
     formattedDate:string='';
     isMobile: boolean = false;
 
+    showScheduleGroup:boolean = false;
+
   constructor(private route: ActivatedRoute, private authService: AuthService, private classService: ClassService,) {
     const currentDate = new Date();
     this.maxDate = new Date(currentDate.setMonth(currentDate.getMonth() + 3));
@@ -125,7 +127,8 @@ export class DetailComponent implements OnInit {
       
   }
 
-  joinThisGroup(slot:any, index:number): void{
+  joinThisGroup(course:any, index:number, event: Event): void{
+    event.stopPropagation();
     this.user_id = this.authService.getLocalStorage('user_id') || '';
     if (this.user_id == this.teacherId){
         const full_name = this.authService.getLocalStorage('full_name');
@@ -137,7 +140,7 @@ export class DetailComponent implements OnInit {
         });
     }
     else{
-      // this.prepareModal(slot, index);
+      // this.prepareModal(course, index);
       Swal.fire({
         title: 'Error!',
         html: `you can't join this class group yet, system under maintance.`,
@@ -304,10 +307,6 @@ export class DetailComponent implements OnInit {
     });
   }
 
-  joinThisGroupX(course:any, event: Event)
-  {
-    event.stopPropagation();
-  }
 
   getDayAndShortDay(dateString: string): { fullDay: string; shortDay: string } {
     // Parse the input date string into a Date object
@@ -354,5 +353,31 @@ export class DetailComponent implements OnInit {
     //   this.showDetailCourseSelected(slot)
     // }
 
+  }
+  
+  setShowScheduleGroup(val:boolean)
+  {
+    this.showScheduleGroup = val
+  }
+
+  showGroupScheduleDetails(course:any, index: number): void {
+    // Toggle details for the clicked row
+    this.selectedDetailGroupRow = this.selectedDetailGroupRow === index ? null : index;
+    console.log(course)
+
+    const course_id = course.id
+    this.classService.getScheduleGroupCourse(course_id).subscribe({
+      next: (response) => {
+        if (response.status) {
+          this.scheduleGroupCourse = response.data;
+          this.setShowScheduleGroup(true)
+        } else {
+          console.log('No schedule found:', response.message);
+        }
+      },
+      error: (error) => {
+        console.error('Error retrieving schedule:', error);
+      }
+    });
   }
 }

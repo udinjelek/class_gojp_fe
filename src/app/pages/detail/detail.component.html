@@ -42,9 +42,13 @@
       <!-- Group Schedule Section -->
       <div class="teacher-detail mt-4 row ">
         <div class="container col-12">
-          <h3>Group Schedule</h3>
+          <!-- pc view -->
+          <h3 class="d-none d-md-block">Group Schedule</h3>
+          <!-- mobile view -->
+          <h4 class="d-md-none">Group Schedule</h4> 
         </div>  
-        <div>
+        <!-- pc view -->
+        <div *ngIf="!isMobile">
           <table class="table w-100">
             <thead>
               <tr>
@@ -65,7 +69,7 @@
                   <td>{{course.name}}</td>
                   <td>{{course.current_join}}/{{course.member_slots}}</td>
                   <td>{{course.total_class}}</td>
-                  <td><button type="button" class="btn btn-primary" (click)="joinThisGroupX(course, $event)">Join Class</button></td>
+                  <td><button type="button" class="btn btn-primary" (click)="joinThisGroup(course, i, $event)">Join Class</button></td>
                 </tr>
                 <ng-container *ngIf="selectedDetailGroupRow === i">
                   <ng-container *ngTemplateOutlet="detailsGroupCourse;"></ng-container>
@@ -74,6 +78,37 @@
             </tbody>
           </table>
         </div>
+        <!-- Mobile view -->
+        <div class="d-md-none w-100">
+          <div *ngFor="let course of listGroupCourses; let i = index" class="card mb-3 shadow-sm">
+            <div class="card-header text-center bg-warning text-dark">
+              <b>{{ course.name }}</b>
+            </div>
+            <div class="card-body p-3 pb-1 m-0">
+              <div class="d-flex" style="width: 100%;">
+                <!-- Left Section -->
+                <div style="flex-grow: 1;">
+                  <p><span class="text-darkblue">Member:</span> {{ course.current_join }} / {{ course.member_slots }}</p>
+                  <p><span class="text-darkblue">Total Classes:</span> {{ course.total_class }}</p>
+                </div>
+
+                <!-- Right Section -->
+                <div style="width: 120px;">
+                  <button class="btn bg-success-2 p-0 d-flex flex-column align-items-center justify-content-center" 
+                          style="width: 120px; height: 60px;" 
+                          (click)="showGroupScheduleDetails(course, i)">
+                    <i class="bi bi-card-list" style="font-size: 1.5rem;"></i> <!-- Icon for "View Schedule" -->
+                    <span class="mt-1" style="font-size: 0.75rem;">View Schedule</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="btn bg-primary-book text-white text-center rounded-0 rounded-bottom" (click)="joinThisGroup(course, i,  $event)">
+                Join Class
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- Schedule Section -->
@@ -146,7 +181,7 @@
                                     style="width:100; text-align: center;"
                                     data-toggle="modal" 
                                     data-target="#bookingModal" 
-                                    (click)="joinThisGroup(slot, i)"
+                                    (click)="joinThisGroup(slot, i, $event)"
                                     (mouseenter)="hoveredIndex = i" 
                                     (mouseleave)="hoveredIndex = -1">
                                     {{ hoveredIndex === i ? 'Book Now' : 'Group (' + (slot.count_member || 0) + '/' + (slot.member_slots || 0) + ')' }}
@@ -162,8 +197,8 @@
               </table>
           </div>
           
+          <!-- Mobile view -->
           <div class="d-md-none w-100" style="width: 100%;">
-            <!-- Mobile view -->
             <ng-container *ngFor="let slot of teacherDetails.schedule; let i = index"> 
                 <div class="p-3 border" *ngIf="slot.status !!= ''">
                   <div class="d-flex flex-column">
@@ -197,7 +232,7 @@
                               class="btn btn-primary text-center w-100 ms-5" 
                               data-toggle="modal" 
                               data-target="#bookingModal" 
-                              (click)="joinThisGroup(slot, i)"
+                              (click)="joinThisGroup(slot, i, $event)"
                               (mouseenter)="hoveredIndex = i" 
                               (mouseleave)="hoveredIndex = -1">
                                 {{ hoveredIndex === i ? 'Book Now' : 'Group (' + (slot.count_member || 0) + '/' + (slot.member_slots || 0) + ')' }}
@@ -273,3 +308,40 @@
     </td>
   </tr>
 </ng-template>
+
+<!-- Schedule Modal -->
+<div class="modal" tabindex="-1" [ngClass]="{'d-block': showScheduleGroup}" style="background-color: rgba(0,0,0,0.5);">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content position-relative">
+      
+      <!-- Card-style Header -->
+      <div class="text-center bg-warning text-dark rounded-0 rounded-top">
+        <h5 class="m-2">Schedule Course</h5>
+      </div>
+      
+      <!-- Modal Body -->
+      <div>
+        <table class="table w-100 m-0">
+          <tbody>
+            <tr *ngFor="let schedule of scheduleGroupCourse">
+              <td><i class="bi bi-calendar-event text-danger"></i></td>
+              <td>
+                {{ getDayAndShortDay(schedule.schedule_date).fullDay }}
+                <br><span class="text-secondary">Duration:</span> 
+              </td>
+              <td class="text-secondary">
+                <span class="text-danger">{{ schedule.schedule_date }}</span> at 
+                <span class="text-primary">{{ schedule.hour_ampm }}</span>
+                <br>
+                <span class="font-weight-bold text-success">{{ formatMinutesToHoursAndMinutes(schedule.duration) }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Close Button -->
+      <button class="btn btn-danger rounded-0 rounded-bottom" (click)="setShowScheduleGroup(false)">Close</button>
+    </div>
+  </div>
+</div>
