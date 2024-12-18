@@ -276,6 +276,29 @@
         </div>
       </div>
 
+
+      <!-- Booking Confirmation Group Modal -->
+      <div class="modal" tabindex="-1" [ngClass]="{'d-block': showBookingGroupModal}" style="background-color: rgba(0,0,0,0.5)">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Booking Confirmation</h5>
+              <button type="button" class="btn-close" aria-label="Close" (click)="closeBookingGroupModal()"></button>
+            </div>
+            <div class="modal-body text-center">
+              <p>Are you sure you want to book group class </p>
+              <p class="text-danger"><b>{{groupCourseSelected.name}}</b></p>
+              <p>with Sensai <b>{{teacherDetails.name}}</b>?</p>
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="closeBookingGroupModal()">Cancel</button>
+              <button type="button" class="btn btn-primary" (click)="confirmBookingGroup()">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
 </div>
 
 <ng-template #detailsGroupCourse>

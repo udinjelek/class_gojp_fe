@@ -122,10 +122,10 @@ export class ClassService {
     return this.http.post<ResponseApi>(this.apiUrl, requestBody, { headers });
   }
 
-  public joinCourse(user_id: string, course_id: string): Observable<ResponseApi> {
+  public joinCourse(user_id: string, course_id: string, student_id: string): Observable<ResponseApi> {
     this.apiUrl = this.baseApi + '/classgojp/join_course'
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const requestBody = { user_id, course_id};
+    const requestBody = { user_id, course_id, student_id};
 
     return this.http.post<ResponseApi>(this.apiUrl, requestBody, { headers });
   }

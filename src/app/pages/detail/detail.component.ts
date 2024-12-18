@@ -34,6 +34,7 @@ export class DetailComponent implements OnInit {
     modalSlot: any=[];
     modalSlotIndex: number = -1;
     showBookingModal:boolean=false;
+    showBookingGroupModal:boolean = false;
     showSuccessModal:boolean=false;
     successMessage:string='';
     listGroupCourses: any=[];
@@ -48,6 +49,7 @@ export class DetailComponent implements OnInit {
     isMobile: boolean = false;
 
     showScheduleGroup:boolean = false;
+    groupCourseSelected: any = {name:''};
 
   constructor(private route: ActivatedRoute, private authService: AuthService, private classService: ClassService,) {
     const currentDate = new Date();
@@ -140,14 +142,41 @@ export class DetailComponent implements OnInit {
         });
     }
     else{
-      // this.prepareModal(course, index);
-      Swal.fire({
-        title: 'Error!',
-        html: `you can't join this class group yet, system under maintance.`,
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
+      this.groupCourseSelected = course
+      console.log(course)
+      this.prepareGroupModal(course, index);
     }
+  }
+  
+  joinCourse(){
+    this.user_id = this.authService.getLocalStorage('user_id') || '';
+    const course_id = this.groupCourseSelected.id
+    const student_id = this.user_id // kebetulan user (orang yg login, dan student adalah orang yg sama)
+    this.classService.joinCourse(this.user_id, course_id, student_id).subscribe({
+      next: (response) => {
+        if (response.status) {
+          this.getDetailTeacher()
+          
+        } else {
+          Swal.fire({
+                      title: 'Error!',
+                      text: response.message,
+                      icon: 'error',
+                      confirmButtonText: 'OK'
+                    });
+        }
+      },
+      error: (error) => {
+        console.log(error)
+        Swal.fire({
+          title: 'Error!',
+          text: error.error.message,
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    });
+    
   }
 
   prepareModal(slot: any, index:number): void {
@@ -156,8 +185,18 @@ export class DetailComponent implements OnInit {
     this.showBookingModal = true;  // Show the booking modal
   }
 
+  prepareGroupModal(slot: any, index:number): void {
+    // this.modalSlotIndex = index;
+    // this.modalSlot = slot;
+    this.showBookingGroupModal = true;  // Show the booking modal
+  }
+
   closeBookingModal(): void {
     this.showBookingModal = false;  // Hide the booking modal
+  }
+
+  closeBookingGroupModal(): void {
+    this.showBookingGroupModal = false;  // Hide the booking modal
   }
 
   confirmBooking(): void {
@@ -165,6 +204,11 @@ export class DetailComponent implements OnInit {
     this.createCourseBystudent()
     
     this.showBookingModal = false;  // Hide the booking modal
+  }
+
+  confirmBookingGroup(): void {
+    this.joinCourse()
+    this.showBookingGroupModal = false;  // Hide the booking modal
   }
   
   onDateChange(event: any): void {
