@@ -210,6 +210,10 @@ export class NavComponent implements OnInit {
     const full_name = this.authService.getLocalStorage('full_name');
     this.authService.logout();
     this.router.navigate(['/']);
+    this.full_name = ''
+    this.role = ''
+    this.user_id = ''
+    this.userProfilePic = ''
     Swal.fire({
       title: 'Logout Successful!',
       html: `Thank you for spending your time with us, <strong style="color: darkblue;">${full_name}</strong>. <br />We hope to see you again soon!`,

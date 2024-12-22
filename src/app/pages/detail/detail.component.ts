@@ -141,6 +141,14 @@ export class DetailComponent implements OnInit {
           confirmButtonText: 'OK'
         });
     }
+    else if (this.user_id == ''){
+      Swal.fire({
+        title: 'Error!',
+        html: `<strong style="color: darkblue;"></strong> Please log in before booking a class.`,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
     else{
       this.groupCourseSelected = course
       console.log(course)
@@ -150,13 +158,20 @@ export class DetailComponent implements OnInit {
   
   joinCourse(){
     this.user_id = this.authService.getLocalStorage('user_id') || '';
-    const course_id = this.groupCourseSelected.id
+    const course_id = this.groupCourseSelected.course_id
     const student_id = this.user_id // kebetulan user (orang yg login, dan student adalah orang yg sama)
     this.classService.joinCourse(this.user_id, course_id, student_id).subscribe({
       next: (response) => {
         if (response.status) {
           this.getDetailTeacher()
-          
+          this.getScheduleTeacher(this.teacherId, this.user_id, this.formattedDate, this.dayOfWeek, true);
+          // handle success
+          Swal.fire({
+            title: 'Complate!',
+            html: `Congratulations! You've successfully joined the <strong style="color: darkblue;">${this.groupCourseSelected.name}</strong> class.`,
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
         } else {
           Swal.fire({
                       title: 'Error!',
@@ -335,7 +350,7 @@ export class DetailComponent implements OnInit {
     this.selectedDetailGroupRow = this.selectedDetailGroupRow === index ? null : index;
     console.log(course)
 
-    const course_id = course.id
+    const course_id = course.course_id
     this.classService.getScheduleGroupCourse(course_id).subscribe({
       next: (response) => {
         if (response.status) {

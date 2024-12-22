@@ -69,7 +69,18 @@
                   <td>{{course.name}}</td>
                   <td>{{course.current_join}}/{{course.member_slots}}</td>
                   <td>{{course.total_class}}</td>
-                  <td><button type="button" class="btn btn-primary" (click)="joinThisGroup(course, i, $event)">Join Class</button></td>
+                  <td>
+                    <span *ngIf="course.is_user_join == 0 && course.current_join < course.member_slots">
+                        <button type="button" class="btn bg-primary-book text-white" (click)="joinThisGroup(course, i, $event)">Join Class</button>
+                    </span>
+                    <span *ngIf="course.is_user_join == 1">
+                        <button type="button" class="btn bg-success-2" >Already Enrolled</button>
+                    </span>
+                    <span *ngIf="course.is_user_join == 0 && course.current_join == course.member_slots">
+                      <button type="button" class="btn btn-secondary" >Class Full</button>
+                    </span>
+                  </td>
+                  
                 </tr>
                 <ng-container *ngIf="selectedDetailGroupRow === i">
                   <ng-container *ngTemplateOutlet="detailsGroupCourse;"></ng-container>
@@ -103,9 +114,21 @@
                 </div>
               </div>
             </div>
-            <div class="btn bg-primary-book text-white text-center rounded-0 rounded-bottom" (click)="joinThisGroup(course, i,  $event)">
-                Join Class
-            </div>
+            <ng-container *ngIf="course.is_user_join == 0 && course.current_join < course.member_slots">
+                  <div class="btn bg-primary-book text-white text-center rounded-0 rounded-bottom" (click)="joinThisGroup(course, i,  $event)">
+                      Join Class
+                  </div>
+            </ng-container>
+            <ng-container *ngIf="course.is_user_join == 1">
+                  <div class="btn bg-success-2 text-center rounded-0 rounded-bottom">
+                    Already Enrolled
+                  </div>
+            </ng-container>
+            <ng-container *ngIf="course.is_user_join == 0 && course.current_join == course.member_slots">
+                  <div class="btn btn-secondary text-center rounded-0 rounded-bottom">
+                    Class Full
+                  </div>
+            </ng-container>
           </div>
         </div>
 
@@ -157,7 +180,7 @@
                     <tr *ngIf="slot.status!=''">
                       <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }">{{slot.day}}</td>
                       <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }"><span class="text-danger">{{slot.date}}</span> at <span class="text-primary">{{slot.time}}</span></td>
-                      <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }"><span *ngIf="slot.count_member > 0">{{slot.member_slots}}/{{slot.count_member}}</span><span *ngIf="!slot.count_member || slot.count_member==0">-</span></td>
+                      <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }"><span *ngIf="slot.count_member > 0">{{slot.count_member}}/{{slot.member_slots}}</span><span *ngIf="!slot.count_member || slot.count_member==0">-</span></td>
                       <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }" class="text-center" style="width:160px;">
                         
                         <ng-container [ngSwitch]="slot.status">
