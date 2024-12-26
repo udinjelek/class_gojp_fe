@@ -122,11 +122,32 @@ export class ClassService {
     return this.http.post<ResponseApi>(this.apiUrl, requestBody, { headers });
   }
 
+  public uploadProfilPic(user_id: string, form_data: FormData, file_name: string): Observable<any> {
+    this.apiUrl = this.baseApi + '/classgojp/upload-profile-pic';
+
+    // Set request headers, if necessary
+    const headers = new HttpHeaders(); // If you don't need custom headers, this can be empty
+
+    form_data.append('user_id', user_id);
+    form_data.append('file_name', file_name);
+
+    return this.http.post<any>(this.apiUrl, form_data, { headers });
+  }
+
   public joinCourse(user_id: string, course_id: string, student_id: string): Observable<ResponseApi> {
     this.apiUrl = this.baseApi + '/classgojp/join_course'
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const requestBody = { user_id, course_id, student_id};
 
     return this.http.post<ResponseApi>(this.apiUrl, requestBody, { headers });
+  }
+
+  public getDetailSelf(user_id: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.apiUrl = this.baseApi + '/classgojp/get_detail_self'
+    const params = new HttpParams()
+      .set('user_id', user_id);
+
+    return this.http.get<any>(this.apiUrl, { headers, params });
   }
 }

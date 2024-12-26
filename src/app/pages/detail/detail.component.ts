@@ -424,7 +424,7 @@ export class DetailComponent implements OnInit {
     this.selectedDetailGroupRow = this.selectedDetailGroupRow === index ? null : index;
     console.log(course)
 
-    const course_id = course.id
+    const course_id = course.course_id
     this.classService.getScheduleGroupCourse(course_id).subscribe({
       next: (response) => {
         if (response.status) {

@@ -6,7 +6,7 @@
   </ng-container>
   <!-- Profile Picture for Mobile (Second Right) -->
   <div class="d-lg-none ms-auto">
-    <img *ngIf="isLoggedIn()" src="{{userProfilePic}}" alt="Profile" class="profile-pic me-3" />
+    <img *ngIf="isLoggedIn()" src="{{userProfilePic}}" alt="Profile" class="profile-pic me-3" [routerLink]="['/profile-settings']"/>
   </div>
 
   <!-- Burger Menu -->
@@ -38,7 +38,7 @@
 
       <!-- Profile Picture for Desktop (Top Right) -->
       <li class="nav-item d-none d-lg-block">
-        <img *ngIf="isLoggedIn()" src="{{userProfilePic}}" alt="Profile" class="profile-pic ms-1 me-1" />
+        <img *ngIf="isLoggedIn()" src="{{userProfilePic}}" alt="Profile" class="profile-pic ms-1 me-1" [routerLink]="['/profile-settings']"/>
       </li>
     </ul>
   </div>

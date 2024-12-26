@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { MainComponent } from './pages/main/main.component';
 import { DetailComponent } from './pages/detail/detail.component'; // Import the detail component
 import { MyclassComponent } from './pages/myclass/myclass.component';
+import { ProfileSettingsComponent } from './pages/profile-settings/profile-settings.component';
 export const routes: Routes = [
     {
         path: '',
@@ -14,5 +15,9 @@ export const routes: Routes = [
     {
         path: 'my-class',  
         component: MyclassComponent
+    },
+    {
+        path: 'profile-settings',  
+        component: ProfileSettingsComponent
     }
 ];

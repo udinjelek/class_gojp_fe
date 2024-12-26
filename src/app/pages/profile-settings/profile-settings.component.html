@@ -1,0 +1,99 @@
+<div class="container-fluid">
+    <!-- Top Content -->
+    <app-nav></app-nav>
+
+    <div class="container my-5" style="max-width: 900px;">
+
+        <!-- Header Section -->
+        <div class="text-center mb-4">
+            <h1 class="text-primary">Edit Your Profile</h1>
+            <p class="text-muted">Update your personal information and settings below.</p>
+        </div>
+
+        <!-- Profile Picture Section -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body d-flex flex-column align-items-center">
+                <div class="photo-container">
+                    <img [src]="userData.profile_pic" class="user-photo" alt="{{userData.full_name}}">
+                </div>
+                <input 
+                    type="file" 
+                    id="photoUpload" 
+                    (change)="onPhotoSelected($event)" 
+                    hidden 
+                    accept="image/*">
+                <button class="btn btn-outline-primary btn-sm mt-3" (click)="triggerFileInput()">Change Photo</button>
+            </div>
+        </div>
+
+
+
+        <!-- Personal Details Form -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="m-0">Personal Information</h5>
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="saveProfile()" #profileForm="ngForm">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" id="name" class="form-control" [(ngModel)]="userData.full_name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone_number" class="form-label">Phone Number</label>
+                        <input type="text" id="phone_number" class="form-control" [(ngModel)]="userData.phone_number" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" id="location" class="form-control" [(ngModel)]="userData.location" name="location">
+                    </div>
+                    <div class="mb-3" *ngIf="userData.role=='teacher'">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea id="description" class="form-control" [(ngModel)]="userData.description" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3" *ngIf="userData.role=='teacher'">
+                        <label for="about" class="form-label">About</label>
+                        <textarea id="about" class="form-control" [(ngModel)]="userData.about" name="about" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3" *ngIf="userData.role=='teacher'">
+                        <label for="testimonial" class="form-label">Testimonial</label>
+                        <textarea id="testimonial" class="form-control" [(ngModel)]="userData.testimonial" name="testimonial" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3" *ngIf="userData.role=='teacher'">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea id="message" class="form-control" [(ngModel)]="userData.message" name="message" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Password Update Form -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="m-0">Change Password</h5>
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="updatePassword()" #passwordForm="ngForm">
+                    <div class="mb-3">
+                        <label for="currentPassword" class="form-label">Current Password</label>
+                        <input type="password" id="currentPassword" class="form-control" [(ngModel)]="passwords.current" name="currentPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">New Password</label>
+                        <input type="password" id="newPassword" class="form-control" [(ngModel)]="passwords.new" name="newPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                        <input type="password" id="confirmPassword" class="form-control" [(ngModel)]="passwords.confirm" name="confirmPassword" required>
+                    </div>
+                    <button class="btn btn-warning w-100">Update Password</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Save Changes Button -->
+        <div class="text-center">
+            <button class="btn btn-success px-5 py-2" (click)="saveProfile()">Save Changes</button>
+        </div>
+    </div>
+</div>

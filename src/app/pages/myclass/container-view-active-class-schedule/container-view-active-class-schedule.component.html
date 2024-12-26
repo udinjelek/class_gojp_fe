@@ -32,19 +32,19 @@
               <tbody>
                 <tr *ngFor="let schedule of schedulesList"
                     [ngClass]="{
-                      'bg-info text-white': schedule.criteria == 'Learning with Sensai', 
-                      'bg-warning text-dark': schedule.criteria != 'Learning with Sensai'
+                      'bg-info text-white': schedule.criteria == 'Learning with Sensei', 
+                      'bg-warning text-dark': schedule.criteria != 'Learning with Sensei'
                     }"
                     class="d-none d-md-table-row">
-                            <td [ngClass]="{  'bg-info': schedule.criteria == 'Learning with Sensai', 
-                                              'bg-warning':schedule.criteria!= 'Learning with Sensai'}">
+                            <td [ngClass]="{  'bg-info': schedule.criteria == 'Learning with Sensei', 
+                                              'bg-warning':schedule.criteria!= 'Learning with Sensei'}">
                             </td>
                             <td>  <div *ngIf="schedule.course_name!=''">{{ schedule.course_name }}</div>
                                   <span>{{getDayNameFromDate(schedule.schedule_date)}}, {{ schedule.schedule_date }} at {{ schedule.schedule_hour }}</span>
                             </td>
                             <td style="vertical-align: middle; white-space: pre-line;">{{formatMinutesToHoursAndMinutesTable(schedule.duration)}}</td>
                             <td style="vertical-align: middle;">
-                                <div *ngIf="schedule.criteria=='Learning with Sensai'">
+                                <div *ngIf="schedule.criteria=='Learning with Sensei'">
                                   <div>{{ schedule.criteria }}</div>
                                   <span>{{ schedule.teacher_name }}</span>
                                 </div>
@@ -54,7 +54,7 @@
                                 </div>
                             </td>
                             <td>
-                              <div *ngIf="schedule.criteria=='Learning with Sensai'">
+                              <div *ngIf="schedule.criteria=='Learning with Sensei'">
                                           <img [src]="schedule.teacher_profile_pic" alt="" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
                               </div>
                               <div *ngIf="schedule.criteria=='Teaching'">
@@ -69,8 +69,8 @@
                                           </ng-template>
                               </div>
                             </td>
-                            <td [ngClass]="{  'bg-info': schedule.criteria == 'Learning with Sensai', 
-                                              'bg-warning':schedule.criteria!= 'Learning with Sensai'}">
+                            <td [ngClass]="{  'bg-info': schedule.criteria == 'Learning with Sensei', 
+                                              'bg-warning':schedule.criteria!= 'Learning with Sensei'}">
                             </td>
                 </tr>
               </tbody>
@@ -82,7 +82,7 @@
             <div *ngFor="let schedule of schedulesList" class="card mb-3 shadow-sm">
               <div class="card-header text-center" 
                   [ngClass]="{
-                    'bg-info text-white': schedule.criteria === 'Learning with Sensai', 
+                    'bg-info text-white': schedule.criteria === 'Learning with Sensei', 
                     'bg-warning text-dark': schedule.criteria === 'Teaching'
                   }">
                 {{ schedule.criteria }}<br><strong>{{ schedule.course_name }}</strong>
@@ -93,7 +93,7 @@
                   <!-- Left Section -->
                   <div style="flex-grow: 1;">
                     <p><strong>Description:</strong> {{ schedule.course_description }}</p>
-                    <p *ngIf="schedule.criteria === 'Learning with Sensai'"><strong>Teacher:</strong> {{ schedule.teacher_name }}</p>
+                    <p *ngIf="schedule.criteria === 'Learning with Sensei'"><strong>Teacher:</strong> {{ schedule.teacher_name }}</p>
                     <p *ngIf="schedule.criteria === 'Teaching'"><strong>Student:</strong> {{ schedule.student_name }}</p>
                   </div>
                 
@@ -110,7 +110,7 @@
                             </button>
                         </ng-template>
                     </ng-container>
-                    <ng-container *ngIf="schedule.criteria === 'Learning with Sensai'">
+                    <ng-container *ngIf="schedule.criteria === 'Learning with Sensei'">
                           <img [src]="schedule.teacher_profile_pic" alt="" class="rounded-circle" style="width: 60px; height: 60px; object-fit: cover;">
                     </ng-container>
                     
