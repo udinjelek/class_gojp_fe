@@ -50,7 +50,27 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
   saveProfile(){
-
+    const user_data = this.userData;
+    this.classService.updateProfile(user_data).subscribe({
+      next: (response: any) => {
+        console.log('Upload successful', response);
+        // this.userData.profile_pic = response.new_profile_pic; // Update profile picture URL from response
+        Swal.fire({
+                    title: 'Complate!',
+                    html: `Upload successful.`,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                  });
+      },
+      error: (error) => {
+          Swal.fire({
+                    title: 'Error',
+                    text: 'Upload failed!',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                  });
+      }
+    });
   }
 
   uploadPhoto() {
@@ -108,7 +128,41 @@ export class ProfileSettingsComponent implements OnInit {
 
   
   updatePassword(){
+    const user_id:string = this.authService.getLocalStorage('user_id') || '';
+    const passwords_current = this.passwords.current
+    const passwords_new =  this.passwords.new
+    const passwords_confirm  =  this.passwords.confirm
 
+    if ( !this.isMatch(passwords_new, passwords_confirm) ){
+      Swal.fire({
+        title: 'Error!',
+        html: `Your new password and password confirmation must match and cannot be left blank. Please ensure both fields are identical.`,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+
+      return;
+    }
+
+    // Call the class service to upload the profile picture
+    this.classService.updatePassword(user_id, passwords_current, passwords_new, passwords_confirm).subscribe({
+      next: (response: any) => {
+        Swal.fire({
+          title: 'Complate!',
+          html: `Password updated successfully.`,
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+      },
+      error: (error) => {
+          Swal.fire({
+                    title: 'Error!',
+                    html: `Update Password failed!  <br>${error.error.message} `,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                  });
+      }
+    });
   }
 
   triggerFileInput() {
@@ -133,5 +187,9 @@ export class ProfileSettingsComponent implements OnInit {
       // Call the upload function
       this.uploadPhoto();
     }
+  }
+
+  isMatch(str1:string, str2:string):boolean{
+    return str1 == str2 && str1 != '';
   }
 }

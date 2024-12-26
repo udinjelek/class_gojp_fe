@@ -36,12 +36,12 @@
             <div class="card-body">
                 <form (ngSubmit)="saveProfile()" #profileForm="ngForm">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" id="name" class="form-control" [(ngModel)]="userData.full_name" name="name" required>
+                        <label for="full_name" class="form-label">Name</label>
+                        <input type="text" id="full_name" class="form-control" [(ngModel)]="userData.full_name" name="full_name" required>
                     </div>
                     <div class="mb-3">
                         <label for="phone_number" class="form-label">Phone Number</label>
-                        <input type="text" id="phone_number" class="form-control" [(ngModel)]="userData.phone_number" name="name" required>
+                        <input type="text" id="phone_number" class="form-control" [(ngModel)]="userData.phone_number" name="phone_number" required>
                     </div>
                     <div class="mb-3">
                         <label for="location" class="form-label">Location</label>
@@ -64,6 +64,11 @@
                         <textarea id="message" class="form-control" [(ngModel)]="userData.message" name="message" rows="3"></textarea>
                     </div>
                 </form>
+
+                <!-- Save Changes Button -->
+                <div class="text-center">
+                    <button class="btn btn-success px-5 py-2" (click)="saveProfile()">Save Changes</button>
+                </div>
             </div>
         </div>
 
@@ -80,20 +85,32 @@
                     </div>
                     <div class="mb-3">
                         <label for="newPassword" class="form-label">New Password</label>
-                        <input type="password" id="newPassword" class="form-control" [(ngModel)]="passwords.new" name="newPassword" required>
+                        <div class="input-group mb-3">
+                            <input type="password" id="newPassword" class="form-control" [(ngModel)]="passwords.new" name="newPassword" required>
+                            <!-- Right icon for success check -->
+                            <span class="input-group-text bg-transparent border-1">
+                              <i *ngIf="isMatch(passwords.new, passwords.confirm)" class="bi bi-check-circle-fill text-success"></i>
+                              <i *ngIf="!isMatch(passwords.new, passwords.confirm)" class="bi bi-x-circle-fill text-warning"></i>
+                            </span>
+                        </div>
+                        
                     </div>
                     <div class="mb-3">
                         <label for="confirmPassword" class="form-label">Confirm New Password</label>
-                        <input type="password" id="confirmPassword" class="form-control" [(ngModel)]="passwords.confirm" name="confirmPassword" required>
+                        <div class="input-group mb-3">
+                            <input type="password" id="confirmPassword" class="form-control" [(ngModel)]="passwords.confirm" name="confirmPassword" required>
+                            <!-- Right icon for success check -->
+                            <span class="input-group-text bg-transparent border-1">
+                                <i *ngIf="isMatch(passwords.new, passwords.confirm)" class="bi bi-check-circle-fill text-success"></i>
+                                <i *ngIf="!isMatch(passwords.new, passwords.confirm)" class="bi bi-x-circle-fill text-warning"></i>
+                              </span>
+                        </div>
                     </div>
                     <button class="btn btn-warning w-100">Update Password</button>
                 </form>
             </div>
         </div>
 
-        <!-- Save Changes Button -->
-        <div class="text-center">
-            <button class="btn btn-success px-5 py-2" (click)="saveProfile()">Save Changes</button>
-        </div>
+        
     </div>
 </div>

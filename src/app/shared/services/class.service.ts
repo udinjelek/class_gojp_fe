@@ -142,6 +142,24 @@ export class ClassService {
     return this.http.post<ResponseApi>(this.apiUrl, requestBody, { headers });
   }
 
+  public updatePassword(user_id: string, passwords_current: string, passwords_new: string, passwords_confirm: string ): Observable<ResponseApi> {
+    this.apiUrl = this.baseApi + '/classgojp/update_password'
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const requestBody = { user_id, passwords_current, passwords_new, passwords_confirm};
+
+    return this.http.post<ResponseApi>(this.apiUrl, requestBody, { headers });
+  }
+
+  public updateProfile(user_data:any): Observable<ResponseApi> {
+    this.apiUrl = this.baseApi + '/classgojp/update_profile'
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const requestBody = { user_data};
+
+    return this.http.post<ResponseApi>(this.apiUrl, requestBody, { headers });
+  }
+
+  
+
   public getDetailSelf(user_id: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     this.apiUrl = this.baseApi + '/classgojp/get_detail_self'
