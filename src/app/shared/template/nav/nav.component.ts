@@ -35,6 +35,9 @@ export class NavComponent implements OnInit {
     this.authService.signupRequest.subscribe(() => {
       this.openSignUpModal();
     });
+    this.authService.updateUserProfilePicRequest.subscribe(() => {
+      this.updateUserProfilePic();
+    });
   }
 
   constructor(private authService: AuthService , private router: Router) {
@@ -224,6 +227,7 @@ export class NavComponent implements OnInit {
 
   updateUserProfilePic(){
     const profile_pic = this.authService.getLocalStorage('profile_pic')
+    const full_name = this.authService.getLocalStorage('full_name')
     if (profile_pic){
       this.userProfilePic =  profile_pic ;
     }
@@ -231,6 +235,7 @@ export class NavComponent implements OnInit {
       this.userProfilePic =  this.profile_pic ;
     }
 
+    this.full_name = full_name;
     
   }
 
@@ -274,4 +279,5 @@ export class NavComponent implements OnInit {
     }
   }
   
+
 }

@@ -6,10 +6,38 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Gray shadow for the photo */
   }
   
-  /* User photo styling */
-  .user-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 15px;
-  }
+/* User photo styling */
+.user-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.test-dark2{
+  color: rgb(41, 38, 38);
+}
+
+
+.bg-base{
+  background-color: rgb(255, 99, 99);
+}
+
+.bg-base2{
+  background-color:rgb(244, 210, 210);
+}
+
+.bg-success-alt{
+  background-color: rgb(70, 179, 105);
+  color:azure
+}
+
+.bg-alt{
+  background-color: rgb(244, 210, 210);
+  color:rgb(41, 38, 38);
+}
+
+.bg-alt2{
+  background-color: #A19AD3; /* Black background */
+  color: #fff; /* White text */
+}

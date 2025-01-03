@@ -61,6 +61,32 @@
   top: -50px; /* Moves the circle upwards to be partially above the modal */
 }
 
+.full-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 300px;   /* Set the width you want */
+}
+
+.bg-alt2{
+    background-color: #A19AD3; /* Black background */
+    color: #fff; /* White text */
+}
+
+.bg-base2{
+  background-color:rgb(244, 210, 210);
+}
+
+.bg-dark2{
+  background-color: #3b3a3c; /* Black background */
+  color: #fff; /* White text */
+}
+
+.bg-base{
+  background-color: rgb(255, 99, 99);
+}
+
 /* Handle alignment for mobile and desktop */
 @media (max-width: 991px) {
 /* Profile picture will be second right in mobile view */
@@ -89,7 +115,36 @@
   .details {
     display: none;
   }
+
+  .full-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 140px;   /* Set the width you want */
+  }
+  
 }
+
+/* For the <ul> in the navbar */
+.navbar-nav {
+  /* Default background for desktop and large screens */
+  background-color: transparent;
+
+  /* For small screens (mobile view) */
+  @media (max-width: 991px) {
+    background-color: #333;  /* Dark background color */
+    margin-top: 1rem;      /* Optional: padding-top for better spacing */
+
+    .nav-link {
+      color: white !important;  /* Ensure nav links are white */
+    }
+  }
+
+  /* Optional: adjust text color for items in dark background */
+  
+}
+
 // disable
 // a{
 //   color: #eee;

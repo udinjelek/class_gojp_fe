@@ -95,36 +95,12 @@
     transform: scale(1.1); /* Zooms in by 10% */
   }
   
-// disable
-// h1 {
-//  color:#eee 
-// }
-// h2 {
-//   color:#eee 
-// }
-// p {
-//   color:#eee 
-// }
-// div {
-//   color:#eee 
-// }
-// input{
-//   color:#eee 
-// }
+  .search {
+    width: 50%; 
+  }
 
-// .abs-overlay{
-//   position: absolute; 
-//   bottom: 0; 
-//   left: 0; 
-//   width: 100%; 
-//   background:#eee; 
-//   color: white; 
-//   padding: 10px;
-// }
-
-// .card{
-//   border-color: #fff;
-// }
-// div{
-//   border-color: #fff;
-// }
+  @media (max-width: 600px) {
+    .search {
+      width: 100%; 
+    }
+  }

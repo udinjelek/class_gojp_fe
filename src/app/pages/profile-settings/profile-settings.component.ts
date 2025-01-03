@@ -61,6 +61,8 @@ export class ProfileSettingsComponent implements OnInit {
                     icon: 'success',
                     confirmButtonText: 'OK'
                   });
+        this.authService.setLocal_full_name(user_data.full_name)
+        this.authService.triggerUpdateUserProfilePic();
       },
       error: (error) => {
           Swal.fire({
@@ -114,6 +116,9 @@ export class ProfileSettingsComponent implements OnInit {
                         icon: 'success',
                         confirmButtonText: 'OK'
                       });
+
+            this.authService.setLocal_profil_pic(response.data.file_url); 
+            this.authService.triggerUpdateUserProfilePic();
         },
         error: (error) => {
             Swal.fire({

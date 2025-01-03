@@ -12,6 +12,7 @@ export class AuthService {
 
   loginRequest = new Subject<void>();
   signupRequest = new Subject<void>();
+  updateUserProfilePicRequest = new Subject<void>();
 
   triggerLogin() {
     this.loginRequest.next();
@@ -20,6 +21,11 @@ export class AuthService {
   triggerSignup() {
     this.signupRequest.next();
   }
+
+  triggerUpdateUserProfilePic() {
+    this.updateUserProfilePicRequest.next();
+  }
+
 
   baseApi:string = environment.apiUrl;
   apiUrl:string=''
@@ -55,6 +61,14 @@ export class AuthService {
 
   getLocalStorage(nameid:string){
     return localStorage.getItem(nameid) ;
+  }
+
+  setLocal_profil_pic(profile_pic:string){
+    localStorage.setItem('profile_pic', profile_pic);
+  }
+
+  setLocal_full_name(full_name:string){
+    localStorage.setItem('full_name', full_name);
   }
 
   login(userData: any): void {

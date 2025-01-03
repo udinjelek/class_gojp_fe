@@ -8,11 +8,15 @@
     <div class="row body">
     <div class="col-12">
       <div class="text-center p-5 content-box bg-purple-gradient">
-        <h1 class="display-3 fw-bold">Finding the Perfect Japanese Tutor</h1>
+        <!-- pc view -->
+        <h1 class="display-3 fw-bold d-none d-md-block">Finding the Perfect Japanese Tutor</h1>
+        <!-- mobile view -->
+        <h3 class="display-3 fw-bold d-md-none">Finding the Perfect Japanese Tutor</h3>
+        
         <p class="lead">Expand your horizons and unlock the full potential</p>
         <!-- Search Input -->
         <div class="mt-4">
-          <div class="input-group w-50 mx-auto">
+          <div class="input-group search mx-auto">
             <input 
               type="text" 
               class="form-control" 
@@ -30,7 +34,7 @@
             </ng-container>
           </div>
         </div>
-
+        
       </div>
     </div>
   </div>
@@ -39,11 +43,15 @@
     <div class="row">
       <div class="col-12 text-center p-3">
         <ng-container *ngIf="filteredTeachers().length > 0; else noResults">
-          <h2>List Teacher</h2>
+          <!-- pc view -->
+          <h2 class="d-none d-md-block m-0">List Teacher</h2>
+          <!-- mobile view -->
+          <h3 class="d-md-none m-0">List Teacher</h3>
         </ng-container>
         
         <ng-template #noResults>
-          <h2>No teachers found</h2>
+          <h2 class="d-none d-md-block">No teachers found</h2>
+          <h3 class="d-md-none">No teachers found</h3>
         </ng-template>
       </div>
       <div class="list-teacher d-flex flex-wrap justify-content-center">

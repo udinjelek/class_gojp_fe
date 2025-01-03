@@ -6,7 +6,11 @@
 
         <!-- Header Section -->
         <div class="text-center mb-4">
-            <h1 class="text-primary">Edit Your Profile</h1>
+            <!-- pc view -->
+            <h1 class="display-3 fw-bold d-none d-md-block">Edit Your Profile</h1>
+            <!-- mobile view -->
+            <h3 class="display-3 fw-bold d-md-none">Edit Your Profile</h3>
+            
             <p class="text-muted">Update your personal information and settings below.</p>
         </div>
 
@@ -22,7 +26,7 @@
                     (change)="onPhotoSelected($event)" 
                     hidden 
                     accept="image/*">
-                <button class="btn btn-outline-primary btn-sm mt-3" (click)="triggerFileInput()">Change Photo</button>
+                <button class="btn bg-alt mt-3" (click)="triggerFileInput()">Change Photo</button>
             </div>
         </div>
 
@@ -30,7 +34,7 @@
 
         <!-- Personal Details Form -->
         <div class="card shadow-sm mb-4">
-            <div class="card-header bg-primary text-white">
+            <div class="card-header bg-base text-white">
                 <h5 class="m-0">Personal Information</h5>
             </div>
             <div class="card-body">
@@ -67,14 +71,14 @@
 
                 <!-- Save Changes Button -->
                 <div class="text-center">
-                    <button class="btn btn-success px-5 py-2" (click)="saveProfile()">Save Changes</button>
+                    <button class="btn bg-alt px-5 py-2" (click)="saveProfile()">Save Changes</button>
                 </div>
             </div>
         </div>
 
         <!-- Password Update Form -->
         <div class="card shadow-sm mb-4">
-            <div class="card-header bg-warning text-dark">
+            <div class="card-header bg-base text-white">
                 <h5 class="m-0">Change Password</h5>
             </div>
             <div class="card-body">
@@ -106,7 +110,10 @@
                               </span>
                         </div>
                     </div>
-                    <button class="btn btn-warning w-100">Update Password</button>
+                    <!-- Save Changes Button -->
+                    <div class="text-center">
+                        <button class="btn bg-alt px-5 py-2">Update Password</button>
+                    </div>
                 </form>
             </div>
         </div>
