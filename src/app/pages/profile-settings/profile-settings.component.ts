@@ -56,7 +56,7 @@ export class ProfileSettingsComponent implements OnInit {
         console.log('Upload successful', response);
         // this.userData.profile_pic = response.new_profile_pic; // Update profile picture URL from response
         Swal.fire({
-                    title: 'Complate!',
+                    title: 'Complete!',
                     html: `Upload successful.`,
                     icon: 'success',
                     confirmButtonText: 'OK'
@@ -111,7 +111,7 @@ export class ProfileSettingsComponent implements OnInit {
             console.log('Upload successful', response);
             // this.userData.profile_pic = response.new_profile_pic; // Update profile picture URL from response
             Swal.fire({
-                        title: 'Complate!',
+                        title: 'Complete!',
                         html: `Upload successful.`,
                         icon: 'success',
                         confirmButtonText: 'OK'
@@ -153,7 +153,7 @@ export class ProfileSettingsComponent implements OnInit {
     this.classService.updatePassword(user_id, passwords_current, passwords_new, passwords_confirm).subscribe({
       next: (response: any) => {
         Swal.fire({
-          title: 'Complate!',
+          title: 'Complete!',
           html: `Password updated successfully.`,
           icon: 'success',
           confirmButtonText: 'OK'

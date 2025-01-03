@@ -164,7 +164,7 @@ export class NavComponent implements OnInit {
                     console.log('User created successfully:', response);
                     // handle success
                     Swal.fire({
-                      title: 'Complate!',
+                      title: 'Complete!',
                       text: 'User creation process completed',
                       icon: 'success',
                       confirmButtonText: 'OK'

@@ -167,7 +167,7 @@ export class DetailComponent implements OnInit {
           this.getScheduleTeacher(this.teacherId, this.user_id, this.formattedDate, this.dayOfWeek, true);
           // handle success
           Swal.fire({
-            title: 'Complate!',
+            title: 'Complete!',
             html: `Congratulations! You've successfully joined the <strong style="color: darkblue;">${this.groupCourseSelected.name}</strong> class.`,
             icon: 'success',
             confirmButtonText: 'OK'
