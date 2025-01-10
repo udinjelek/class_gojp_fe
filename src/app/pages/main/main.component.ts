@@ -37,13 +37,16 @@ export class MainComponent implements OnInit {
         }
       },
       error: (error) => {
-        console.error('Error retrieving teachers data:', error);
-        Swal.fire({
-          title: 'Error!',
-          html: `Unable to connect to the server. Please check your internet connection or try again later.`,
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
+        if (error.status != 404) {
+          console.error('Error retrieving teachers data:', error);
+          Swal.fire({
+            title: 'Error!',
+            html: `Unable to connect to the server. Please check your internet connection or try again later.`,
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
+        
       }
     });
   }
