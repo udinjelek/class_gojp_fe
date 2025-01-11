@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" >
      <!-- Top Content -->
      <app-nav></app-nav>
   
@@ -18,309 +18,309 @@
     </div>
     
       <!-- About Section -->
-      <div class="teacher-detail mt-4 d-flex justify-content-center align-items-start">
+    <div class="teacher-detail mt-4 d-flex justify-content-center align-items-start">
       <div class="mt-4">
         <h3 class="sub-bold">About {{teacherDetails.name}}</h3>
         <p>{{teacherDetails.about}}</p>
       </div>
-      </div>
+    </div>
     
       <!-- Student Testimonials -->
-      <div class="teacher-detail mt-4">
+    <div class="teacher-detail mt-4">
       <div class="mt-4">
         <h3 class="sub-bold">What Students Say</h3>
         <p><em>"{{teacherDetails.testimonial}}"</em></p>
       </div>
-      </div>
+    </div>
       <!-- Current Students -->
-      <div class="teacher-detail mt-4" *ngIf="teacherDetails.students>0">
-        <div class="mt-4">
-          <h3 class="sub-bold">Current Students: {{teacherDetails.students}}</h3>
-        </div>
+    <div class="teacher-detail mt-4" *ngIf="teacherDetails.students>0">
+      <div class="mt-4">
+        <h3 class="sub-bold">Current Students: {{teacherDetails.students}}</h3>
       </div>
+    </div>
 
       <!-- Group Schedule Section -->
-      <div class="teacher-detail mt-4 row ">
-        <div class="container col-12">
-          <!-- pc view -->
-          <h3 class="d-none d-md-block">Group Schedule</h3>
-          <!-- mobile view -->
-          <h4 class="d-md-none">Group Schedule</h4> 
-        </div>  
+    <div class="teacher-detail mt-4 row ">
+      <div class="container col-12">
         <!-- pc view -->
-        <div *ngIf="!isMobile">
-          <table class="table w-100">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Course Name</th>
-                <th>Member</th>
-                <th>Total Class</th>
-                <th>Action</th>
+        <h3 class="d-none d-md-block">Group Schedule</h3>
+        <!-- mobile view -->
+        <h4 class="d-md-none">Group Schedule</h4> 
+      </div>  
+      <!-- pc view -->
+      <div *ngIf="!isMobile">
+        <table class="table w-100">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Course Name</th>
+              <th>Member</th>
+              <th>Total Class</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let course of listGroupCourses; let i = index">
+              <tr (click)="toggleDetails(course, i)">
+                <td>  
+                  <i class="bi bi-caret-down-fill" *ngIf="selectedDetailGroupRow == i"></i>
+                  <i class="bi bi-caret-right-fill" *ngIf="selectedDetailGroupRow != i"></i>
+                </td>
+                <td>{{course.name}}</td>
+                <td>{{course.current_join}}/{{course.member_slots}}</td>
+                <td>{{course.total_class}}</td>
+                <td>
+                  <span *ngIf="course.is_user_join == 0 && course.current_join < course.member_slots">
+                      <button type="button" class="btn bg-primary-book text-white" (click)="joinThisGroup(course, i, $event)">Join Class</button>
+                  </span>
+                  <span *ngIf="course.is_user_join == 1">
+                      <button type="button" class="btn bg-success-2" >Already Enrolled</button>
+                  </span>
+                  <span *ngIf="course.is_user_join == 0 && course.current_join == course.member_slots">
+                    <button type="button" class="btn btn-secondary" >Class Full</button>
+                  </span>
+                </td>
+                
               </tr>
-            </thead>
-            <tbody>
-              <ng-container *ngFor="let course of listGroupCourses; let i = index">
-                <tr (click)="toggleDetails(course, i)">
-                  <td>  
-                    <i class="bi bi-caret-down-fill" *ngIf="selectedDetailGroupRow == i"></i>
-                    <i class="bi bi-caret-right-fill" *ngIf="selectedDetailGroupRow != i"></i>
-                  </td>
-                  <td>{{course.name}}</td>
-                  <td>{{course.current_join}}/{{course.member_slots}}</td>
-                  <td>{{course.total_class}}</td>
-                  <td>
-                    <span *ngIf="course.is_user_join == 0 && course.current_join < course.member_slots">
-                        <button type="button" class="btn bg-primary-book text-white" (click)="joinThisGroup(course, i, $event)">Join Class</button>
-                    </span>
-                    <span *ngIf="course.is_user_join == 1">
-                        <button type="button" class="btn bg-success-2" >Already Enrolled</button>
-                    </span>
-                    <span *ngIf="course.is_user_join == 0 && course.current_join == course.member_slots">
-                      <button type="button" class="btn btn-secondary" >Class Full</button>
-                    </span>
-                  </td>
-                  
-                </tr>
-                <ng-container *ngIf="selectedDetailGroupRow === i">
-                  <ng-container *ngTemplateOutlet="detailsGroupCourse;"></ng-container>
-                </ng-container>
+              <ng-container *ngIf="selectedDetailGroupRow === i">
+                <ng-container *ngTemplateOutlet="detailsGroupCourse;"></ng-container>
               </ng-container>
-            </tbody>
-          </table>
-        </div>
-        <!-- Mobile view -->
-        <div class="d-md-none w-100">
-          <div *ngFor="let course of listGroupCourses; let i = index" class="card mb-3 shadow-sm">
-            <div class="card-header text-center bg-warning text-dark">
-              <b>{{ course.name }}</b>
-            </div>
-            <div class="card-body p-3 pb-1 m-0">
-              <div class="d-flex" style="width: 100%;">
-                <!-- Left Section -->
-                <div style="flex-grow: 1;">
-                  <p><span class="text-darkblue">Member:</span> {{ course.current_join }} / {{ course.member_slots }}</p>
-                  <p><span class="text-darkblue">Total Classes:</span> {{ course.total_class }}</p>
-                </div>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <!-- Mobile view -->
+      <div class="d-md-none w-100">
+        <div *ngFor="let course of listGroupCourses; let i = index" class="card mb-3 shadow-sm">
+          <div class="card-header text-center bg-warning text-dark">
+            <b>{{ course.name }}</b>
+          </div>
+          <div class="card-body p-3 pb-1 m-0">
+            <div class="d-flex" style="width: 100%;">
+              <!-- Left Section -->
+              <div style="flex-grow: 1;">
+                <p><span class="text-darkblue">Member:</span> {{ course.current_join }} / {{ course.member_slots }}</p>
+                <p><span class="text-darkblue">Total Classes:</span> {{ course.total_class }}</p>
+              </div>
 
-                <!-- Right Section -->
-                <div style="width: 120px;">
-                  <button class="btn bg-success-2 p-0 d-flex flex-column align-items-center justify-content-center" 
-                          style="width: 120px; height: 60px;" 
-                          (click)="showGroupScheduleDetails(course, i)">
-                    <i class="bi bi-card-list" style="font-size: 1.5rem;"></i> <!-- Icon for "View Schedule" -->
-                    <span class="mt-1" style="font-size: 0.75rem;">View Schedule</span>
-                  </button>
-                </div>
+              <!-- Right Section -->
+              <div style="width: 120px;">
+                <button class="btn bg-success-2 p-0 d-flex flex-column align-items-center justify-content-center" 
+                        style="width: 120px; height: 60px;" 
+                        (click)="showGroupScheduleDetails(course, i)">
+                  <i class="bi bi-card-list" style="font-size: 1.5rem;"></i> <!-- Icon for "View Schedule" -->
+                  <span class="mt-1" style="font-size: 0.75rem;">View Schedule</span>
+                </button>
               </div>
             </div>
-            <ng-container *ngIf="course.is_user_join == 0 && course.current_join < course.member_slots">
-                  <div class="btn bg-primary-book text-white text-center rounded-0 rounded-bottom" (click)="joinThisGroup(course, i,  $event)">
-                      Join Class
-                  </div>
-            </ng-container>
-            <ng-container *ngIf="course.is_user_join == 1">
-                  <div class="btn bg-success-2 text-center rounded-0 rounded-bottom">
-                    Already Enrolled
-                  </div>
-            </ng-container>
-            <ng-container *ngIf="course.is_user_join == 0 && course.current_join == course.member_slots">
-                  <div class="btn btn-secondary text-center rounded-0 rounded-bottom">
-                    Class Full
-                  </div>
-            </ng-container>
           </div>
+          <ng-container *ngIf="course.is_user_join == 0 && course.current_join < course.member_slots">
+                <div class="btn bg-primary-book text-white text-center rounded-0 rounded-bottom" (click)="joinThisGroup(course, i,  $event)">
+                    Join Class
+                </div>
+          </ng-container>
+          <ng-container *ngIf="course.is_user_join == 1">
+                <div class="btn bg-success-2 text-center rounded-0 rounded-bottom">
+                  Already Enrolled
+                </div>
+          </ng-container>
+          <ng-container *ngIf="course.is_user_join == 0 && course.current_join == course.member_slots">
+                <div class="btn btn-secondary text-center rounded-0 rounded-bottom">
+                  Class Full
+                </div>
+          </ng-container>
         </div>
-
       </div>
+
+    </div>
 
       <!-- Schedule Section -->
-      <div class="teacher-detail mt-4 row ">
-        <div class="container col-6 mt-2">
-          <!-- pc view -->
-          <h3 class="d-none d-md-block">Schedule</h3>
-          <!-- mobile view -->
-           <h4 class="d-md-none">Schedule</h4> 
-        </div>
-        <div class="container col-6">
-          <mat-form-field appearance="fill" class="w-100">
-            <mat-label class="responsive-label">Select a Date (Max 3 months ahead)</mat-label>
-            <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="Choose a date" (dateChange)="onDateChange($event)"> 
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <!-- <mat-datepicker #picker class="highlighted-calendar"></mat-datepicker> -->
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </div>  
+    <div class="teacher-detail mt-4 row ">
+      <div class="container col-6 mt-2">
+        <!-- pc view -->
+        <h3 class="d-none d-md-block">Schedule</h3>
+        <!-- mobile view -->
+          <h4 class="d-md-none">Schedule</h4> 
       </div>
+      <div class="container col-6">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label class="responsive-label">Select a Date (Max 3 months ahead)</mat-label>
+          <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" placeholder="Choose a date" (dateChange)="onDateChange($event)"> 
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <!-- <mat-datepicker #picker class="highlighted-calendar"></mat-datepicker> -->
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>  
+    </div>
       
-      <div class="teacher-detail mt-0 d-flex justify-content-center align-items-start w-100">
-        <div class="container mt-0 w-100">
-          <div *ngIf="formattedDate===''" class="text-center pt-3 card w-100">
-            <!-- pc view -->
-            <h5 class="d-none d-md-block">Please Select Date First</h5>
-            <!-- mobile view -->
-            <h6 class="d-md-none">Please Select Date First</h6>
-          </div>
-          <div *ngIf="formattedDate!=='' && countValidSchedule() == 0" class="text-center m-3 p-2 card w-100">
-              <h5>Teacher don’t have any classes scheduled<br>for <span class="text-primary">{{dayOfWeek}}</span> <span class="text-danger"> {{formattedDate}}</span><br><br>Please select another date</h5>
-          </div>
+    <div class="teacher-detail mt-0 d-flex justify-content-center align-items-start w-100">
+      <div class="container mt-0 w-100">
+        <div *ngIf="formattedDate===''" class="text-center pt-3 card w-100">
           <!-- pc view -->
-          <div *ngIf="!isMobile">
-              <table *ngIf="formattedDate!=='' && countValidSchedule() > 0" class="table w-100">
-                <thead>
-                  <tr>
-                    <th>Day</th>
-                    <th>Date & Time</th>
-                    <th>Slot</th>
-                    <th class="text-center" >Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <ng-container *ngFor="let slot of teacherDetails.schedule; let i = index">
-                    <tr *ngIf="slot.status!=''">
-                      <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }">{{slot.day}}</td>
-                      <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }"><span class="text-danger">{{slot.date}}</span> at <span class="text-primary">{{slot.time}}</span></td>
-                      <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }"><span *ngIf="slot.count_member > 0">{{slot.count_member}}/{{slot.member_slots}}</span><span *ngIf="!slot.count_member || slot.count_member==0">-</span></td>
-                      <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }" class="text-center" style="width:160px;">
-                        
-                        <ng-container [ngSwitch]="slot.status">
-                          <ng-container *ngSwitchCase="'Available'">
-                            <button  
-                                    class="btn btn-primary text-center" 
-                                    style="width:100; text-align: center;"
-                                    data-toggle="modal" 
-                                    data-target="#bookingModal" 
-                                    (click)="bookingThisSlot(slot, i)"
-                                    (mouseenter)="hoveredIndex = i" 
-                                    (mouseleave)="hoveredIndex = -1">
-                                      {{ hoveredIndex === i ? 'Book Now' : slot.status }}
-                            </button>
-                          </ng-container>
-                          <ng-container *ngSwitchCase="'Booked'"  class="text-center text-danger">
-                            <span *ngIf="slot.participant == 0 && slot.count_member == slot.member_slots">Full Booked</span>
-                            <span *ngIf="slot.participant == 1">Booked by me</span>
-                            <button *ngIf="slot.participant == 0 && slot.count_member < slot.member_slots" 
-                                    class="btn btn-primary text-center" 
-                                    style="width:100; text-align: center;"
-                                    data-toggle="modal" 
-                                    data-target="#bookingModal" 
-                                    (click)="joinThisGroup(slot, i, $event)"
-                                    (mouseenter)="hoveredIndex = i" 
-                                    (mouseleave)="hoveredIndex = -1">
-                                    {{ hoveredIndex === i ? 'Book Now' : 'Group (' + (slot.count_member || 0) + '/' + (slot.member_slots || 0) + ')' }}
-                            </button>
-                          </ng-container> 
-                          <span *ngSwitchDefault class="text-center">{{slot.status}}</span>
-                        </ng-container>
-                        
-                      </td>
-                    </tr>
-                  </ng-container>
-                </tbody>
-              </table>
-          </div>
-          
-          <!-- Mobile view -->
-          <div class="d-md-none w-100" style="width: 100%;">
-            <ng-container *ngFor="let slot of teacherDetails.schedule; let i = index"> 
-                <div class="p-3 border" *ngIf="slot.status !!= ''">
-                  <div class="d-flex flex-column">
-                    <div class="text-center"><span class="text-primary">  {{slot.day}}</span><span> {{slot.date}}</span>  <span class="text-danger">  {{slot.time}}</span></div>
-                    <div class="d-flex align-items-center justify-content-between w-100">
-                      <div class="me-2">
-                        <b>Status:</b>
-                      </div>
-                      <div class="d-flex justify-content-center align-items-center w-100">
-                        <ng-container [ngSwitch]="slot.status">
-                          <!-- Available -->
-                          <ng-container *ngSwitchCase="'Available'">
-                            <button  
-                              class="btn btn-primary btn-sm text-center w-100 ms-5" 
-                              data-toggle="modal" 
-                              data-target="#bookingModal" 
-                              (click)="bookingThisSlot(slot, i)"
-                              (mouseenter)="hoveredIndex = i" 
-                              (mouseleave)="hoveredIndex = -1">
-                                {{ hoveredIndex === i ? 'Book Now' : slot.status }}
-                            </button>
-                          </ng-container>
-                          
-                          <!-- Booked -->
-                          <ng-container *ngSwitchCase="'Booked'">
-                            <button *ngIf="slot.participant == 0 && slot.count_member == slot.member_slots" 
-                                  class="btn btn-secondary btn-sm text-center w-100 ms-5">Full Booked</button>
-                            <button *ngIf="slot.participant == 1" 
-                                  class="btn btn-secondary btn-sm w-100 ms-5">Booked by me</button>
-                            <button *ngIf="slot.participant == 0 && slot.count_member < slot.member_slots" 
-                              class="btn btn-primary text-center w-100 ms-5" 
-                              data-toggle="modal" 
-                              data-target="#bookingModal" 
-                              (click)="joinThisGroup(slot, i, $event)"
-                              (mouseenter)="hoveredIndex = i" 
-                              (mouseleave)="hoveredIndex = -1">
-                                {{ hoveredIndex === i ? 'Book Now' : 'Group (' + (slot.count_member || 0) + '/' + (slot.member_slots || 0) + ')' }}
-                            </button>
-                          </ng-container>
-                          
-                          <!-- Default -->
-                          <button *ngSwitchDefault class="btn btn-secondary btn-sm text-center w-100 ms-5">{{slot.status}}</button>
-                        </ng-container>
-                      </div>
-                    </div>
-                    
-                    
-                    
-                  </div>
-                </div>
-            </ng-container>
-          </div>
-          
+          <h5 class="d-none d-md-block">Please Select Date First</h5>
+          <!-- mobile view -->
+          <h6 class="d-md-none">Please Select Date First</h6>
         </div>
+        <div *ngIf="formattedDate!=='' && countValidSchedule() == 0" class="text-center m-3 p-2 card w-100">
+            <h5>Teacher don’t have any classes scheduled<br>for <span class="text-primary">{{dayOfWeek}}</span> <span class="text-danger"> {{formattedDate}}</span><br><br>Please select another date</h5>
+        </div>
+        <!-- pc view -->
+        <div *ngIf="!isMobile">
+            <table *ngIf="formattedDate!=='' && countValidSchedule() > 0" class="table w-100">
+              <thead>
+                <tr>
+                  <th>Day</th>
+                  <th>Date & Time</th>
+                  <th>Slot</th>
+                  <th class="text-center" >Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let slot of teacherDetails.schedule; let i = index">
+                  <tr *ngIf="slot.status!=''">
+                    <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }">{{slot.day}}</td>
+                    <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }"><span class="text-danger">{{slot.date}}</span> at <span class="text-primary">{{slot.time}}</span></td>
+                    <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }"><span *ngIf="slot.count_member > 0">{{slot.count_member}}/{{slot.member_slots}}</span><span *ngIf="!slot.count_member || slot.count_member==0">-</span></td>
+                    <td [ngClass]="{'bg-secondary-2': slot.status === 'Booked' && slot.participant == 0 && slot.count_member == slot.member_slots, 'bg-success-2': slot.status === 'Booked' && slot.participant == 1 }" class="text-center" style="width:160px;">
+                      
+                      <ng-container [ngSwitch]="slot.status">
+                        <ng-container *ngSwitchCase="'Available'">
+                          <button  
+                                  class="btn btn-primary text-center" 
+                                  style="width:100; text-align: center;"
+                                  data-toggle="modal" 
+                                  data-target="#bookingModal" 
+                                  (click)="bookingThisSlot(slot, i)"
+                                  (mouseenter)="hoveredIndex = i" 
+                                  (mouseleave)="hoveredIndex = -1">
+                                    {{ hoveredIndex === i ? 'Book Now' : slot.status }}
+                          </button>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'Booked'"  class="text-center text-danger">
+                          <span *ngIf="slot.participant == 0 && slot.count_member == slot.member_slots">Full Booked</span>
+                          <span *ngIf="slot.participant == 1">Booked by me</span>
+                          <button *ngIf="slot.participant == 0 && slot.count_member < slot.member_slots" 
+                                  class="btn btn-primary text-center" 
+                                  style="width:100; text-align: center;"
+                                  data-toggle="modal" 
+                                  data-target="#bookingModal" 
+                                  (click)="joinThisGroup(slot, i, $event)"
+                                  (mouseenter)="hoveredIndex = i" 
+                                  (mouseleave)="hoveredIndex = -1">
+                                  {{ hoveredIndex === i ? 'Book Now' : 'Group (' + (slot.count_member || 0) + '/' + (slot.member_slots || 0) + ')' }}
+                          </button>
+                        </ng-container> 
+                        <span *ngSwitchDefault class="text-center">{{slot.status}}</span>
+                      </ng-container>
+                      
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+        </div>
+        
+        <!-- Mobile view -->
+        <div class="d-md-none w-100" style="width: 100%;">
+          <ng-container *ngFor="let slot of teacherDetails.schedule; let i = index"> 
+              <div class="p-3 border" *ngIf="slot.status !!= ''">
+                <div class="d-flex flex-column">
+                  <div class="text-center"><span class="text-primary">  {{slot.day}}</span><span> {{slot.date}}</span>  <span class="text-danger">  {{slot.time}}</span></div>
+                  <div class="d-flex align-items-center justify-content-between w-100">
+                    <div class="me-2">
+                      <b>Status:</b>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center w-100">
+                      <ng-container [ngSwitch]="slot.status">
+                        <!-- Available -->
+                        <ng-container *ngSwitchCase="'Available'">
+                          <button  
+                            class="btn btn-primary btn-sm text-center w-100 ms-5" 
+                            data-toggle="modal" 
+                            data-target="#bookingModal" 
+                            (click)="bookingThisSlot(slot, i)"
+                            (mouseenter)="hoveredIndex = i" 
+                            (mouseleave)="hoveredIndex = -1">
+                              {{ hoveredIndex === i ? 'Book Now' : slot.status }}
+                          </button>
+                        </ng-container>
+                        
+                        <!-- Booked -->
+                        <ng-container *ngSwitchCase="'Booked'">
+                          <button *ngIf="slot.participant == 0 && slot.count_member == slot.member_slots" 
+                                class="btn btn-secondary btn-sm text-center w-100 ms-5">Full Booked</button>
+                          <button *ngIf="slot.participant == 1" 
+                                class="btn btn-secondary btn-sm w-100 ms-5">Booked by me</button>
+                          <button *ngIf="slot.participant == 0 && slot.count_member < slot.member_slots" 
+                            class="btn btn-primary text-center w-100 ms-5" 
+                            data-toggle="modal" 
+                            data-target="#bookingModal" 
+                            (click)="joinThisGroup(slot, i, $event)"
+                            (mouseenter)="hoveredIndex = i" 
+                            (mouseleave)="hoveredIndex = -1">
+                              {{ hoveredIndex === i ? 'Book Now' : 'Group (' + (slot.count_member || 0) + '/' + (slot.member_slots || 0) + ')' }}
+                          </button>
+                        </ng-container>
+                        
+                        <!-- Default -->
+                        <button *ngSwitchDefault class="btn btn-secondary btn-sm text-center w-100 ms-5">{{slot.status}}</button>
+                      </ng-container>
+                    </div>
+                  </div>
+                  
+                  
+                  
+                </div>
+              </div>
+          </ng-container>
+        </div>
+        
       </div>
+    </div>
 
       <!-- Booking Confirmation Modal -->
-      <div class="modal" tabindex="-1" [ngClass]="{'d-block': showBookingModal}" style="background-color: rgba(0,0,0,0.5)">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Booking Confirmation</h5>
-              <button type="button" class="btn-close" aria-label="Close" (click)="closeBookingModal()"></button>
-            </div>
-            <div class="modal-body text-center">
-              <p>Are you sure you want to book class </p>
-              <p>with Sensei <b>{{teacherDetails.name}}</b></p>
-               <p> at {{ modalSlot.day }} {{ modalSlot.date }} on {{ modalSlot.time }}?</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" (click)="closeBookingModal()">Cancel</button>
-              <button type="button" class="btn btn-primary" (click)="confirmBooking()">Confirm</button>
-            </div>
+    <div class="modal" tabindex="-1" [ngClass]="{'d-block': showBookingModal}" style="background-color: rgba(0,0,0,0.5)">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Booking Confirmation</h5>
+            <button type="button" class="btn-close" aria-label="Close" (click)="closeBookingModal()"></button>
+          </div>
+          <div class="modal-body text-center">
+            <p>Are you sure you want to book class </p>
+            <p>with Sensei <b>{{teacherDetails.name}}</b></p>
+              <p> at {{ modalSlot.day }} {{ modalSlot.date }} on {{ modalSlot.time }}?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeBookingModal()">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="confirmBooking()">Confirm</button>
           </div>
         </div>
       </div>
+    </div>
 
 
       <!-- Booking Confirmation Group Modal -->
-      <div class="modal" tabindex="-1" [ngClass]="{'d-block': showBookingGroupModal}" style="background-color: rgba(0,0,0,0.5)">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Booking Confirmation</h5>
-              <button type="button" class="btn-close" aria-label="Close" (click)="closeBookingGroupModal()"></button>
-            </div>
-            <div class="modal-body text-center">
-              <p>Are you sure you want to book group class </p>
-              <p class="text-danger"><b>{{groupCourseSelected.name}}</b></p>
-              <p>with Sensei <b>{{teacherDetails.name}}</b>?</p>
-              
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" (click)="closeBookingGroupModal()">Cancel</button>
-              <button type="button" class="btn btn-primary" (click)="confirmBookingGroup()">Confirm</button>
-            </div>
+    <div class="modal" tabindex="-1" [ngClass]="{'d-block': showBookingGroupModal}" style="background-color: rgba(0,0,0,0.5)">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Booking Confirmation</h5>
+            <button type="button" class="btn-close" aria-label="Close" (click)="closeBookingGroupModal()"></button>
+          </div>
+          <div class="modal-body text-center">
+            <p>Are you sure you want to book group class </p>
+            <p class="text-danger"><b>{{groupCourseSelected.name}}</b></p>
+            <p>with Sensei <b>{{teacherDetails.name}}</b>?</p>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeBookingGroupModal()">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="confirmBookingGroup()">Confirm</button>
           </div>
         </div>
       </div>
+    </div>
 
 </div>
 

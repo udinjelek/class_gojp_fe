@@ -8,6 +8,7 @@ import { ContainerManageWeeklyScheduleTemplateComponent } from './container-mana
 import { ContainerViewUpdateClassScheduleComponent } from './container-view-update-class-schedule/container-view-update-class-schedule.component';
 import { ContainerViewActiveClassScheduleComponent } from './container-view-active-class-schedule/container-view-active-class-schedule.component';
 import { ContainerManageCustomClassComponent } from './container-manage-custom-class/container-manage-custom-class.component';
+import { ContainerUserManagementComponent } from './container-user-management/container-user-management.component';
 
 import Swal from 'sweetalert2';
 
@@ -20,6 +21,7 @@ import Swal from 'sweetalert2';
     , ContainerViewUpdateClassScheduleComponent
     , ContainerViewActiveClassScheduleComponent
     , ContainerManageCustomClassComponent
+    , ContainerUserManagementComponent
   ],
   templateUrl: './myclass.component.html',
   styleUrl: './myclass.component.scss'
@@ -49,21 +51,15 @@ export class MyclassComponent {
   showSuccessModal:boolean=false;
   successMessage:string='';
   myData:any = {  schedule: [
-                            { date: "2024-10-01", day: "Thursday", time: "01:00 PM - 02:00 PM", status: "Available" },
-                            { date: "2024-10-02", day: "Friday", time: "03:00 PM - 04:00 PM", status: "Booked By Other" },
-                            { date: "2024-10-03", day: "Saturday", time: "09:00 AM - 10:00 AM", status: "Available" },
-                            { date: "2024-10-04", day: "Sunday", time: "11:00 AM - 12:00 PM", status: "Available" },
-                            { date: "2024-10-05", day: "Monday", time: "02:00 PM - 03:00 PM", status: "Booked By Other" },
-                            { date: "2024-10-06", day: "Tuesday", time: "10:00 AM - 11:00 AM", status: "Available" },
-                            { date: "2024-10-07", day: "Wednesday", time: "04:00 PM - 05:00 PM", status: "Booked By Other" },
-                            { date: "2024-10-08", day: "Thursday", time: "08:00 AM - 09:00 AM", status: "Available" },
-                            { date: "2024-10-09", day: "Friday", time: "03:00 PM - 04:00 PM", status: "Available" }
                 ]
               };
   constructor(private authService: AuthService, private classService: ClassService,) {
       this.role = this.authService.getLocalStorage('role') || '';
       if (this.role == 'teacher'){
         this.activeTab = 'update'
+      }
+      if (this.role == 'admin'){
+        this.activeTab = 'user'
       }
   }
 

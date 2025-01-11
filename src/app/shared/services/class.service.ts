@@ -168,4 +168,30 @@ export class ClassService {
 
     return this.http.get<any>(this.apiUrl, { headers, params });
   }
+
+  public getSearchUsers(search_name:string, page_select:number): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.apiUrl = this.baseApi + '/classgojp/get_search_users'
+    const params = new HttpParams()
+      .set('search_name', search_name)
+      .set('page_select', page_select);
+    return this.http.get<any>(this.apiUrl, { headers, params });
+  }
+
+  public getDataUser(target_id:string, user_id:string):Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.apiUrl = this.baseApi + '/classgojp/get_data_user'
+    const params = new HttpParams()
+      .set('target_id', target_id)
+      .set('user_id', user_id);
+    return this.http.get<any>(this.apiUrl, { headers, params });
+  }
+
+  public setInvertRole(target_id:string, user_id:string): Observable<ResponseApi> {
+    this.apiUrl = this.baseApi + '/classgojp/set_invert_role'
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const requestBody = { target_id, user_id};
+
+    return this.http.post<ResponseApi>(this.apiUrl, requestBody, { headers });
+  }
 }

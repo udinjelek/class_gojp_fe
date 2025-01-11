@@ -39,6 +39,14 @@
                   <i class="bi bi-clock-fill me-2"></i>Create Custom Class
                 </a>
               </li>
+              <li class="nav-item" *ngIf="role==='admin'">
+                <a 
+                  class="nav-link" 
+                  [class.active]="activeTab === 'user'" 
+                  (click)="activeTab = 'user'">
+                  <i class="bi bi-person-lines-fill"></i> User Management
+                </a>
+              </li>
             </ul>
           </div>
           
@@ -47,25 +55,30 @@
         <div class="tab-content mt-4">
           <div *ngIf="activeTab === 'update'" class="tab-pane fade" [class.show]="activeTab === 'update'" [class.active]="activeTab === 'update'">
             <p>Content for viewing class schedules...</p>
-            <app-container-view-update-class-schedule ></app-container-view-update-class-schedule>
+            <app-container-view-update-class-schedule />
           </div>
 
           
           <div *ngIf="activeTab === 'template'" class="tab-pane fade show active">
             <p>Content for managing the weekly schedule template...</p>
-            <app-container-manage-weekly-schedule-template ></app-container-manage-weekly-schedule-template>
+            <app-container-manage-weekly-schedule-template />
           </div>
           
           
           <div *ngIf="activeTab === 'view'" class="tab-pane fade" [class.show]="activeTab === 'view'" [class.active]="activeTab === 'view'">
             <p>Content for viewing class schedules...</p>
-            <app-container-view-active-class-schedule></app-container-view-active-class-schedule>
+            <app-container-view-active-class-schedule />
           </div>
           
           
           <div *ngIf="activeTab === 'custom'" class="tab-pane fade" [class.show]="activeTab === 'custom'" [class.active]="activeTab === 'custom'">
             <p>Content for setting or updating availability...</p>
-            <app-container-manage-custom-class></app-container-manage-custom-class>
+            <app-container-manage-custom-class />
+          </div>
+
+          <div *ngIf="activeTab === 'user'" class="tab-pane fade" [class.show]="activeTab === 'user'" [class.active]="activeTab === 'user'">
+            <p>Content for setting or updating user management...</p>
+            <app-container-user-management />
           </div>
         </div>
       </div>
