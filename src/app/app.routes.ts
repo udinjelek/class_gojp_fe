@@ -4,6 +4,7 @@ import { DetailComponent } from './pages/detail/detail.component'; // Import the
 import { MyclassComponent } from './pages/myclass/myclass.component';
 import { ProfileSettingsComponent } from './pages/profile-settings/profile-settings.component';
 import { UserComponent } from './pages/user/user.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 export const routes: Routes = [
     {
         path: '',
@@ -24,5 +25,9 @@ export const routes: Routes = [
     {
         path: 'user/:id',  // Detail page with dynamic user ID
         component: UserComponent
+    },
+    {
+        path: 'reset-password/:token',  // Detail page with dynamic user ID
+        component: ResetPasswordComponent
     },
 ];

@@ -194,4 +194,20 @@ export class ClassService {
 
     return this.http.post<ResponseApi>(this.apiUrl, requestBody, { headers });
   }
+
+  public resetPassword(token_id: string, password_new: string, password_confirm: string ): Observable<ResponseApi> {
+    this.apiUrl = this.baseApi + '/classgojp/reset_password'
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const requestBody = { token_id, password_new, password_confirm};
+
+    return this.http.post<ResponseApi>(this.apiUrl, requestBody, { headers });
+  }
+
+  public getValidResetPassword(token_id: string):Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.apiUrl = this.baseApi + '/classgojp/get_valid_reset_password'
+    const params = new HttpParams()
+      .set('token_id', token_id);
+    return this.http.get<any>(this.apiUrl, { headers, params });
+  }
 }

@@ -90,6 +90,7 @@
         <!-- Switch to Sign-Up Modal -->
         <div class="modal-footer justify-content-center">
           <a href="#" class="text-primary" (click)="switchToSignUp($event)">Don't have an account?</a>
+          <a href="#" class="text-primary" (click)="switchToResetPassword($event)">Forget Password?</a>
         </div>
       </div>
     </div>
@@ -193,3 +194,64 @@
       </div>
     </div>
   </div>
+
+  <!-- Reset Password Modal -->
+  <div class="modal" tabindex="-1" [ngClass]="{'d-block': showResetPasswordModal}" style="background-color: rgba(0,0,0,0.5)">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content position-relative">
+        <!-- Outer Circle (using Bootstrap) -->
+        <div class="circle-outer bg-white text-white rounded-circle position-absolute top-0 start-50 translate-middle d-flex justify-content-center align-items-center">
+          <!-- Inner Circle and Reset Password Icon -->
+          <div class="bg-danger rounded-circle d-flex justify-content-center align-items-center" style="width: 80px; height: 80px;">
+            <i class="bi bi-envelope-fill fs-3 text-white"></i> <!-- Icon for email -->
+          </div>
+        </div>
+
+        <!-- Close button at the top right -->
+        <div class="modal-header border-0">
+          <button type="button" class="btn-close ms-auto" aria-label="Close" (click)="closeResetPasswordModal()"></button>
+        </div>
+
+        <!-- Modal title (Reset Password) centered below the close button -->
+        <div class="text-center mb-2">
+          <h5 class="modal-title">Reset Your Password</h5>
+        </div>
+
+        <div class="modal-body">
+          <form (submit)="onResetPassword($event)">
+            <!-- Email input -->
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <div class="input-group mb-3">
+                <input [(ngModel)]="email" name="reset-email"  type="email"  class="form-control" placeholder="Enter your email" required>
+                <span class="input-group-text bg-transparent border-1">
+                  <i *ngIf="isValid(email, 'email')" class="bi bi-check-circle-fill text-success"></i>
+                  <i *ngIf="!isValid(email, 'email')" class="bi bi-x-circle-fill text-warning"></i>
+                </span>
+              </div> 
+            </div>
+            
+
+            <!-- Reset Password Button -->
+            <button type="submit" class="btn btn-danger w-100" [disabled]="isResetButtonDisabled">
+              Reset Password
+            </button>
+
+            <!-- Timer countdown for enabling reset password button -->
+            <div *ngIf="isResetButtonDisabled" class="mt-3 text-center">
+              <p>Try again in: {{ countdown }} seconds</p>
+            </div>
+          </form>
+
+          <div *ngIf="isResetEmailSent" class="mt-3 text-center text-success">
+            <p>A reset password link has been sent to your email. Please check your inbox!</p>
+          </div>
+
+          <div *ngIf="isResetEmailError" class="mt-3 text-center text-danger">
+            <p>An error occurred. Please try again later.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

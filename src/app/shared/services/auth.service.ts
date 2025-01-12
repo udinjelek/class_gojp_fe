@@ -54,6 +54,12 @@ export class AuthService {
     return this.http.post<ResponseApi>(this.apiUrl, loginRequest, { headers });
   }
 
+  public requestResetPassword(resetRequest:{email: string}): Observable<ResponseApi> {
+    this.apiUrl = this.baseApi + '/classgojp/request_reset_password';
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<ResponseApi>(this.apiUrl, resetRequest, { headers });
+  }
+
   isLoggedIn(): boolean {
     // Check if the user is logged in
     return localStorage.getItem(this.storageKey) === 'true';

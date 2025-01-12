@@ -27,6 +27,12 @@ export class NavComponent implements OnInit {
   confirm_password: string = '';
   showLoginModal: boolean = false;
   showSignUpModal: boolean = false;
+  showResetPasswordModal: boolean = false;
+  isResetButtonDisabled: boolean = false; // Disable button initially
+  isResetEmailSent: boolean = false; // Flag to show success message
+  isResetEmailError: boolean = false; // Flag for error message
+  countdown: number = 60; // Starting countdown value (60 seconds)
+  timer: any; // Variable to hold the timer
 
   ngOnInit() {
     this.authService.loginRequest.subscribe(() => {
@@ -51,20 +57,29 @@ export class NavComponent implements OnInit {
   openLoginModal() {
     this.showSignUpModal = false;  // Close Sign-Up Modal
     this.showLoginModal = true;    // Open Login Modal
+    this.showResetPasswordModal = false;
   }
 
   // Function to open the Sign-Up Modal and close Login Modal
   openSignUpModal() {
     this.showLoginModal = false;   // Close Login Modal
     this.showSignUpModal = true;   // Open Sign-Up Modal
+    this.showResetPasswordModal = false;
   }
 
+  openResetPasswordModal() {
+    this.showLoginModal = false;   // Close Login Modal
+    this.showSignUpModal = false;   // Open Sign-Up Modal
+    this.showResetPasswordModal = true;
+    this.isResetButtonDisabled = false;
+    clearInterval(this.timer); 
+  }
   
   switchToLogin(event: Event) {
     event.preventDefault();  // Prevents the default anchor behavior
     this.showSignUpModal = false;  // Close Sign-Up Modal
     this.showLoginModal = true;
-    
+    this.showResetPasswordModal = false;
   }
 
   // Function to switch from Login Modal to Sign-Up Modal
@@ -72,7 +87,18 @@ export class NavComponent implements OnInit {
     event.preventDefault();  // Prevents the default anchor behavior
     this.showLoginModal = false;  // Close Login Modal
     this.showSignUpModal = true;
-  
+    this.showResetPasswordModal = false;
+  }
+
+  switchToResetPassword(event:Event){
+    event.preventDefault();  // Prevents the default anchor behavior
+    this.showLoginModal = false;  // Close Login Modal
+    this.showSignUpModal = false;
+    this.showResetPasswordModal = true;
+    this.isResetButtonDisabled = false;
+    this.isResetEmailSent = false; // Flag to show success message
+    this.isResetEmailError = false;
+    clearInterval(this.timer); 
   }
 
   closeLoginModal() {
@@ -81,6 +107,11 @@ export class NavComponent implements OnInit {
 
   closeSignUpModal() {
     this.showSignUpModal = false;
+  }
+
+  closeResetPasswordModal() {
+    this.showResetPasswordModal = false;
+    clearInterval(this.timer); 
   }
 
   onLogin(event: Event) {
@@ -200,6 +231,93 @@ export class NavComponent implements OnInit {
             }
           });
   }
+
+  onResetPassword(event: Event): void {
+    event.preventDefault(); // Prevent form from reloading the page
+
+    if (!this.isValid(this.email, 'email')  ){
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please fill in all fields correctly.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+      // early exit
+      return;
+    }
+
+    this.isResetEmailSent = false;
+    this.isResetEmailError = false;
+
+    // Simulate reset email sending
+    // this.simulateEmailSend();
+    const resetRequest =  {  email: this.email }
+          this.authService.requestResetPassword(resetRequest).subscribe({
+            next: (response) => {
+              if (response.status){
+                    
+                    // handle success
+                    // Swal.fire({
+                    //   title: 'Complete!',
+                    //   text: 'Request reset password completed',
+                    //   icon: 'success',
+                    //   confirmButtonText: 'OK'
+                    // });
+                    this.isResetEmailSent = true
+
+                    // Disable the reset button for 60 seconds to prevent spam
+                    this.isResetButtonDisabled = true;
+                    
+                    // Start countdown timer
+                    this.startCountdown(60);
+
+                    // Disable the reset button for 60 seconds
+                    setTimeout(() => {
+                      this.isResetButtonDisabled = false; // Enable the button after 60 seconds
+                    }, 60000); // 60 seconds
+              }
+              else{
+                    // Swal.fire({
+                    //   title: 'Error!',
+                    //   text: response.message,
+                    //   icon: 'error',
+                    //   confirmButtonText: 'OK'
+                    // });
+                    this.isResetEmailError = true
+              }
+              
+            },
+            error: (error) => {
+              console.error('Error request reset password:', error);
+              // handle error
+              // Swal.fire({
+              //   title: 'Error!',
+              //   text: 'There was an error request reset password',
+              //   icon: 'error',
+              //   confirmButtonText: 'OK'
+              // });
+              this.isResetEmailError = true
+            },
+            complete: () => {
+              console.log('User creation process completed.');
+              // optional completion handling
+            }
+          });
+   
+  }
+
+  // Start the countdown timer
+  startCountdown(second:number): void {
+    this.countdown = second; // Reset the countdown
+    this.timer = setInterval(() => {
+      if (this.countdown > 0) {
+        this.countdown--; // Decrease the countdown every second
+      } else {
+        clearInterval(this.timer); // Stop the countdown when it reaches 0
+      }
+    }, 1000); // Update every second
+  }
+
   // Function to toggle the navbar collapse state
   toggleNavbar() {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
@@ -279,5 +397,5 @@ export class NavComponent implements OnInit {
     }
   }
   
-
+  
 }
