@@ -3,18 +3,16 @@
      <app-nav></app-nav>
   
     <!-- Teacher Photo and Details Section -->
-    <div class="teacher-detail mt-4 d-flex justify-content-center align-items-start">
-      <div class="photo-container">
+    <div class="teacher-detail mt-4 d-flex flex-column flex-md-row justify-content-center align-items-center align-items-md-start">
+      <div class="photo-container mb-3 mb-md-0">
         <img [src]="teacherDetails.profile_pic" class="teacher-photo" alt="{{teacherDetails.name}}">
-        <!-- <img  class="teacher-photo" alt="{{teacherDetails.name}}"> -->
       </div>
-      <div class="teacher-info ms-4">
+      <div class="teacher-info text-center text-md-start ms-md-4">
         <h5 class="teacher-name">{{teacherDetails.name}}</h5>
         <p class="teacher-location"><strong>Location:</strong> {{teacherDetails.location}}</p>
-        <p class="teacher-status"><strong>Status:</strong> {{teacherDetails.status}}</p>
+        <p class="teacher-status"><strong class="d-none d-md-inline">Status:</strong> {{teacherDetails.status}}</p>
         <p class="teacher-description">{{teacherDetails.description}}</p>
       </div>
-      
     </div>
     
       <!-- About Section -->
