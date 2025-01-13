@@ -134,7 +134,10 @@ export class NavComponent implements OnInit {
                     confirmButtonText: 'Proceed'
                   });
                   this.updateUserProfilePic()
-                  
+                   // Check if not on '/detail' page, redirect to '/'
+                  if (this.router.url !== '/detail' && this.router.url !== '/' ) {
+                      this.router.navigate(['/']); // Navigate to the root page
+                  }
               }
               else{
                   Swal.fire({

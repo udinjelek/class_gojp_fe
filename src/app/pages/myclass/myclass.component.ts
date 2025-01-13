@@ -88,10 +88,10 @@ export class MyclassComponent {
           }
         },
         error: (error) => {
-          console.error('Error login:', error);
+          console.error('Error:', error);
           Swal.fire({
             title: 'Error!',
-            text: 'There was an error when login',
+            text: 'There was an error when get the data',
             icon: 'error',
             confirmButtonText: 'OK'
           });
