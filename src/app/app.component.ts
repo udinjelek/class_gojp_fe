@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
+import { TitleScrollingService } from './shared/services/title-scrolling.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -9,5 +9,8 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'class_gojp';
+  constructor(private titleService: TitleScrollingService){
+
+  }
+  // title = 'class_gojp';
 }
