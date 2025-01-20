@@ -104,3 +104,93 @@
       width: 100%; 
     }
   }
+
+  /* Custom Background Colors */
+.bg-color-x {
+  background-color: #f4d2d2; /* Light pink */
+}
+
+.bg-color-y {
+  background-color: #f1f1f1; /* Light gray */
+}
+
+// .bg-color-x {
+//   background-image: url('/assets/images/31082021-09_generated.jpg'); /* Set abc.jpg for bg-color-x */
+//   background-size: cover;
+//   background-position: center;
+//   background-repeat: no-repeat;
+//   height: 100vh; /* Adjust height as needed */
+// }
+
+// /* Background color and image for bg-color-y */
+// .bg-color-y {
+//   background-image: url('/assets/images/image1-5.png'); /* Set def.jpg for bg-color-y */
+//   background-size: cover;
+//   background-position: center;
+//   background-repeat: no-repeat;
+//   height: 100vh; /* Adjust height as needed */
+// }
+
+.content-block {
+  padding: 40px 0;
+}
+
+/* Ensuring responsive image scaling */
+.img-fluid {
+  width: 100%;
+  height: auto;
+}
+
+/* Card styling */
+.card {
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+/* Alternating Layout on Desktop */
+@media (min-width: 768px) {
+  .content-block {
+    display: flex;
+    flex-direction: row;
+  }
+  .content-center{
+    display: flex;
+    justify-content: center;
+  }
+  .card {
+    width: 90%; /* Set width of card to 90% in larger screens */
+  }
+}
+.card {
+  margin: 0 auto; /* Center card horizontally */
+}
+
+/* Optional: Adjust padding or margins for better appearance */
+.card-body {
+  padding: 20px;
+}
+
+/* Center card and ensure image/text are properly ordered on Mobile */
+
+@media (max-width: 768px) {
+  .content-block {
+    text-align: center;
+  }
+
+  .card {
+    margin: 0 auto;
+  }
+
+  /* Ensure image and text are vertically aligned in mobile */
+  .order-md-1 {
+    order: 1; /* Image comes first on mobile */
+  }
+
+  .order-md-2 {
+    order: 2; /* Text comes after on mobile */
+  }
+}

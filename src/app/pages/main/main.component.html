@@ -79,11 +79,42 @@
           </ng-container>
         </ng-container>
       </div>
-      
-      
-      
     </div>
-  
+    
+    <div class="container mb-5">
+      <!-- Loop through content blocks -->
+      <div class="row content-block" *ngFor="let block of contentBlocks; let i = index" 
+           [ngClass]="{'bg-color-x': i % 2 === 0, 'bg-color-y': i % 2 !== 0}"
+           [attr.id]="'section-' + i"> <!-- Add dynamic id for each block -->
+        
+        <!-- Desktop view: Image on the left, Text on the right -->
+        <div class="col-md-6 d-none d-md-block" [ngClass]="{'order-md-1': i % 2 === 0, 'order-md-2': i % 2 !== 0}">
+          <img [src]="block.imageUrl" class="img-fluid" alt="Content Image">
+        </div>
+        <div class="col-md-6 content-center d-none d-md-block" [ngClass]="{'order-md-2': i % 2 === 0, 'order-md-1': i % 2 !== 0}">
+          <div class="card mx-auto"> <!-- Center card on mobile -->
+            <div class="card-body">
+              <h4 class="card-title">{{ block.title }}</h4>
+              <p class="card-text" [innerHTML]="block.textHtml"></p>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Mobile view: Image above, Text below -->
+        <div class="col-12 d-block d-md-none">
+          <div class="card mx-auto">
+            <img [src]="block.imageUrl" class="card-img-top img-fluid" alt="Content Image">
+            <div class="card-body">
+              <h4 class="card-title">{{ block.title }}</h4>
+              <p class="card-text" [innerHTML]="block.textHtmlMobile"></p>
+            </div>
+          </div>
+        </div>
+    
+      </div>
+    </div>
+    
+    
     <!-- Footer -->
     <footer class="bg-dark text-light pt-5 pb-3">
         <div class="footer-wrapper mx-auto">
@@ -92,8 +123,9 @@
             <div class="col-lg-4 col-md-6 mb-4 px-4">
               <h5>About</h5>
               <ul class="list-unstyled">
-                <li><a href="#">Who are we?</a></li>
-                <li><a href="#">Our Values</a></li>
+                <li><a href="#section-0">About Us</a></li>
+                <li><a href="#section-1">Our Values</a></li>
+                <li><a href="#section-2">Who are we?</a></li>
                 <li><a href="#">Terms & Conditions</a></li>
                 <li><a href="#">Privacy Policy</a></li>
               </ul>

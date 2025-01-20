@@ -14,6 +14,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: red;
     z-index: 1;
   }
+
+  body {
+    background: url('/assets/images/image1-5x.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
   
   // .modal {
   //   z-index: 1040 !important; /* Set lower than the cdk-overlay-container (1051) */
