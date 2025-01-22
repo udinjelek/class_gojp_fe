@@ -82,36 +82,92 @@
     </div>
     
     <div class="container mb-5">
-      <!-- Loop through content blocks -->
-      <div class="row content-block" *ngFor="let block of contentBlocks; let i = index" 
-           [ngClass]="{'bg-color-x': i % 2 === 0, 'bg-color-y': i % 2 !== 0}"
-           [attr.id]="'section-' + i"> <!-- Add dynamic id for each block -->
-        
-        <!-- Desktop view: Image on the left, Text on the right -->
-        <div class="col-md-6 d-none d-md-block" [ngClass]="{'order-md-1': i % 2 === 0, 'order-md-2': i % 2 !== 0}">
-          <img [src]="block.imageUrl" class="img-fluid" alt="Content Image">
-        </div>
-        <div class="col-md-6 content-center d-none d-md-block" [ngClass]="{'order-md-2': i % 2 === 0, 'order-md-1': i % 2 !== 0}">
-          <div class="card mx-auto"> <!-- Center card on mobile -->
-            <div class="card-body">
-              <h4 class="card-title">{{ block.title }}</h4>
-              <p class="card-text" [innerHTML]="block.textHtml"></p>
-            </div>
-          </div>
-        </div>
-    
-        <!-- Mobile view: Image above, Text below -->
-        <div class="col-12 d-block d-md-none">
-          <div class="card mx-auto">
-            <img [src]="block.imageUrl" class="card-img-top img-fluid" alt="Content Image">
-            <div class="card-body">
-              <h4 class="card-title">{{ block.title }}</h4>
-              <p class="card-text" [innerHTML]="block.textHtmlMobile"></p>
-            </div>
-          </div>
-        </div>
+      <!-- blocks 1 About Us-->
+      <!-- id section-0, color x, image order-md-1, text order-md-2 -->
+      <div class="row content-block bg-color-x"  id="section-0" *ngIf="homePage.content_about_us_desktop">
+                  <!-- Desktop view: Image on the left, Text on the right -->
+                  <div class="col-md-6 d-none d-md-block order-md-1">
+                    <img [src]="homePage.image_about_us_desktop" class="img-fluid" alt="Content Image">
+                  </div>
+                  <div class="col-md-6 content-center d-none d-md-block order-md-2">
+                    <div class="card mx-auto"> <!-- Center card on mobile -->
+                      <div class="card-body">
+                        <h4 class="card-title">About Us</h4>
+                        <p class="card-text" [innerHTML]="homePage.content_about_us_desktop"></p>
+                      </div>
+                    </div>
+                  </div>
+              
+                  <!-- Mobile view: Image above, Text below -->
+                  <div class="col-12 d-block d-md-none">
+                    <div class="card mx-auto">
+                      <img [src]="homePage.image_about_us_mobile" class="card-img-top img-fluid" alt="Content Image">
+                      <div class="card-body">
+                        <h4 class="card-title">About Us</h4>
+                        <p class="card-text" [innerHTML]="homePage.content_about_us_mobile"></p>
+                      </div>
+                    </div>
+                  </div>
     
       </div>
+    
+      <!-- blocks 2 Our Values-->
+      <!-- id section-1, color y, image order-md-2, text order-md-1 -->
+      <div class="row content-block bg-color-y"  id="section-1" *ngIf="homePage.content_our_values_desktop">
+                  <!-- Desktop view: Image on the right, Text on the left -->
+                  <div class="col-md-6 d-none d-md-block order-md-2">
+                    <img [src]="homePage.image_our_values_desktop" class="img-fluid" alt="Content Image">
+                  </div>
+                  <div class="col-md-6 content-center d-none d-md-block order-md-1">
+                    <div class="card mx-auto"> <!-- Center card on mobile -->
+                      <div class="card-body">
+                        <h4 class="card-title">Our Values</h4>
+                        <p class="card-text" [innerHTML]="homePage.content_our_values_desktop"></p>
+                      </div>
+                    </div>
+                  </div>
+              
+                  <!-- Mobile view: Image above, Text below -->
+                  <div class="col-12 d-block d-md-none">
+                    <div class="card mx-auto">
+                      <img [src]="homePage.image_our_values_mobile" class="card-img-top img-fluid" alt="Content Image">
+                      <div class="card-body">
+                        <h4 class="card-title">Our Values</h4>
+                        <p class="card-text" [innerHTML]="homePage.content_our_values_mobile"></p>
+                      </div>
+                    </div>
+                  </div>
+
+        </div>
+        
+        <!-- blocks 3 Who are we-->
+        <!-- id section-2, color x, image order-md-1, text order-md-2 -->
+        <div class="row content-block bg-color-x"  id="section-2" *ngIf="homePage.content_who_are_we_desktop">
+          <!-- Desktop view: Image on the left, Text on the right -->
+          <div class="col-md-6 d-none d-md-block order-md-1">
+            <img [src]="homePage.image_who_are_we_desktop" class="img-fluid" alt="Content Image">
+          </div>
+          <div class="col-md-6 content-center d-none d-md-block order-md-2">
+            <div class="card mx-auto"> <!-- Center card on mobile -->
+              <div class="card-body">
+                <h4 class="card-title">Who Are We?</h4>
+                <p class="card-text" [innerHTML]="homePage.content_who_are_we_desktop"></p>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Mobile view: Image above, Text below -->
+          <div class="col-12 d-block d-md-none">
+            <div class="card mx-auto">
+              <img [src]="homePage.image_who_are_we_mobile" class="card-img-top img-fluid" alt="Content Image">
+              <div class="card-body">
+                <h4 class="card-title">Who Are We?</h4>
+                <p class="card-text" [innerHTML]="homePage.content_who_are_we_mobile"></p>
+              </div>
+            </div>
+          </div>
+
+  </div>
     </div>
     
     
@@ -126,8 +182,6 @@
                 <li><a href="#section-0">About Us</a></li>
                 <li><a href="#section-1">Our Values</a></li>
                 <li><a href="#section-2">Who are we?</a></li>
-                <li><a href="#">Terms & Conditions</a></li>
-                <li><a href="#">Privacy Policy</a></li>
               </ul>
             </div>
       
@@ -144,9 +198,32 @@
             <div class="col-lg-4 col-md-12 mb-4 px-4">
               <h5>Follow Us</h5>
               <ul class="list-unstyled">
-                <li class="me-3"><a href="#"><i class="bi bi-facebook"></i> Facebook</a></li>
-                <li><a href="#"><i class="bi bi-instagram"></i> Instagram</a></li>
+                <li class="me-3" *ngIf="homePage['link_facebook']">
+                  <a [href]="homePage['link_facebook']" target="_blank"><i class="bi bi-facebook"></i> Facebook</a>
+                </li>
+                <li class="me-3" *ngIf="homePage['link_instagram']">
+                  <a [href]="homePage['link_instagram']" target="_blank"><i class="bi bi-instagram"></i> Instagram</a>
+                </li>
+                <li class="me-3" *ngIf="homePage['link_x']">
+                  <a [href]="homePage['link_x']" target="_blank"><i class="bi bi-twitter"></i> Twitter</a>
+                </li>
+                <li class="me-3" *ngIf="homePage['link_linkedin']">
+                  <a [href]="homePage['link_linkedin']" target="_blank"><i class="bi bi-linkedin"></i> LinkedIn</a>
+                </li>
+                <li class="me-3" *ngIf="homePage['link_youtube']">
+                  <a [href]="homePage['link_youtube']" target="_blank"><i class="bi bi-youtube"></i> YouTube</a>
+                </li>
+                <li class="me-3" *ngIf="homePage['link_pinterest']">
+                  <a [href]="homePage['link_pinterest']" target="_blank"><i class="bi bi-pinterest"></i> Pinterest</a>
+                </li>
+                <li class="me-3" *ngIf="homePage['link_snapchat']">
+                  <a [href]="homePage['link_snapchat']" target="_blank"><i class="bi bi-snapchat"></i> Snapchat</a>
+                </li>
+                <li class="me-3" *ngIf="homePage['link_tiktok']">
+                  <a [href]="homePage['link_tiktok']" target="_blank"><i class="bi bi-tiktok"></i> TikTok</a>
+                </li>
               </ul>
+              
             </div>
           </div>
         </div>

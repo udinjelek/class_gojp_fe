@@ -18,6 +18,28 @@ export class MainComponent implements OnInit {
   searchTerm: string = '';
 
   teachers:any[] = [];
+  homePage:any= {
+      'content_about_us_desktop':``
+    , 'content_about_us_mobile':``
+    , 'image_about_us_desktop':``
+    , 'image_about_us_mobile':``
+    , 'content_our_values_desktop':``
+    , 'content_our_values_mobile':``
+    , 'image_our_values_desktop':``
+    , 'image_our_values_mobile':``
+    , 'content_who_are_we_desktop':``
+    , 'content_who_are_we_mobile':``
+    , 'image_who_are_we_desktop':``
+    , 'image_who_are_we_mobile':``
+    , 'link_facebook':``
+    , 'link_instagram':``
+    , 'link_x':``
+    , 'link_linkedin':``
+    , 'link_youtube':``
+    , 'link_pinterest':''
+    , 'link_snapchat':''
+    , 'link_tiktok':''
+  };
 
   constructor(private authService: AuthService, private classService: ClassService,) {
   }
@@ -46,6 +68,27 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
       this.getListTeachers()  
+      this.getHomePageContent()
+  }
+
+  getHomePageContent(){
+    this.classService.getHomePageContent().subscribe({
+      next: (response) => {
+        if (response.status) {
+          this.homePage = response.data;
+          console.log('home page content data:', this.teachers);
+        } else {
+          console.log('No home page content found:', response.message);
+        }
+      },
+      error: (error) => {
+        if (error.status != 404) {
+          console.error('Error retrieving home page content data:', error);
+        }
+        
+      }
+      
+    });
   }
 
   getListTeachers(){

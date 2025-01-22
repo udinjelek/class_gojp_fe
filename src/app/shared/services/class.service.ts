@@ -210,4 +210,11 @@ export class ClassService {
       .set('token_id', token_id);
     return this.http.get<any>(this.apiUrl, { headers, params });
   }
+
+  public getHomePageContent():Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.apiUrl = this.baseApi + '/classgojp/get_home_page_content'
+    const params = new HttpParams();
+    return this.http.get<any>(this.apiUrl, { headers, params });
+  }
 }
