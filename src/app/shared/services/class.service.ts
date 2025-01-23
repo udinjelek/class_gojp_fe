@@ -217,4 +217,11 @@ export class ClassService {
     const params = new HttpParams();
     return this.http.get<any>(this.apiUrl, { headers, params });
   }
+
+  public getContactPageContent():Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.apiUrl = this.baseApi + '/classgojp/get_contact_page_content'
+    const params = new HttpParams();
+    return this.http.get<any>(this.apiUrl, { headers, params });
+  }
 }

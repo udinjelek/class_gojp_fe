@@ -1,0 +1,98 @@
+
+.test-dark2{
+  color: rgb(41, 38, 38);
+}
+
+
+.bg-base{
+  background-color: rgb(255, 99, 99);
+}
+
+.bg-base2{
+  background-color:rgb(244, 210, 210);
+}
+
+.bg-success-alt{
+  background-color: rgb(70, 179, 105);
+  color:azure
+}
+
+.bg-alt{
+  background-color: rgb(244, 210, 210);
+  color:rgb(41, 38, 38);
+}
+
+.bg-alt2{
+  background-color: #A19AD3; /* Black background */
+  color: #fff; /* White text */
+}
+.max800{
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+
+/* Default: Apply min-width for desktops and larger screens */
+.limit-input-icon {
+    display: flex;
+    align-items: center;
+    min-width: 150px;
+  }
+  
+  /* Remove min-width for mobile screens (below 768px) */
+  @media (max-width: 767px) {
+    .limit-input-icon {
+      min-width: 0;  /* or simply remove the property */
+    }
+
+
+  }
+
+  footer {
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+    padding: 20px 0;
+  
+    .footer-wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+  
+    h5 {
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+  
+    ul {
+      padding: 0;
+      list-style: none;
+  
+      li {
+        margin-bottom: 10px;
+  
+        a {
+          color: #ccc;
+          text-decoration: none;
+          &:hover {
+            color: #fff;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  
+    .list-unstyled.d-flex {
+      display: flex;
+      gap: 20px;
+  
+      i {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

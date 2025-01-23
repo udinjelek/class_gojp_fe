@@ -18,7 +18,7 @@ export class MainComponent implements OnInit {
   searchTerm: string = '';
 
   teachers:any[] = [];
-  homePage:any= {
+  homeData:any= {
       'content_about_us_desktop':``
     , 'content_about_us_mobile':``
     , 'image_about_us_desktop':``
@@ -75,7 +75,7 @@ export class MainComponent implements OnInit {
     this.classService.getHomePageContent().subscribe({
       next: (response) => {
         if (response.status) {
-          this.homePage = response.data;
+          this.homeData = response.data;
           console.log('home page content data:', this.teachers);
         } else {
           console.log('No home page content found:', response.message);

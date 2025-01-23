@@ -1,0 +1,248 @@
+<div class="container-fluid" >
+    <!-- Top Content -->
+    <app-nav></app-nav>
+
+    <div class="container max800">
+        <!-- Page Title -->
+        <!-- pc view -->
+        <h1 class="display-3 text-center fw-bold d-none d-md-block">Contact</h1>
+        <!-- mobile view -->
+        <h3 class="display-3 text-center fw-bold d-md-none">Contact</h3>
+        
+        <!-- Help Center Section -->
+        <div class="card mb-4 shadow-sm" id="section-0">
+          <div class="card-header bg-base text-white">
+            <h5 class="m-0">Help Center</h5>
+          </div>
+          <div class="card-body">
+            <p>
+              Welcome to the Help Center. Here you can find frequently asked questions and resources to help you with any issues.
+            </p>
+        
+            <!-- FAQ 1: How to Create an Account -->
+            <div class="mb-4">
+              <h6><strong>How to Create an Account?</strong></h6>
+              <p>
+                To sign up for an account, follow these steps:
+              </p>
+              <ol>
+                <li>Click on the "Login" button located at the top right corner of the page.</li>
+                <li>On the login page, scroll down to the bottom and click the "Don't have an account?" link.</li>
+                <li>You will be redirected to the sign-up page where you can create a new account.</li>
+                <li>Fill in all the required information as prompted.</li>
+                <li>Once you've entered all the necessary details, click the "Sign Up" button to complete your registration.</li>
+              </ol>
+            </div>
+        
+            <!-- FAQ 2: How to Reset Your Password -->
+            <div class="mb-4">
+              <h6><strong>How to Reset Your Password?</strong></h6>
+              <p>
+                If you've forgotten your password and need to reset it, here's what you should do:
+              </p>
+              <ol>
+                <li>Click the "Login" button at the top right corner of the page.</li>
+                <li>On the login screen, scroll to the bottom and click the "Forgot password?" link.</li>
+                <li>Enter the email address associated with your account.</li>
+                <li>The system will send a password reset link to your email inbox.</li>
+                <li>Wait 1-2 minutes for the email to arrive.</li>
+                <li>Open the email and click the password reset link.</li>
+                <li>Enter your new password and click "Submit" to update your password.</li>
+              </ol>
+            </div>
+        
+            <!-- FAQ 3: How to Contact Support -->
+            <div class="mb-4">
+              <h6><strong>How to Contact Support?</strong></h6>
+              <p>
+                If you need help, please use the "Contact Us" section located at the bottom of this page to reach our support team. 
+                They are available to assist with any issues or questions you may have regarding your account or our platform.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+      
+        <!-- Contact Us Section -->
+        <!-- Contact Us Section -->
+        <div class="card shadow-sm mb-4" id="section-1">
+          <div class="card-header bg-base text-white">
+            <h5 class="m-0">Contact Us</h5>
+          </div>
+          <div class="card-body">
+            <p>We’re excited to help you connect with the perfect Japanese language teacher or student. Here’s how you can reach us:</p>
+
+            <!-- Contact Support Section -->
+            <div class="mt-4">
+              <h6><strong>Contact Support</strong></h6>
+              <p>Need assistance or have questions? Our support team is here to help you navigate our platform and make your learning experience smooth.</p>
+
+              <!-- Contact Details -->
+              <div class="list-group">
+                <div *ngIf="contactData.contact_cs_email" class="list-group-item">
+                  <div class="input-group">
+                    <!-- Apply the new class with min-width on desktop -->
+                    <span class="input-group-text limit-input-icon bg-danger text-white">
+                      <i class="bi bi-envelope-fill"></i>
+                      <span class="d-none d-sm-inline">&nbsp; Email: </span>
+                    </span>
+                    <a [href]="'mailto:' + contactData.contact_cs_email" class="form-control text-end text-truncate" target="_blank">
+                      {{ contactData.contact_cs_email }}
+                    </a>
+                  </div>
+                </div>
+                <div *ngIf="contactData.contact_cs_phone" class="list-group-item">
+                  <div class="input-group">
+                    <span class="input-group-text limit-input-icon bg-warning">
+                      <i class="bi bi-telephone-fill"></i>
+                      <span class="d-none d-sm-inline">&nbsp; Phone: </span>
+                    </span>
+                    <a [href]="'tel:' + contactData.contact_cs_phone" class="form-control text-end">
+                      {{ contactData.contact_cs_phone }}
+                    </a>
+                  </div>
+                </div>
+                <div *ngIf="contactData.contact_cs_whatsapp" class="list-group-item">
+                  <div class="input-group">
+                    <span class="input-group-text limit-input-icon bg-success text-white">
+                      <i class="bi bi-whatsapp"></i>
+                      <span class="d-none d-sm-inline">&nbsp; WhatsApp: </span>
+                    </span>
+                    <a [href]="'https://wa.me/' + contactData.contact_cs_whatsapp" class="form-control text-end" target="_blank">
+                      {{ contactData.contact_cs_whatsapp }}
+                    </a>
+                  </div>
+                </div>
+                <div *ngIf="contactData.contact_cs_telegram" class="list-group-item">
+                  <div class="input-group">
+                    <span class="input-group-text limit-input-icon bg-primary text-white">
+                      <i class="bi bi-telegram"></i>
+                      <span class="d-none d-sm-inline">&nbsp; Telegram: </span>
+                    </span>
+                    <a [href]="'https://t.me/' + contactData.contact_cs_telegram" class="form-control text-end" target="_blank">
+                      &#64;{{ contactData.contact_cs_telegram }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Talk to Our Team Section -->
+            <div class="mt-4">
+              <h6><strong>Talk to Our Team</strong> </h6>
+              <p>Interested in becoming a teacher or finding the right student? Our team is ready to assist you in getting started. Reach out to us for more information or personalized support.</p>
+
+              <!-- Contact Details -->
+              <div class="list-group">
+                <div *ngIf="contactData.contact_team_email" class="list-group-item">
+                  <div class="input-group">
+                    <span class="input-group-text limit-input-icon bg-danger text-white">
+                      <i class="bi bi-envelope-fill"></i>
+                      <span class="d-none d-sm-inline">&nbsp; Email: </span>
+                    </span>
+                    <a [href]="'mailto:' + contactData.contact_team_email" class="form-control text-end text-truncate" target="_blank">
+                      {{ contactData.contact_team_email }}
+                    </a>
+                  </div>
+                </div>
+                <div *ngIf="contactData.contact_team_phone" class="list-group-item">
+                  <div class="input-group">
+                    <span class="input-group-text limit-input-icon bg-warning">
+                      <i class="bi bi-telephone-fill"></i>
+                      <span class="d-none d-sm-inline">&nbsp; Phone: </span>
+                    </span>
+                    <a [href]="'tel:' + contactData.contact_team_phone" class="form-control text-end">
+                      {{ contactData.contact_team_phone }}
+                    </a>
+                  </div>
+                </div>
+                <div *ngIf="contactData.contact_team_whatsapp" class="list-group-item">
+                  <div class="input-group">
+                    <span class="input-group-text limit-input-icon bg-success text-white">
+                      <i class="bi bi-whatsapp"></i>
+                      <span class="d-none d-sm-inline">&nbsp; WhatsApp: </span>
+                    </span>
+                    <a [href]="'https://wa.me/' + contactData.contact_team_whatsapp" class="form-control text-end" target="_blank">
+                      {{ contactData.contact_team_whatsapp }}
+                    </a>
+                  </div>
+                </div>
+                <div *ngIf="contactData.contact_team_telegram" class="list-group-item">
+                  <div class="input-group">
+                    <span class="input-group-text limit-input-icon bg-primary text-white">
+                      <i class="bi bi-telegram"></i>
+                      <span class="d-none d-sm-inline">&nbsp; Telegram: </span>
+                    </span>
+                    <a [href]="'https://t.me/' + contactData.contact_team_telegram" class="form-control text-end" target="_blank">
+                      &#64;{{ contactData.contact_team_telegram }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Contact Us Section --- end-->
+      </div>
+    
+    <!-- Footer -->
+    <footer class="bg-dark text-light pt-5 pb-3">
+      <div class="footer-wrapper mx-auto">
+        <div class="row">
+          <!-- About Section -->
+          <div class="col-lg-4 col-md-6 mb-4 px-4">
+            <h5>About</h5>
+            <ul class="list-unstyled">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Our Values</a></li>
+              <li><a href="#">Who are we?</a></li>
+            </ul>
+          </div>
+    
+          <!-- Contact Section -->
+          <div class="col-lg-4 col-md-6 mb-4 px-4">
+            <h5>Contact</h5>
+            <ul class="list-unstyled">
+              <li><a href="/contact#section-0">Help Center</a></li>
+              <li><a href="/contact#section-1">Contact Us</a></li>
+            </ul>
+          </div>
+    
+          <!-- Follow Us Section -->
+          <div class="col-lg-4 col-md-12 mb-4 px-4">
+            <h5>Follow Us</h5>
+            <ul class="list-unstyled">
+              <li class="me-3" *ngIf="contactData['link_facebook']">
+                <a [href]="contactData['link_facebook']" target="_blank"><i class="bi bi-facebook"></i> Facebook</a>
+              </li>
+              <li class="me-3" *ngIf="contactData['link_instagram']">
+                <a [href]="contactData['link_instagram']" target="_blank"><i class="bi bi-instagram"></i> Instagram</a>
+              </li>
+              <li class="me-3" *ngIf="contactData['link_x']">
+                <a [href]="contactData['link_x']" target="_blank"><i class="bi bi-twitter"></i> Twitter</a>
+              </li>
+              <li class="me-3" *ngIf="contactData['link_linkedin']">
+                <a [href]="contactData['link_linkedin']" target="_blank"><i class="bi bi-linkedin"></i> LinkedIn</a>
+              </li>
+              <li class="me-3" *ngIf="contactData['link_youtube']">
+                <a [href]="contactData['link_youtube']" target="_blank"><i class="bi bi-youtube"></i> YouTube</a>
+              </li>
+              <li class="me-3" *ngIf="contactData['link_pinterest']">
+                <a [href]="contactData['link_pinterest']" target="_blank"><i class="bi bi-pinterest"></i> Pinterest</a>
+              </li>
+              <li class="me-3" *ngIf="contactData['link_snapchat']">
+                <a [href]="contactData['link_snapchat']" target="_blank"><i class="bi bi-snapchat"></i> Snapchat</a>
+              </li>
+              <li class="me-3" *ngIf="contactData['link_tiktok']">
+                <a [href]="contactData['link_tiktok']" target="_blank"><i class="bi bi-tiktok"></i> TikTok</a>
+              </li>
+            </ul>
+            
+          </div>
+        </div>
+      </div>
+    </footer>
+  
+</div>

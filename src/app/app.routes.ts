@@ -5,6 +5,8 @@ import { MyclassComponent } from './pages/myclass/myclass.component';
 import { ProfileSettingsComponent } from './pages/profile-settings/profile-settings.component';
 import { UserComponent } from './pages/user/user.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { ContactComponent } from './pages/contact/contact.component';
+
 export const routes: Routes = [
     {
         path: '',
@@ -29,5 +31,9 @@ export const routes: Routes = [
     {
         path: 'reset-password/:token',  // Detail page with dynamic user ID
         component: ResetPasswordComponent
+    },
+    {
+        path: 'contact', 
+        component: ContactComponent
     },
 ];
