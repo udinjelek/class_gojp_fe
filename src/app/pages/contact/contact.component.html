@@ -5,27 +5,42 @@
     <div class="container max800">
         <!-- Page Title -->
         <!-- pc view -->
-        <h1 class="display-3 text-center fw-bold d-none d-md-block">Contact</h1>
+        <h1 class="display-3 text-center fw-bold d-none d-md-block slide-in">Contact</h1>
         <!-- mobile view -->
-        <h3 class="display-3 text-center fw-bold d-md-none">Contact</h3>
+        <h3 class="display-3 text-center fw-bold d-md-none slide-in">Contact</h3>
         
         <!-- Help Center Section -->
-        <div class="card mb-4 shadow-sm" id="section-0">
+        <div class="card mb-4 shadow-sm fade-in" id="section-0">
           <div class="card-header bg-base text-white">
-            <h5 class="m-0">Help Center</h5>
+            <h5 class="m-0"
+            [ngClass]="{ 'slide-in': true }" 
+            [ngStyle]="{ 'animation-delay': getAnimationDelay(0.25) }"
+            >Help Center</h5>
           </div>
-          <div class="card-body">
+          <div class="card-body"
+            [ngClass]="{ 'slide-in': true }" 
+            [ngStyle]="{ 'animation-delay': getAnimationDelay(0.5) }"
+            >
             <p>
               Welcome to the Help Center. Here you can find frequently asked questions and resources to help you with any issues.
             </p>
         
             <!-- FAQ 1: How to Create an Account -->
             <div class="mb-4">
-              <h6><strong>How to Create an Account?</strong></h6>
-              <p>
+              <h6 
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(0.75) }"
+              ><strong>How to Create an Account?</strong></h6>
+              <p 
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(1) }"
+              >
                 To sign up for an account, follow these steps:
               </p>
-              <ol>
+              <ol    
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(1.25) }"
+              >
                 <li>Click on the "Login" button located at the top right corner of the page.</li>
                 <li>On the login page, scroll down to the bottom and click the "Don't have an account?" link.</li>
                 <li>You will be redirected to the sign-up page where you can create a new account.</li>
@@ -36,11 +51,20 @@
         
             <!-- FAQ 2: How to Reset Your Password -->
             <div class="mb-4">
-              <h6><strong>How to Reset Your Password?</strong></h6>
-              <p>
+              <h6    
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(0.75) }"
+              ><strong>How to Reset Your Password?</strong></h6>
+              <p 
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(1) }"
+              >
                 If you've forgotten your password and need to reset it, here's what you should do:
               </p>
-              <ol>
+              <ol 
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(1.25) }"
+              >
                 <li>Click the "Login" button at the top right corner of the page.</li>
                 <li>On the login screen, scroll to the bottom and click the "Forgot password?" link.</li>
                 <li>Enter the email address associated with your account.</li>
@@ -53,8 +77,14 @@
         
             <!-- FAQ 3: How to Contact Support -->
             <div class="mb-4">
-              <h6><strong>How to Contact Support?</strong></h6>
-              <p>
+              <h6    
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(0.75) }"
+              ><strong>How to Contact Support?</strong></h6>
+              <p 
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(1) }"
+              >
                 If you need help, please use the "Contact Us" section located at the bottom of this page to reach our support team. 
                 They are available to assist with any issues or questions you may have regarding your account or our platform.
               </p>
@@ -65,21 +95,36 @@
       
         <!-- Contact Us Section -->
         <!-- Contact Us Section -->
-        <div class="card shadow-sm mb-4" id="section-1">
+        <div class="card shadow-sm mb-4 fade-in" id="section-1">
           <div class="card-header bg-base text-white">
-            <h5 class="m-0">Contact Us</h5>
+            <h5 class="m-0"
+              [ngClass]="{ 'slide-in': true }" 
+              [ngStyle]="{ 'animation-delay': getAnimationDelay(0.25) }"
+            >Contact Us</h5>
           </div>
-          <div class="card-body">
+          <div class="card-body"
+            [ngClass]="{ 'slide-in': true }" 
+            [ngStyle]="{ 'animation-delay': getAnimationDelay(0.5) }"
+          >
             <p>We’re excited to help you connect with the perfect Japanese language teacher or student. Here’s how you can reach us:</p>
 
             <!-- Contact Support Section -->
             <div class="mt-4">
-              <h6><strong>Contact Support</strong></h6>
-              <p>Need assistance or have questions? Our support team is here to help you navigate our platform and make your learning experience smooth.</p>
+              <h6    
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(0.75) }"
+              ><strong>Contact Support</strong></h6>
+              <p 
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(1) }"
+              >Need assistance or have questions? Our support team is here to help you navigate our platform and make your learning experience smooth.</p>
 
               <!-- Contact Details -->
               <div class="list-group">
-                <div *ngIf="contactData.contact_cs_email" class="list-group-item">
+                <div *ngIf="contactData.contact_cs_email" class="list-group-item"
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(1.25) }"
+                >
                   <div class="input-group">
                     <!-- Apply the new class with min-width on desktop -->
                     <span class="input-group-text limit-input-icon bg-danger text-white">
@@ -91,7 +136,10 @@
                     </a>
                   </div>
                 </div>
-                <div *ngIf="contactData.contact_cs_phone" class="list-group-item">
+                <div *ngIf="contactData.contact_cs_phone" class="list-group-item"
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(1.25) }"
+                >
                   <div class="input-group">
                     <span class="input-group-text limit-input-icon bg-warning">
                       <i class="bi bi-telephone-fill"></i>
@@ -102,7 +150,10 @@
                     </a>
                   </div>
                 </div>
-                <div *ngIf="contactData.contact_cs_whatsapp" class="list-group-item">
+                <div *ngIf="contactData.contact_cs_whatsapp" class="list-group-item"
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(1.25) }"
+                >
                   <div class="input-group">
                     <span class="input-group-text limit-input-icon bg-success text-white">
                       <i class="bi bi-whatsapp"></i>
@@ -113,7 +164,10 @@
                     </a>
                   </div>
                 </div>
-                <div *ngIf="contactData.contact_cs_telegram" class="list-group-item">
+                <div *ngIf="contactData.contact_cs_telegram" class="list-group-item"
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(1.25) }"
+                >
                   <div class="input-group">
                     <span class="input-group-text limit-input-icon bg-primary text-white">
                       <i class="bi bi-telegram"></i>
@@ -129,12 +183,21 @@
 
             <!-- Talk to Our Team Section -->
             <div class="mt-4">
-              <h6><strong>Talk to Our Team</strong> </h6>
-              <p>Interested in becoming a teacher or finding the right student? Our team is ready to assist you in getting started. Reach out to us for more information or personalized support.</p>
+              <h6 
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(0.75) }"
+              ><strong>Talk to Our Team</strong> </h6>
+              <p 
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(1) }"
+              >Interested in becoming a teacher or finding the right student? Our team is ready to assist you in getting started. Reach out to us for more information or personalized support.</p>
 
               <!-- Contact Details -->
               <div class="list-group">
-                <div *ngIf="contactData.contact_team_email" class="list-group-item">
+                <div *ngIf="contactData.contact_team_email" class="list-group-item"
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(1.25) }"
+                >
                   <div class="input-group">
                     <span class="input-group-text limit-input-icon bg-danger text-white">
                       <i class="bi bi-envelope-fill"></i>
@@ -145,7 +208,10 @@
                     </a>
                   </div>
                 </div>
-                <div *ngIf="contactData.contact_team_phone" class="list-group-item">
+                <div *ngIf="contactData.contact_team_phone" class="list-group-item"
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(1.25) }"
+                >
                   <div class="input-group">
                     <span class="input-group-text limit-input-icon bg-warning">
                       <i class="bi bi-telephone-fill"></i>
@@ -156,7 +222,10 @@
                     </a>
                   </div>
                 </div>
-                <div *ngIf="contactData.contact_team_whatsapp" class="list-group-item">
+                <div *ngIf="contactData.contact_team_whatsapp" class="list-group-item"
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(1.25) }"
+                >
                   <div class="input-group">
                     <span class="input-group-text limit-input-icon bg-success text-white">
                       <i class="bi bi-whatsapp"></i>
@@ -167,7 +236,10 @@
                     </a>
                   </div>
                 </div>
-                <div *ngIf="contactData.contact_team_telegram" class="list-group-item">
+                <div *ngIf="contactData.contact_team_telegram" class="list-group-item"
+                [ngClass]="{ 'slide-in': true }" 
+                [ngStyle]="{ 'animation-delay': getAnimationDelay(1.25) }"
+                >
                   <div class="input-group">
                     <span class="input-group-text limit-input-icon bg-primary text-white">
                       <i class="bi bi-telegram"></i>

@@ -96,3 +96,80 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  
+// animation
+// SCSS for animations
+
+// 1. Fade-in animation for elements
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 2s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// 2. Scale effect on hover for cards
+.card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+// 3. Slide-in animation for content sections (like "About Us", "Our Values", etc.)
+.slide-in {
+  transform: translateX(-150%);
+  animation: slideIn 0.6s forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+// 4. Smooth scrolling between sections
+html {
+  scroll-behavior: smooth;
+}
+
+// 5. Bouncing animation for buttons and inputs (like the search input or "Contact Us" button)
+.search button {
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+// 6. Angular fade-in animation for dynamic content like teacher cards
+.card {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.card.appear {
+  opacity: 1;
+  transform: translateY(0);
+}

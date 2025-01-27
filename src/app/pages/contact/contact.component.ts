@@ -57,4 +57,8 @@ export class ContactComponent implements OnInit {
       
     });
   }
+
+  getAnimationDelay(index: number): string {
+    return `${(index * 1)}s`;  // 0.1s delay for each card based on its index
+  }
 }

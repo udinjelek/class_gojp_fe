@@ -58,6 +58,7 @@ export class NavComponent implements OnInit {
     this.showSignUpModal = false;  // Close Sign-Up Modal
     this.showLoginModal = true;    // Open Login Modal
     this.showResetPasswordModal = false;
+    this.hideNavbar();
   }
 
   // Function to open the Sign-Up Modal and close Login Modal
@@ -326,6 +327,9 @@ export class NavComponent implements OnInit {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
   }
 
+  hideNavbar() {
+    this.isNavbarCollapsed = true;
+  }
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn(); // Check login status
   }
@@ -338,6 +342,7 @@ export class NavComponent implements OnInit {
     this.role = ''
     this.user_id = ''
     this.userProfilePic = ''
+    this.hideNavbar()
     Swal.fire({
       title: 'Logout Successful!',
       html: `Thank you for spending your time with us, <strong style="color: darkblue;">${full_name}</strong>. <br />We hope to see you again soon!`,

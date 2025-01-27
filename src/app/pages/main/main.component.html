@@ -9,11 +9,56 @@
     <div class="col-12">
       <div class="text-center p-5 content-box bg-purple-gradient">
         <!-- pc view -->
-        <h1 class="display-3 fw-bold d-none d-md-block">Finding the Perfect Japanese Tutor</h1>
+        <h1 class="display-3 fw-bold d-none d-md-block">
+          <span 
+            [ngClass]="{ 'fade-slide-in': true }" 
+            [ngStyle]="{ 'animation-delay': getAnimationDelay(0.25) }"
+          >Finding&nbsp;</span> 
+          <span 
+            [ngClass]="{ 'fade-slide-in': true }" 
+            [ngStyle]="{ 'animation-delay': getAnimationDelay(0.5) }"
+          >the&nbsp;</span> 
+          <span 
+            [ngClass]="{ 'fade-slide-in': true }" 
+            [ngStyle]="{ 'animation-delay': getAnimationDelay(0.75) }"
+          >Perfect&nbsp;</span> 
+          <span 
+            [ngClass]="{ 'fade-slide-in': true }" 
+            [ngStyle]="{ 'animation-delay': getAnimationDelay(1) }"
+          >Japanese&nbsp;</span> 
+          <span 
+            [ngClass]="{ 'fade-slide-in': true }" 
+            [ngStyle]="{ 'animation-delay': getAnimationDelay(1.25) }"
+          >Tutor</span>
+        </h1>
         <!-- mobile view -->
-        <h3 class="display-3 fw-bold d-md-none">Finding the Perfect Japanese Tutor</h3>
+        <h3 class="display-3 fw-bold d-md-none">
+          <span 
+            [ngClass]="{ 'fade-slide-in': true }" 
+            [ngStyle]="{ 'animation-delay': getAnimationDelay(0.25) }"
+          >Finding&nbsp;</span> 
+          <span 
+            [ngClass]="{ 'fade-slide-in': true }" 
+            [ngStyle]="{ 'animation-delay': getAnimationDelay(0.5) }"
+          >the&nbsp;</span> 
+          <span 
+            [ngClass]="{ 'fade-slide-in': true }" 
+            [ngStyle]="{ 'animation-delay': getAnimationDelay(0.75) }"
+          >Perfect&nbsp;</span> 
+          <span 
+            [ngClass]="{ 'fade-slide-in': true }" 
+            [ngStyle]="{ 'animation-delay': getAnimationDelay(1) }"
+          >Japanese&nbsp;</span> 
+          <span 
+            [ngClass]="{ 'fade-slide-in': true }" 
+            [ngStyle]="{ 'animation-delay': getAnimationDelay(1.25) }"
+          >Tutor</span>
+        </h3>
         
-        <p class="lead">Expand your horizons and unlock the full potential</p>
+        <p class="lead"
+        [ngClass]="{ 'slide-in': true }" 
+        [ngStyle]="{ 'animation-delay': getAnimationDelay(1.5) }"
+        >Expand your horizons and unlock the full potential</p>
         <!-- Search Input -->
         <div class="mt-4">
           <div class="input-group search mx-auto">
@@ -39,7 +84,7 @@
     </div>
   </div>
   
-    <!-- Bottom Content -->
+    <!-- List Teacher Content -->
     <div class="row">
       <div class="col-12 text-center p-3">
         <ng-container *ngIf="filteredTeachers().length > 0; else noResults">
@@ -55,10 +100,15 @@
         </ng-template>
       </div>
       <div class="list-teacher d-flex flex-wrap justify-content-center">
-        <ng-container *ngFor="let teacher of teachers">
+        <ng-container *ngFor="let teacher of teachers; let i = index">
           <!-- Filter teachers based on searchTerm -->
           <ng-container *ngIf="!searchTerm || (teacher.name.toLowerCase().includes(searchTerm.toLowerCase()))">
-            <div class="card m-3" style="width: 18rem; position: relative;">
+            <div 
+              class="card m-3 fade-in" 
+              style="width: 18rem; position: relative;"
+              [ngClass]="{ 'fade-slide-in': true }"
+              [ngStyle]="{ 'animation-delay': getAnimationDelay(i * 0.2) }"  
+            >
               <!-- Image Container -->
               <div class="image-container" style="position: relative; overflow: hidden;">
                 <img [src]="teacher.profile_pic" class="card-img-top teacher-image" alt="{{ teacher.name }}">
@@ -90,7 +140,7 @@
                     <img [src]="homeData.image_about_us_desktop" class="img-fluid" alt="Content Image">
                   </div>
                   <div class="col-md-6 content-center d-none d-md-block order-md-2">
-                    <div class="card mx-auto"> <!-- Center card on mobile -->
+                    <div class="card mx-auto fade-in"> <!-- Center card on mobile -->
                       <div class="card-body">
                         <h4 class="card-title">About Us</h4>
                         <p class="card-text" [innerHTML]="homeData.content_about_us_desktop"></p>
@@ -100,7 +150,7 @@
               
                   <!-- Mobile view: Image above, Text below -->
                   <div class="col-12 d-block d-md-none">
-                    <div class="card mx-auto">
+                    <div class="card mx-auto fade-in">
                       <img [src]="homeData.image_about_us_mobile" class="card-img-top img-fluid" alt="Content Image">
                       <div class="card-body">
                         <h4 class="card-title">About Us</h4>
@@ -119,7 +169,7 @@
                     <img [src]="homeData.image_our_values_desktop" class="img-fluid" alt="Content Image">
                   </div>
                   <div class="col-md-6 content-center d-none d-md-block order-md-1">
-                    <div class="card mx-auto"> <!-- Center card on mobile -->
+                    <div class="card mx-auto fade-in"> <!-- Center card on mobile -->
                       <div class="card-body">
                         <h4 class="card-title">Our Values</h4>
                         <p class="card-text" [innerHTML]="homeData.content_our_values_desktop"></p>
@@ -129,7 +179,7 @@
               
                   <!-- Mobile view: Image above, Text below -->
                   <div class="col-12 d-block d-md-none">
-                    <div class="card mx-auto">
+                    <div class="card mx-auto fade-in">
                       <img [src]="homeData.image_our_values_mobile" class="card-img-top img-fluid" alt="Content Image">
                       <div class="card-body">
                         <h4 class="card-title">Our Values</h4>
@@ -148,7 +198,7 @@
             <img [src]="homeData.image_who_are_we_desktop" class="img-fluid" alt="Content Image">
           </div>
           <div class="col-md-6 content-center d-none d-md-block order-md-2">
-            <div class="card mx-auto"> <!-- Center card on mobile -->
+            <div class="card mx-auto fade-in"> <!-- Center card on mobile -->
               <div class="card-body">
                 <h4 class="card-title">Who Are We?</h4>
                 <p class="card-text" [innerHTML]="homeData.content_who_are_we_desktop"></p>
@@ -158,7 +208,7 @@
       
           <!-- Mobile view: Image above, Text below -->
           <div class="col-12 d-block d-md-none">
-            <div class="card mx-auto">
+            <div class="card mx-auto fade-in">
               <img [src]="homeData.image_who_are_we_mobile" class="card-img-top img-fluid" alt="Content Image">
               <div class="card-body">
                 <h4 class="card-title">Who Are We?</h4>

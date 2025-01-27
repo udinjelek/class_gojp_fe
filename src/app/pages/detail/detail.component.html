@@ -4,19 +4,19 @@
   
     <!-- Teacher Photo and Details Section -->
     <div class="teacher-detail mt-4 d-flex flex-column flex-md-row justify-content-center align-items-center align-items-md-start">
-      <div class="photo-container mb-3 mb-md-0">
+      <div class="photo-container mb-3 mb-md-0 fade-slide-in">
         <img [src]="teacherDetails.profile_pic" class="teacher-photo" alt="{{teacherDetails.name}}">
       </div>
       <div class="teacher-info text-center text-md-start ms-md-4">
-        <h5 class="teacher-name">{{teacherDetails.name}}</h5>
-        <p class="teacher-location"><strong>Location:</strong> {{teacherDetails.location}}</p>
-        <p class="teacher-status"><strong class="d-none d-md-inline">Status:</strong> {{teacherDetails.status}}</p>
-        <p class="teacher-description">{{teacherDetails.description}}</p>
+        <h5 class="teacher-name slide-in">{{teacherDetails.name}}</h5>
+        <p class="teacher-location slide-in"><strong>Location:</strong> {{teacherDetails.location}}</p>
+        <p class="teacher-status slide-in"><strong class="d-none d-md-inline">Status:</strong> {{teacherDetails.status}}</p>
+        <p class="teacher-description slide-in">{{teacherDetails.description}}</p>
       </div>
     </div>
     
       <!-- About Section -->
-    <div class="teacher-detail mt-4 d-flex justify-content-center align-items-start">
+    <div class="teacher-detail mt-4 d-flex justify-content-center align-items-start slide-in">
       <div class="mt-4">
         <h3 class="sub-bold">About {{teacherDetails.name}}</h3>
         <p>{{teacherDetails.about}}</p>
@@ -24,21 +24,21 @@
     </div>
     
       <!-- Student Testimonials -->
-    <div class="teacher-detail mt-4">
+    <div class="teacher-detail mt-4 slide-in">
       <div class="mt-4">
         <h3 class="sub-bold">What Students Say</h3>
         <p><em>"{{teacherDetails.testimonial}}"</em></p>
       </div>
     </div>
       <!-- Current Students -->
-    <div class="teacher-detail mt-4" *ngIf="teacherDetails.students>0">
+    <div class="teacher-detail mt-4 slide-in" *ngIf="teacherDetails.students>0">
       <div class="mt-4">
         <h3 class="sub-bold">Current Students: {{teacherDetails.students}}</h3>
       </div>
     </div>
 
       <!-- Group Schedule Section -->
-    <div class="teacher-detail mt-4 row ">
+    <div class="teacher-detail mt-4 row fade-slide-in">
       <div class="container col-12">
         <!-- pc view -->
         <h3 class="d-none d-md-block">Group Schedule</h3>
@@ -133,7 +133,7 @@
     </div>
 
       <!-- Schedule Section -->
-    <div class="teacher-detail mt-4 row ">
+    <div class="teacher-detail mt-4 row fade-slide-in">
       <div class="container col-6 mt-2">
         <!-- pc view -->
         <h3 class="d-none d-md-block">Schedule</h3>
@@ -151,7 +151,7 @@
       </div>  
     </div>
       
-    <div class="teacher-detail mt-0 d-flex justify-content-center align-items-start w-100">
+    <div class="teacher-detail mt-0 d-flex justify-content-center align-items-start w-100 fade-slide-in">
       <div class="container mt-0 w-100">
         <div *ngIf="formattedDate===''" class="text-center pt-3 card w-100">
           <!-- pc view -->

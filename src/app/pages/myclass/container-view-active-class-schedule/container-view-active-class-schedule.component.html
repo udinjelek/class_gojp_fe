@@ -1,9 +1,9 @@
 <div class="container mt-4">
     <!-- Table for larger screens -->
-    <div *ngIf="!user_id" class="alert alert-warning text-center mt-4 max800">
+    <div *ngIf="!user_id" class="card bg-color-x bounce text-center mt-4 max800">
       
-        <h5 class="mb-3">You must be logged in to view your schedule.</h5>
-        <p class="mb-0">
+        <h5 class="mb-3 card-body">You must be logged in to view your schedule.</h5>
+        <p class="mb-0 card-footer">
           Please 
           <button type="button" class="btn btn-link p-0 align-baseline text-decoration-none" (click)="openLoginModal()">
             <strong>log in</strong>

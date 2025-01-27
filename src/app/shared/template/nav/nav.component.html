@@ -17,16 +17,16 @@
   <div [ngClass]="{'collapse': isNavbarCollapsed, 'navbar-collapse': true}" id="navbarNav">
     <ul class="navbar-nav ms-auto">
       <li class="nav-item">
-        <a class="nav-link btn-custom" href="#">Home</a>
+        <a class="nav-link btn-custom" href="#" (click)="hideNavbar()">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link btn-custom" href="#">Services</a>
+        <a [routerLink]="['/contact']" class="nav-link btn-custom" (click)="hideNavbar()">Contact</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn()">
+        <a class="nav-link btn-custom" [routerLink]="['/profile-settings']" (click)="hideNavbar()">My Profile</a>
       </li>
       <li class="nav-item">
-        <a [routerLink]="['/contact']" class="nav-link btn-custom" href="#">Contact</a>
-      </li>
-      <li class="nav-item">
-        <a [routerLink]="['/my-class']" class="nav-link btn-custom">My Class</a>
+        <a [routerLink]="['/my-class']" class="nav-link btn-custom" (click)="hideNavbar()">My Class</a>
       </li>
       <!-- Show Login or Logout depending on isLoggedIn() -->
       <li class="nav-item" *ngIf="!isLoggedIn()">
@@ -47,7 +47,10 @@
   
 
   <!-- Login Modal -->
-  <div class="modal" tabindex="-1" [ngClass]="{'d-block': showLoginModal}" style="background-color: rgba(0,0,0,0.5)">
+  <div class="modal" tabindex="-1" 
+    [ngClass]="{'d-block fade-in': showLoginModal}" 
+    style="background-color: rgba(0,0,0,0.5)"
+  >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content position-relative">
         <!-- Outer Circle (using Bootstrap) -->

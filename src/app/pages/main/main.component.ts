@@ -6,12 +6,26 @@ import { NavComponent } from '../../shared/template/nav/nav.component';
 import { ClassService } from '../../shared/services/class.service';
 import { AuthService } from '../../shared/services/auth.service';
 import Swal from 'sweetalert2';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
+
 @Component({
   selector: 'app-main',
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule, NavComponent, ],
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  styleUrls: ['./main.component.scss'],
+  animations: [
+    trigger('fadeInList', [
+      transition('* => *', [
+        query('.card', [
+          style({ opacity: 0, transform: 'translateY(10px)' }),
+          stagger('100ms', [
+            animate('500ms 100ms', style({ opacity: 1, transform: 'translateY(0)' }))
+          ])
+        ], { optional: true })
+      ])
+    ])
+  ]
 })
 export class MainComponent implements OnInit {
   title = 'teacher-list';
@@ -128,4 +142,7 @@ export class MainComponent implements OnInit {
     );
   }
   
+  getAnimationDelay(index: number): string {
+    return `${(index * 1)}s`;  // 0.1s delay for each card based on its index
+  }
 }

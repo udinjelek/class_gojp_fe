@@ -17,3 +17,27 @@
     max-width: 800px;
     margin: 0 auto;
 }
+
+.bg-color-x {
+    // background-color: #f4d2d2; /* Light pink */
+    background: linear-gradient(to top, rgb(244, 210, 210), rgb(255, 252, 252));
+    
+  }
+
+  .bounce{
+    animation: bounceFadeIn 1s ease-in-out;
+  }
+
+  @keyframes bounceFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(100px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
